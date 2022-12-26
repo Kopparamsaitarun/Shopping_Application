@@ -20,7 +20,7 @@ namespace Domain.Model.User
         public string password { get; set; }
         [Required]
         public string phoneNumber { get; set; }
-        [Display(Name = "")]
+        //[Display(Name = "")]
         [Required]
         public bool policyFlag { get; set; }
     }
