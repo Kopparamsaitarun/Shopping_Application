@@ -36,8 +36,8 @@ namespace ShoppingApp.Controllers
                 lstUser.Add(user);
             });
             //return Ok(lstUser);
-           // ViewData["lstUser"] = lstUser;
-            return View(lstUser);
+            ViewData["lstUser"] = lstUser;
+            return View();
         }
 
         [HttpPost("CreateUsers")]

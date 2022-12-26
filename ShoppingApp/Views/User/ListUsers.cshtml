@@ -1,41 +1,27 @@
 ﻿
-@*@{
+@{
     ViewData["Title"] = "ListUsers";
-    var emp = ViewData["lstUser"] as List<User>;
+    var emp = ViewData["lstUser"] as List<Domain.Model.User.User>;
 }
-*@
 
-@model Domain.Model.User
-<h1>ListUsers</h1>
+<h1>Users List</h1>
 <style>
-    #employees {
+    #users {
         font-family: Arial, Helvetica, sans-serif;
         border-collapse: collapse;
         width: 100%;
     }
-
-
-
-        #employees td, #employees th {
+        #users td, #users th {
             border: 1px solid #ddd;
             padding: 8px;
         }
-
-
-
-        #employees tr:nth-child(even) {
+        #users tr:nth-child(even) {
             background-color: #f2f2f2;
         }
-
-
-
-        #employees tr:hover {
+        #users tr:hover {
             background-color: #ddd;
         }
-
-
-
-        #employees th {
+        #users th {
             padding-top: 12px;
             padding-bottom: 12px;
             text-align: left;
@@ -45,29 +31,23 @@
 </style>
 
 
-
-
-<h1>Employee List</h1>
-
-
-
-<table id="employees">
+<table id="users">
     <tr>
-        <th>Employee Name</th>
-        <th>Employee Department</th>
+        <th>First Name</th>
+        <th>Last Name</th>
         <th>Email</th>
-        <th>Country</th>
         <th>Phone</th>
+        <th>Created on</th>
     </tr>
     @{
-        foreach (User em in Model.ToList())
+        foreach (Domain.Model.User.User em in emp)
         {
             <tr>
                 <td>@em.firstName</td>
                 <td>@em.lastName</td>
                 <td>@em.email</td>
                 <td>@em.phoneNumber</td>
-                <td>@em.password</td>
+                <td>@em.ModifiedDate</td>
             </tr>
         }
     }
