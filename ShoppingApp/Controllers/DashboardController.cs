@@ -28,7 +28,7 @@ namespace ShoppingApp.Controllers
                 IEnumerable<Productlist> products = productlist;
                 products = _dashboardRepository.GetAllProduct();
 
-                return View("~/Views/Dashboard/Index.cshtml", products);
+                return View( products);
 
 
             }
