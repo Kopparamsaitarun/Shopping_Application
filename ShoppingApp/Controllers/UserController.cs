@@ -25,13 +25,14 @@ namespace ShoppingApp.Controllers
                 User user = null;
                 user = new User()
                 {
-                    userId = u.userId,
+                    Id = u.Id,
                     firstName = u.firstName,
                     lastName = u.lastName,
                     email = u.email,
                     phoneNumber = u.phoneNumber,
                     password = u.password,
                     policyFlag = u.policyFlag,
+                    Role=u.Role,
                 };
                 lstUser.Add(user);
             });
@@ -51,6 +52,7 @@ namespace ShoppingApp.Controllers
                 phoneNumber = model.phoneNumber,
                 password = model.password,
                 policyFlag = model.policyFlag,
+                Role = model.Role,
             };
             iuserRepository.InsertUser(UserEntity);
             return 1;
@@ -61,13 +63,14 @@ namespace ShoppingApp.Controllers
         {
             User UserEntity = new User
             {
-                userId = model.userId,
+                Id = model.Id,
                 firstName = model.firstName,
                 lastName = model.lastName,
                 email = model.email,
                 phoneNumber = model.phoneNumber,
                 password = model.password,
                 policyFlag = model.policyFlag,
+                Role = model.Role,
 
             };
             iuserRepository.UpdatetUser(UserEntity);

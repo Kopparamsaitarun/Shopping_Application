@@ -37,7 +37,6 @@
         <th>Last Name</th>
         <th>Email</th>
         <th>Phone</th>
-        <th>Created on</th>
     </tr>
     @{
         foreach (Domain.Model.User.User em in emp)
@@ -47,7 +46,6 @@
                 <td>@em.lastName</td>
                 <td>@em.email</td>
                 <td>@em.phoneNumber</td>
-                <td>@em.ModifiedDate</td>
             </tr>
         }
     }

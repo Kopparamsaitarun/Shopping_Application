@@ -18,5 +18,7 @@ namespace ShoppingApp.Models
         [Display(Name = "")]
         [Required]
         public bool policyFlag { get; set; }
+
+        public string Role { get; set; }
     }
 }

@@ -10,8 +10,7 @@ namespace Domain.Model.User
 {
     public class User : BaseEntity
     {
-        [Key]
-        public int userId { get; set; }
+        
         public string firstName { get; set; }
         public string lastName { get; set; }
         [Required]
@@ -23,5 +22,6 @@ namespace Domain.Model.User
         //[Display(Name = "")]
         [Required]
         public bool policyFlag { get; set; }
+        public string Role { get; set; }
     }
 }
