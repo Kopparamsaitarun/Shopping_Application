@@ -13,6 +13,7 @@ namespace Domain.EntityFramework
    public partial class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext() { }
+        //public DbSet<User> Users { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> opt) : base(opt)
         {
 

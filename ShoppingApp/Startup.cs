@@ -63,7 +63,11 @@ namespace ShoppingApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=User}/{action=ListUsers}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}");                
+                
+                endpoints.MapControllerRoute(
+                    name: "",
+                    pattern: "{controller=Home}/{action=Index}");
             });
         }
     }

@@ -42,9 +42,10 @@ namespace Services
 
 
 
-        public void InsertUser(User user)
+        public int InsertUser(User user)
         {
             userRepository.Insert(user);
+            return 1;
         }
 
 
@@ -52,6 +53,11 @@ namespace Services
         public void UpdatetUser(User user)
         {
             userRepository.Update(user);
+        }
+
+        void IUserRepository.InsertUser(User user)
+        {
+            throw new NotImplementedException();
         }
     }
 }
