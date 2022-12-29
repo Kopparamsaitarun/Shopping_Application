@@ -1,4 +1,5 @@
 ﻿using Domain.Model.Login;
+using Domain.Model.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace Services
 {
     public interface ILoginRepository
     {
-        bool Login(UserLogin userLogin);
+        UserLogin Login(UserLogin userLogin);
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Domain.Model.Login;
+using Domain.Model.User;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using Services.Login;
 using System;
 
 namespace ShoppingApp.Controllers
@@ -10,10 +12,12 @@ namespace ShoppingApp.Controllers
     public class CustomerLoginController : Controller
     {
         public ILoginRepository LoginRepository;
+        private readonly IUserAuthenticationReposiroty userAuthenticationReposiroty;
 
-        public CustomerLoginController(ILoginRepository _loginRepository)
+        public CustomerLoginController(ILoginRepository _loginRepository, IUserAuthenticationReposiroty _userAuthenticationReposiroty)
         {
             LoginRepository = _loginRepository;
+            userAuthenticationReposiroty = _userAuthenticationReposiroty;
         }
 
         [HttpGet("GetLoginCustomer")]
@@ -25,21 +29,29 @@ namespace ShoppingApp.Controllers
         [HttpPost("LoginCustomer")]
         public IActionResult LoginCustomer(UserLogin model)
         {
+            if (model == null)
+            {
+                return BadRequest("user is null.");
+            }
             try
             {
-                if (!ModelState.IsValid)
+                UserLogin user = LoginRepository.Login(model);
+                if (user != null)
                 {
-                    throw new Exception("Model is not valid");
+                    var tokenString = userAuthenticationReposiroty.GenerateSessionJWT(user);
+                    return Ok(new
+                    {
+                        success = true,
+                        Message = "User Login Successful",
+                        user,
+                        token = tokenString
+                    });
                 }
-                else
-                {
-                    bool result = LoginRepository.Login(model);                                                                               
-                    return this.Ok(new { Success = true, Message = "Login Successfully" });
-                }
+                return BadRequest(new { success = false, Message = "User Login Unsuccessful" });
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                return BadRequest(new { Success = false, ex.Message });
+                return BadRequest(new { success = false, exception.Message });
             }
         }
             

@@ -1,4 +1,5 @@
 ﻿using Domain.Model.Login;
+using Domain.Model.User;
 using Infrastructure.Repository;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Services.Login
         {
             genericRepository = _genericRepository;
         }
-        public bool Login(UserLogin userLogin)
+        public UserLogin Login(UserLogin userLogin)
         {
             return genericRepository.Login(userLogin);
         }

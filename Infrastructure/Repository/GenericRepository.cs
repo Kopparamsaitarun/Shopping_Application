@@ -95,7 +95,7 @@ namespace Infrastructure.Repository
             }
         }
 
-        public bool Login(UserLogin userLogin)
+        public UserLogin Login(UserLogin userLogin)
         {
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -122,7 +122,7 @@ namespace Infrastructure.Repository
                     {
                         throw new Exception("Email not registered");
                     }
-                    return true;
+                    return userLogin;
                 }
             }
         }

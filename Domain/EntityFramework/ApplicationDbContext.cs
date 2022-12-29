@@ -44,6 +44,8 @@ namespace Domain.EntityFramework
                 entity.HasKey(t => t.Id);
                 entity.Property(t => t.EmailId).IsRequired();
                 entity.Property(t => t.Password).IsRequired();
+                entity.Property(t => t.Role).IsRequired();
+
             });
             OnModelCreatingPartial(oModelBuilder);
             //new EmployeeMap(oModelBuilder.Entity<Employee>());
