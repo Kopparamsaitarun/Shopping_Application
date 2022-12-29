@@ -1,31 +1,24 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
 namespace ShoppingApp.Models
 {
     public class User 
     {
-        [JsonPropertyName("userId")]
+        [Key]
         public int userId { get; set; }
-        [JsonPropertyName("firstName")]
         public string firstName { get; set; }
-        [JsonPropertyName("lastName")]
         public string lastName { get; set; }
-        [JsonPropertyName("email")]
+        [Required]
         public string email { get; set; }
-        [JsonPropertyName("password")]
+        [Required]
         public string password { get; set; }
-        [JsonPropertyName("phoneNumber")]
+        [Required]
         public string phoneNumber { get; set; }
-        [JsonPropertyName("policyFlag")]
+        [Display(Name = "")]
+        [Required]
         public bool policyFlag { get; set; }
-        [JsonPropertyName("id")]
-        public long id { get; set; }
-        [JsonPropertyName("ModifiedDate")]
-        public DateTime ModifiedDate { get; set; }
-        [JsonPropertyName("IpAddress")]
-        public string IpAddress { get; set; }
+
+        public string Role { get; set; }
     }
 }

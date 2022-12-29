@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Domain.Migrations
 {
-    public partial class Intialstart : Migration
+    public partial class IntialUser : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +10,7 @@ namespace Domain.Migrations
                 name: "Register",
                 columns: table => new
                 {
-                    userId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     firstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     lastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -19,13 +18,11 @@ namespace Domain.Migrations
                     password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     phoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     policyFlag = table.Column<bool>(type: "bit", nullable: false),
-                    Id = table.Column<long>(type: "bigint", nullable: false),
-                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IpAddress = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Register", x => x.userId);
+                    table.PrimaryKey("PK_Register", x => x.Id);
                 });
         }
 
