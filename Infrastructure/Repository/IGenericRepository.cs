@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.Model.Login;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace Infrastructure.Repository
             void Delete(T entity);
             void Remove(T entity);
             void Savechanges();
+        bool Login(UserLogin userLogin);
         }
     }
 

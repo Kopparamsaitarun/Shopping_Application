@@ -1,4 +1,5 @@
-﻿using Domain.Model.User;
+﻿using Domain.Model.Login;
+using Domain.Model.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -22,7 +23,7 @@ namespace Domain.EntityFramework
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=MLBTAL1-109705\\SQLEXPRESS\\SQLEXPRESS;DataBase=ShoppingApp;Integrated Security=true;");
+                optionsBuilder.UseSqlServer("Server=MLBBTL-108966\\SQLEXPRESS;DataBase=ShoppingApp;Integrated Security=true;");
             }
         }
         protected override void OnModelCreating(ModelBuilder oModelBuilder)
@@ -36,6 +37,13 @@ namespace Domain.EntityFramework
                 entity.Property(t => t.phoneNumber).IsRequired();
                 entity.Property(t => t.password).IsRequired();
                 entity.Property(t=>t.Role).IsRequired();    
+            });
+
+            oModelBuilder.Entity<UserLogin>(entity =>
+            {
+                entity.HasKey(t => t.Id);
+                entity.Property(t => t.EmailId).IsRequired();
+                entity.Property(t => t.Password).IsRequired();
             });
             OnModelCreatingPartial(oModelBuilder);
             //new EmployeeMap(oModelBuilder.Entity<Employee>());
