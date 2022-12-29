@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 namespace ShoppingApp.Models.Dashboard
@@ -10,7 +11,7 @@ namespace ShoppingApp.Models.Dashboard
         [Range(1, 1000000000, ErrorMessage = "Book Price must be between 1 to 100000")]
         public int ProductPrice { get; set; }
         [Required]
-        public string ProductName { get; set; }
+        public IFormFile ProductName { get; set; }
 
         public string ProductImage { get; set; }
         public bool InStock { get; set; }

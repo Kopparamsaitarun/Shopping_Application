@@ -11,13 +11,16 @@ namespace Services.Dashboard
     public class DashboardRepository : IDashboardRepository
     {
         IGenericRepository<Productlist> _genericRepository;
+        private readonly IFileUploadService _fileUploadService;
 
 
 
 
-        public DashboardRepository(IGenericRepository<Productlist> shoppingRepository)
+
+        public DashboardRepository(IGenericRepository<Productlist> shoppingRepository, IFileUploadService fileUploadService)
         {
             this._genericRepository = shoppingRepository;
+            _fileUploadService = fileUploadService;
         }
         public IEnumerable<Productlist> GetAllProduct()
         {
@@ -51,6 +54,7 @@ namespace Services.Dashboard
         }
         public void InsertProduct(Productlist model)
         {
+            string unique = _fileUploadService.Upload(model.ProductImage);
 
             Productlist entity = null;
             entity = new Productlist

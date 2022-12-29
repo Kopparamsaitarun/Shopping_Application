@@ -13,6 +13,7 @@ namespace ShoppingApp.Controllers
     {
         private readonly IDashboardRepository _dashboardRepository;
 
+
         public DashboardController(IDashboardRepository dashboardRepository)
         {
             _dashboardRepository = dashboardRepository;
@@ -36,6 +37,20 @@ namespace ShoppingApp.Controllers
             {
                 return BadRequest(new { success = false, exception.Message });
             }
+        }
+        [HttpGet("GetCreateProduct")]
+        public IActionResult GetCreateProduct(Productlist model)
+        {
+            try
+            { 
+               
+                return View("", true);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(new { success = false, exception.Message });
+            }
+
         }
 
         [HttpPost("CreateProduct")]

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace Domain.Model.Dashboard
         [Required]
         public string ProductName { get; set; }
 
-        public string ProductImage { get; set; }
+        public IFormFile ProductImage { get; set; }
         public bool InStock { get; set; }
         public bool InCart { get; set; }
         [Required]
