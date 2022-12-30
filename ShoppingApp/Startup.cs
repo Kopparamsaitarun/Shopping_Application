@@ -17,6 +17,7 @@ namespace ShoppingApp
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,6 +28,16 @@ namespace ShoppingApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  policy =>
+                                  {
+                                      policy.WithOrigins("https://localhost:44316")
+                                                  .AllowAnyHeader()
+                                                  .AllowAnyMethod();
+                                  });
+            });
             services.AddControllersWithViews();
             services.AddControllers();
 
@@ -56,6 +67,8 @@ namespace ShoppingApp
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 

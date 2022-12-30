@@ -51,13 +51,7 @@ namespace ShoppingApp.Controllers
             User user = new User();
             return View(user);
         }
-        [HttpPost("Register1")]
-        public JsonResult Register1(User user)
-        {
-            IGenericRepository<User> genericRepository =null;
-            UserRepository userRepository = new UserRepository(genericRepository);
-            return Json(userRepository.InsertUser(user));
-        }    
+         
         [HttpPost("Register")]
         public ActionResult Register(User user)
         {
@@ -90,7 +84,7 @@ namespace ShoppingApp.Controllers
         //}
 
         [HttpPost("SignUp")]
-        public JsonResult SignUp(ShoppingApp.Models.User model)
+        public IActionResult SignUp(ShoppingApp.Models.User model)
         {
             //User model = new User();
             User UserEntity = new User
@@ -105,7 +99,7 @@ namespace ShoppingApp.Controllers
                 Role = model.Role,
             };
              iuserRepository.InsertUser(UserEntity);
-            return null;
+            return Ok("Success");
         }
 
         [HttpPut("UpdateUser")]

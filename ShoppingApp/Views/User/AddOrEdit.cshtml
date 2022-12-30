@@ -4,12 +4,16 @@
     ViewData["Title"] = "AddOrEdit";
 }
 
-
-<h1>User Registration</h1>
+<table>
+    <tr>
+        <td><img src="~/UserIcon.png" /></td>
+        <td><h1>&nbsp;&nbsp; User Registration</h1></td>
+    </tr>
+</table>
 <h5>Welocome to ShoppApp! Looks like you're new here!</h5>
 <h5>Sign up with your email address to get started</h5>
 <hr />
-
+<form asp-action="AddOrEdit">
     <div class="row">
         <div class="col-md-4">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -33,7 +37,11 @@
                 <input asp-for="password" class="form-control" />
                 <span asp-validation-for="password" class="text-danger"></span>
             </div>
-
+            <div class="form-group">
+                <label asp-for="ConfirmPassword" class="control-label">Confirm Password</label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="phoneNumber" class="control-label">Phone Number</label>
                 <input asp-for="phoneNumber" class="form-control" />
@@ -50,7 +58,7 @@
             </div>
         </div>
     </div>
-
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
