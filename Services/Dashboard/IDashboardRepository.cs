@@ -10,7 +10,7 @@ namespace Services.Dashboard
     public interface IDashboardRepository
     {
         IEnumerable<Productlist> GetAllProduct();
-        void InsertProduct(Productlist entity);
+        void InsertProduct(Productlistservice entity);
 
         Productlist GetProduct(long id);
         void DeleteProduct(long id);

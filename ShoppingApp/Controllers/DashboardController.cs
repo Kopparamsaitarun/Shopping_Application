@@ -38,13 +38,14 @@ namespace ShoppingApp.Controllers
                 return BadRequest(new { success = false, exception.Message });
             }
         }
-        [HttpGet("GetCreateProduct")]
-        public IActionResult GetCreateProduct(Productlist model)
+   
+
+        [HttpGet("CreateProductpage")]
+        public IActionResult CreateProductpage()
         {
             try
-            { 
-               
-                return View("", true);
+            {
+                return View();
             }
             catch (Exception exception)
             {
@@ -54,7 +55,7 @@ namespace ShoppingApp.Controllers
         }
 
         [HttpPost("CreateProduct")]
-        public IActionResult CreateProduct(Productlist model)
+        public IActionResult CreateProduct(Productlistservice model)
         {
             try
             {

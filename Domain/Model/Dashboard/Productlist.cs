@@ -17,7 +17,7 @@ namespace Domain.Model.Dashboard
         [Required]
         public string ProductName { get; set; }
 
-        public IFormFile ProductImage { get; set; }
+        public string ProductImage { get; set; }
         public bool InStock { get; set; }
         public bool InCart { get; set; }
         [Required]

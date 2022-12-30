@@ -52,7 +52,7 @@ namespace Services.Dashboard
 
 
         }
-        public void InsertProduct(Productlist model)
+        public void InsertProduct(Productlistservice model)
         {
             string unique = _fileUploadService.Upload(model.ProductImage);
 
@@ -62,7 +62,7 @@ namespace Services.Dashboard
                 ProductDiscription = model.ProductDiscription,
                 ProductPrice = model.ProductPrice,
                 ProductName = model.ProductName,
-                ProductImage = model.ProductImage,
+                ProductImage = unique,
                 InStock = model.InStock,
                 InCart = model.InCart,
                 Quantity = model.Quantity,

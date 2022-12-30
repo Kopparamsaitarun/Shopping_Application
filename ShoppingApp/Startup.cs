@@ -39,6 +39,8 @@ namespace ShoppingApp
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IDashboardRepository, DashboardRepository>();
+            services.AddTransient<IFileUploadService, FileUploadService>();
+
 
         }
 

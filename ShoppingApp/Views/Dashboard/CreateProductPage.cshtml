@@ -1,0 +1,76 @@
+﻿@model Services.Dashboard.Productlistservice
+
+
+
+<div class="col-md-10 mx-auto py-4">
+    <div class="card">
+        <div class="card-header bg-primary text-uppercase text-white">
+            <h4>Add New </h4>
+        </div>
+        <div class="card-body">
+            <form class="form" id="registerform">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="ProductName">ProductName</label><br>
+                            <input class="form-control" id="ProductName" />
+                            <span  class="text-danger"></span>
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="ProductDiscription">ProductDiscription</label><br>
+                            <input class="form-control" id="ProductDiscription" />
+                            <span  class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="ProductPrice">ProductPrice</label><br>
+                            <input class="form-control" id="ProductPrice" />
+                            <span  class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="ProductImage">ProductImage</label><br>
+                            <div class="custom-file">
+                                <input asp-for="ProductImage" class="custom-file-input" id="customFile">
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="submit" id="submit" class="btn btn-sm btn-primary rounded-0 text-uppercase" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+        $(".submit").on("change", function() {
+            var ProductName = $('#ProductName').val();
+            var ProductDiscription = $('#ProductDiscription').val();
+            var ProductPrice = $('#ProductPrice').val();
+        });
+        
+    </script>
+       
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}  

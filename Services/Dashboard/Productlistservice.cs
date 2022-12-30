@@ -1,17 +1,22 @@
 ﻿using Domain;
 using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace ShoppingApp.Models.Dashboard
+namespace Services.Dashboard
 {
-    public class ProductlistDTO : BaseEntity
+    public class Productlistservice : BaseEntity
     {
         public string ProductDiscription { get; set; } = "";
         [Required]
         [Range(1, 1000000000, ErrorMessage = "Book Price must be between 1 to 100000")]
         public int ProductPrice { get; set; }
         [Required]
-        public IFormFile ProductName { get; set; }
+        public string ProductName { get; set; }
 
         public IFormFile ProductImage { get; set; }
         public bool InStock { get; set; }
