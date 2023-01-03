@@ -18,7 +18,7 @@ namespace Infrastructure.Repository
     {
         public readonly ApplicationDbContext dbContext;
         private DbSet<T> entities;
-        private static string connectionString = "Server=MLBBTL-108966\\SQLEXPRESS;DataBase=ShoppingApp;Integrated Security=true";
+        private static string connectionString = "Server=MLBTAL-109698\\SQLEXPRESS;DataBase=ShoppingApp;Integrated Security=true";
 
 
 
@@ -109,8 +109,8 @@ namespace Infrastructure.Repository
                     {
                         CommandType = CommandType.StoredProcedure
                     };
-                    cmd.Parameters.AddWithValue("Email", userLogin.EmailId);
-                    cmd.Parameters.AddWithValue("Password", userLogin.Password);
+                    cmd.Parameters.AddWithValue("email", userLogin.EmailId);
+                    cmd.Parameters.AddWithValue("password", userLogin.Password);
                     var returnParameter = cmd.Parameters.Add("@Result", SqlDbType.Int);
                     returnParameter.Direction = ParameterDirection.ReturnValue;
 

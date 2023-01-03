@@ -23,7 +23,7 @@ namespace Domain.EntityFramework
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=MLBBTL-108966\\SQLEXPRESS;DataBase=ShoppingApp;Integrated Security=true;");
+                optionsBuilder.UseSqlServer("Server=MLBTAL-109698\\SQLEXPRESS;DataBase=ShoppingApp;Integrated Security=true;");
             }
         }
         protected override void OnModelCreating(ModelBuilder oModelBuilder)
