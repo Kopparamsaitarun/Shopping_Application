@@ -54,9 +54,23 @@ namespace ShoppingApp.Controllers
         [HttpPost]
         public ActionResult Register(User user)
         {
-            IGenericRepository<User> genericRepository =null;
-            UserRepository userRepository = new UserRepository(genericRepository);
-            return Json(userRepository.InsertUser(user));
+            User loginUser = new User
+            {
+                firstName = user.firstName,
+                ConfirmPassword = user.ConfirmPassword,
+                email = user.email,
+                lastName = user.lastName,
+                password = user.password,
+                Role = user.Role,
+                phoneNumber = user.phoneNumber,
+                policyFlag = user.policyFlag
+            };
+            iuserRepository.InsertUser(loginUser);
+            return View("ListUsers");
+            //IGenericRepository<User> genericRepository =null;
+            //UserRepository userRepository = new UserRepository(genericRepository);
+            //return Json(userRepository.InsertUser(user));
+
         }
         //[HttpPost]
         //public ActionResult AddOrEdit(User user)

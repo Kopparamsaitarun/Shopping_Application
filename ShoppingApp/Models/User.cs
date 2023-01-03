@@ -7,7 +7,6 @@ namespace ShoppingApp.Models
 {
     public class User : BaseEntity
     {
-        [Key]
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string email { get; set; }

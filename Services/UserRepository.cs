@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Services
 {
+    
     public class UserRepository : IUserRepository
     {
         IGenericRepository<User> userRepository;
