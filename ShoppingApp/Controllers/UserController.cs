@@ -83,6 +83,7 @@ namespace ShoppingApp.Controllers
         //    return View("AddOrEdit", new User());
         //}
 
+
         [HttpPost("SignUp")]
         public IActionResult SignUp(ShoppingApp.Models.User model)
         {

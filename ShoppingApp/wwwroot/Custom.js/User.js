@@ -5,10 +5,27 @@
         email: $('#email').val(),
         password: $('#password').val(),
         phoneNumber: $('#phoneNumber').val(),
-        policyFlag: $('#policyFlag').val()
+        ConfirmPassword: $('#ConfirmPassword').val(),
+        policyFlag: $('#policyFlag').val(),
+        role: '"Admin"'
     };
-    console.log(UserObj);
+
+    //var UserObj1 = "{"
+    //    + '"firstName" : "' + $('#firstName').val() + '",'
+    //    + '"lastName" : "' + $('#lastName').val() + '",'
+    //    + '"email" : "' + $('#email').val() + '",'
+    //    + '"password" : "' + $('#password').val() + '",'
+    //    + '"phoneNumber" : "' + $('#phoneNumber').val() + '",'
+    //    + '"policyFlag" : "' + $('#policyFlag').val() + '",'
+    //    + '"role" : "Admin"'
+    //    + "}";
+    //console.log(UserObj);
+    //console.log(UserObj);
+    //var SendInfo = [];
+    //SendInfo.push(UserObj);
+
     UserOperations.SaveUserDetails(UserObj);
+    //UserOperations.SaveUserDetails(UserObj);
 });
 
 $('#btnSample').click(function () {
@@ -22,8 +39,8 @@ $('#btnSample').click(function () {
 var UserOperations = {
     SaveUserDetails: function (Userdata) {
         $.ajax({
-            url: "/User/SignUp",
-            type: "POST",
+            url: "/User/Register",
+            type: "post",
             data: Userdata,
             contentType: "application/json; charset=utf-8",
             dataType: "json",

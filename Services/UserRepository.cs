@@ -57,7 +57,7 @@ namespace Services
 
         void IUserRepository.InsertUser(User user)
         {
-            throw new NotImplementedException();
+            userRepository.Insert(user);
         }
     }
 }
