@@ -10,8 +10,7 @@ using Infrastructure.Repository;
 
 namespace ShoppingApp.Controllers
 {
-    [Route("[controller]")]
-    [ApiController]
+    //[Route("[controller]")]
     public class UserController : Controller
     {
         IUserRepository iuserRepository;
@@ -21,7 +20,7 @@ namespace ShoppingApp.Controllers
             this.iuserRepository = _iuserRepository;
         }
 
-        [HttpGet("ListUsers")]
+        [HttpGet]
         public ActionResult ListUsers()
         {
             List<User> lstUser = new List<User>();
@@ -52,7 +51,7 @@ namespace ShoppingApp.Controllers
             return View(user);
         }
          
-        [HttpPost("Register")]
+        [HttpPost]
         public ActionResult Register(User user)
         {
             IGenericRepository<User> genericRepository =null;
