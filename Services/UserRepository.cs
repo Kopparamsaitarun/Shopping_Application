@@ -12,8 +12,6 @@ namespace Services
     {
         IGenericRepository<User> userRepository;
 
-
-
         public UserRepository(IGenericRepository<User> _userRepository)
         {
             this.userRepository = _userRepository;
@@ -25,30 +23,19 @@ namespace Services
             userRepository.Remove(user);
             userRepository.Savechanges();
         }
-
-
-
         public User GetUser(long Id)
         {
             return userRepository.GetT(Id);
         }
-
-
-
         public IEnumerable<User> GetUsers()
         {
             return userRepository.GetAll();
         }
-
-
-
         public int InsertUser(User user)
         {
             userRepository.Insert(user);
             return 1;
         }
-
-
 
         public void UpdatetUser(User user)
         {

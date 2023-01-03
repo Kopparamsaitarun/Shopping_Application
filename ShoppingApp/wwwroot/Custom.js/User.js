@@ -1,33 +1,37 @@
-﻿$('#btnSave').click(function () {
+﻿function SingupRegister() {
+    var firstName = $('#firstName').val();
+
     var UserObj = {
         firstName: $('#firstName').val(),
         lastName: $('#lastName').val(),
         email: $('#email').val(),
         password: $('#password').val(),
-        phoneNumber: $('#phoneNumber').val(),
         ConfirmPassword: $('#ConfirmPassword').val(),
+        phoneNumber: $('#phoneNumber').val(),
         policyFlag: $('#policyFlag').val(),
-        role: 'Admin'
+        Role: 'Admin'
     };
+    var dummy = UserObj;
 
     $.ajax({
         type: "POST",
         dataType: "JSON",
         data: UserObj,
-            url: "/User/Register",            
-            contentType: "application/json; charset=utf-8",
-            success: function (result) {
-                if (result == true) {
-                    //Clearform();
-                    alert("Records added succesfully")
-                }
-            },
-            error: function (errormessgae) {
-                alert(errormessgae);
+        url: "/User/Register",
+        success: function (result) {
+            if (result == true) {
+                //Clearform();
+                alert("Records added succesfully")
             }
+        },
+        error: function (errormessgae) {
+            alert(errormessgae);
+        }
 
-        });
-    
-});
+    });
+
+}
+
+
 
 

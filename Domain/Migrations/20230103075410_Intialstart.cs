@@ -2,7 +2,7 @@
 
 namespace Domain.Migrations
 {
-    public partial class IntialUser : Migration
+    public partial class Intialstart : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
