@@ -1,12 +1,9 @@
 ﻿using Domain.Model.User;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Domain.EntityFramework;
-using Microsoft.AspNetCore.Http;
-using Infrastructure.Repository;
 
 namespace ShoppingApp.Controllers
 {
@@ -40,7 +37,6 @@ namespace ShoppingApp.Controllers
                 };
                 lstUser.Add(user);
             });
-            //return Ok(lstUser);
             ViewData["lstUser"] = lstUser;
             return View();
         }
@@ -50,71 +46,46 @@ namespace ShoppingApp.Controllers
             User user = new User();
             return View(user);
         }
+
+        [HttpGet]
+        public IActionResult RegistrationSuccess()
+        {
+            return View("UserRegistrationSuccess");
+        }
          
         [HttpPost]
         public ActionResult Register(User user)
         {
-            User loginUser = new User
+            try
             {
-                firstName = user.firstName,
-                ConfirmPassword = user.ConfirmPassword,
-                email = user.email,
-                lastName = user.lastName,
-                password = user.password,
-                Role = user.Role,
-                phoneNumber = user.phoneNumber,
-                policyFlag = user.policyFlag
-            };
-            iuserRepository.InsertUser(loginUser);
-            return View("ListUsers");
-            //IGenericRepository<User> genericRepository =null;
-            //UserRepository userRepository = new UserRepository(genericRepository);
-            //return Json(userRepository.InsertUser(user));
+                if (user.email != "" && user.firstName !="" && user.email != null && user.firstName != null && user.password!="" && user.password != null && user.password==user.ConfirmPassword)
+                {                
+                    User loginUser = new User
+                    {
+                        firstName = user.firstName,
+                        ConfirmPassword = user.ConfirmPassword,
+                        email = user.email,
+                        lastName = user.lastName,
+                        password = Models.EncDec.Encrypt(user.password),
+                        Role = user.Role,
+                        phoneNumber = user.phoneNumber,
+                        policyFlag = user.policyFlag                       
+                    };
 
-        }
-        //[HttpPost]
-        //public ActionResult AddOrEdit(User user)
-        //{
-        //   // User user = new Domain.Model.User.User();
-
-        //    DbContextOptions<ApplicationDbContext> options = new DbContextOptions<ApplicationDbContext>();
-        //    ApplicationDbContext db = new ApplicationDbContext(options);
-
-        //    if (db.Register.Any(x => x.email == user.email))
-        //    {
-        //        ViewBag.UserExistMessage = "User with the Email Already Exists.";
-        //        return View("AddOrEdit", user);
-        //    }
-        //    else
-        //    {
-        //        db.Register.Add(user);
-        //        db.SaveChanges();
-        //    }
-
-        //    ModelState.Clear();
-        //    ViewBag.SuccessMessage = "User Registration Successful.";
-        //    return View("AddOrEdit", new User());
-        //}
-
-
-        [HttpPost("SignUp")]
-        public IActionResult SignUp(ShoppingApp.Models.User model)
-        {
-            //User model = new User();
-            User UserEntity = new User
+                    iuserRepository.InsertUser(loginUser);
+                    return Json(new { success = true, message = "Success"});
+                }
+                else
+                {                    
+                    return Json(new { success = false, message = "Fill all mandatory fields"});
+                }                
+            }
+            catch (Exception exception)
             {
-                Id=11,
-                firstName = model.firstName,
-                lastName = model.lastName,
-                email = model.email,
-                phoneNumber = model.phoneNumber,
-                password = model.password,
-                policyFlag = model.policyFlag,
-                Role = model.Role,
-            };
-             iuserRepository.InsertUser(UserEntity);
-            return Ok("Success");
+                return BadRequest(new { success = false, exception.Message });
+            }
         }
+
 
         [HttpPut("UpdateUser")]
         public int UpdateUser(User model)

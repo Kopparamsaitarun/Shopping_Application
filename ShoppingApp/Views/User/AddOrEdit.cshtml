@@ -13,7 +13,7 @@
 <h5>Welocome to ShoppApp! Looks like you're new here!</h5>
 <h5>Sign up with your email address to get started</h5>
 <hr />
-<form asp-action="AddOrEdit">
+<form name="userRegistration" onsubmit="return Signup()">
     <div class="row">
         <div class="col-md-4">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -46,15 +46,14 @@
                 <label asp-for="phoneNumber" class="control-label">Phone Number</label>
                 <input asp-for="phoneNumber" class="form-control" id="phoneNumber" />
                 <span asp-validation-for="phoneNumber" class="text-danger"></span>
+                @Html.ValidationMessageFor(m => m.phoneNumber, "", new { @class = "text-danger" })
             </div>
             <div class="form-group form-check">
                 <input class="form-check-input" asp-for="policyFlag" /> @Html.DisplayNameFor(model => model.policyFlag)
-                <label class="form-check-label">
-                    By enrolling your email, you consent to receive automated security notifications via email from ShoppingApp
-                </label>
             </div>
             <div class="form-group">
-                <button onclick="SingupRegister()" class="btn btn-primary" />
+                @*<input type="button" onclick="Signup()" value="Signup" class="btn btn-primary" />*@  
+                <input type="submit" name="signup" value="Signup" class="btn btn-primary" />                
             </div>
         </div>
     </div>

@@ -18,8 +18,8 @@ namespace Domain.Model.User
         public string ConfirmPassword { get; set; }
         [Required(ErrorMessage = "Enter your Phone number")]
         public string phoneNumber { get; set; }
-        [Required(ErrorMessage = "Accept the terms and conditions")]
-       //[Required(ErrorMessage = "Accept the terms and conditions"), Display(Name = "")]
+        //[Required(ErrorMessage = "Accept the terms and conditions")]
+        [Required(ErrorMessage = "Accept the terms and conditions"), Display(Name = "By enrolling your email, you consent to receive automated security notifications via email from ShoppingApp")]
         public bool policyFlag { get; set; }
         [Required(ErrorMessage = "Enter your Role")]
         public string Role { get; set; }
