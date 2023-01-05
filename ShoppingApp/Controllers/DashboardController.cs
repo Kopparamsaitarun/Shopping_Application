@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System;
-using Services.Dashboard;
 using Domain.Model.Dashboard;
 using ShoppingApp.Models.Dashboard;
+using Services.Dashboard;
+using System;
 
 namespace ShoppingApp.Controllers
 {
