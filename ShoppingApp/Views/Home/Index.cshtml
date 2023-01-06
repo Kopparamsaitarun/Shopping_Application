@@ -1103,6 +1103,15 @@
         <div class="header_main">
             <div class="container">
                 <div class="row">
+                    
+                    <div class="dropdown">
+                        <button onclick="myFunction()" class="dropbtn">Filter</button>
+                        <div id="myDropdown" class="dropdown-content">
+                            <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                            <a href="#about">Low-High</a>
+                            <a href="#base">High-Low</a>
+                        </div>
+                    </div>
 
                     <!-- Logo -->
                     <div class="col-lg-2 col-sm-3 col-3 order-1">
@@ -1176,16 +1185,6 @@
                     <div class="col-lg-4 col-9 order-lg-3 order-2 text-lg-left text-right">
                         <div class="wishlist_cart d-flex flex-row align-items-center justify-content-end">
                             <!--Filter-->
-
-                            <div class="dropdown">
-                                <button onclick="myFunction()" class="dropbtn">Filter</button>
-                                <div id="myDropdown" class="dropdown-content">
-                                    <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-                                    <a href="#about">Low-High</a>
-                                    <a href="#base">High-Low</a>
-                                </div>
-                            </div>
-
                             <!-- Cart -->
                             <div class="cart">
                                 <div class="cart_container d-flex flex-row align-items-center justify-content-end">

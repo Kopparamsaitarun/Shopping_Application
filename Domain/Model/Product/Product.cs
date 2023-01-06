@@ -13,7 +13,6 @@ namespace Domain.Model.Product
         public double ProductPrice { get; set; } 
         public byte[] ProductImage { get; set; }
         public int categoryId { get; set; }     
-
         public ICollection<ProductCategory> Categories { get; set; }
     }
 }
