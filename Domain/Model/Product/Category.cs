@@ -10,6 +10,5 @@ namespace Domain.Model.Product
     {
         public string CategoryName { get; set; }
         public ICollection<ProductCategory>Products{ get; set; }
-
     }
 }

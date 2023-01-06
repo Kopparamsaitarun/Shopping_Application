@@ -1,4 +1,5 @@
-﻿using Domain.Model.User;
+﻿using Domain.Model.Product;
+using Domain.Model.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -23,7 +24,7 @@ namespace Domain.EntityFramework
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;DataBase=ShoppingApp;Integrated Security=true;");
+                optionsBuilder.UseSqlServer("MLBTAL1-109705\\SQLEXPRESS;DataBase=ShoppingApp;Integrated Security=true;");
             }
         }
         protected override void OnModelCreating(ModelBuilder oModelBuilder)
@@ -46,6 +47,8 @@ namespace Domain.EntityFramework
         }
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }
 
