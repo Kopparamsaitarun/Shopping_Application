@@ -24,6 +24,11 @@ namespace ShoppingApp.Controllers
         {
             return View();
         }
+        [HttpGet("CartItems")]
+        public IActionResult CartItems()
+        {
+            return View("CartItems");
+        }
 
         [HttpGet("Privacy")]
         public IActionResult Privacy()
