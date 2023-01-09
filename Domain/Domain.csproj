@@ -18,8 +18,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Model\Cart\" />
-  </ItemGroup>
-
 </Project>
