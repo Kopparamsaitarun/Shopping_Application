@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Services;
 using Services.Cart;
-using Services.ProductDetails;
+using Services.DashBoard;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,8 +50,7 @@ namespace ShoppingApp
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<ICategory,CategoryRepository>();
-            services.AddTransient<IProduct, ProductRepository>();
+            services.AddTransient<IDashboardRepository, DashboardRepository>();
             services.AddTransient<ICartProductRepository, CartProductRepository>();
         }
 

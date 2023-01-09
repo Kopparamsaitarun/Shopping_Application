@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domain.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230109055945_Initial")]
+    [Migration("20230109095021_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,68 +46,39 @@ namespace Domain.Migrations
                     b.ToTable("CartProducts");
                 });
 
-            modelBuilder.Entity("Domain.Model.Product.Category", b =>
+            modelBuilder.Entity("Domain.Model.Productlst", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CategoryName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("InCart")
+                        .HasColumnType("bit");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("Domain.Model.Product.Product", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<bool>("InStock")
+                        .HasColumnType("bit");
 
                     b.Property<string>("ProductDescription")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<byte[]>("ProductImage")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("ProductImage")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("ProductPrice")
-                        .HasColumnType("float");
+                    b.Property<int>("ProductPrice")
+                        .HasColumnType("int");
 
-                    b.Property<int>("categoryId")
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("Domain.Model.Product.ProductCategory", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long?>("categoryId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("productId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("categoryId");
-
-                    b.HasIndex("productId");
-
-                    b.ToTable("ProductCategory");
+                    b.ToTable("Productlst");
                 });
 
             modelBuilder.Entity("Domain.Model.User.User", b =>
@@ -155,38 +126,13 @@ namespace Domain.Migrations
                         .WithMany()
                         .HasForeignKey("UserId");
 
-                    b.HasOne("Domain.Model.Product.Product", "product")
+                    b.HasOne("Domain.Model.Productlst", "product")
                         .WithMany()
                         .HasForeignKey("productId");
 
                     b.Navigation("product");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Domain.Model.Product.ProductCategory", b =>
-                {
-                    b.HasOne("Domain.Model.Product.Category", "category")
-                        .WithMany("Products")
-                        .HasForeignKey("categoryId");
-
-                    b.HasOne("Domain.Model.Product.Product", "product")
-                        .WithMany("Categories")
-                        .HasForeignKey("productId");
-
-                    b.Navigation("category");
-
-                    b.Navigation("product");
-                });
-
-            modelBuilder.Entity("Domain.Model.Product.Category", b =>
-                {
-                    b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("Domain.Model.Product.Product", b =>
-                {
-                    b.Navigation("Categories");
                 });
 #pragma warning restore 612, 618
         }
