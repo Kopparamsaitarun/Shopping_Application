@@ -41,6 +41,7 @@ namespace ShoppingApp
             });
             services.AddControllersWithViews();
             services.AddControllers();
+            services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IDashboardRepository, DashboardRepository>();
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
