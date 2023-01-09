@@ -2,17 +2,17 @@
 
 namespace Domain.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Productlst",
+                name: "Productlist",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductDescription = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    ProductDiscription = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     ProductPrice = table.Column<int>(type: "int", nullable: false),
                     ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProductImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -22,7 +22,7 @@ namespace Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Productlst", x => x.Id);
+                    table.PrimaryKey("PK_Productlist", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -58,9 +58,9 @@ namespace Domain.Migrations
                 {
                     table.PrimaryKey("PK_CartProducts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CartProducts_Productlst_productId",
+                        name: "FK_CartProducts_Productlist_productId",
                         column: x => x.productId,
-                        principalTable: "Productlst",
+                        principalTable: "Productlist",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -88,7 +88,7 @@ namespace Domain.Migrations
                 name: "CartProducts");
 
             migrationBuilder.DropTable(
-                name: "Productlst");
+                name: "Productlist");
 
             migrationBuilder.DropTable(
                 name: "Register");

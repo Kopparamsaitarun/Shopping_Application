@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Services;
 using Services.Cart;
-using Services.DashBoard;
+using Services.Dashboard;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +43,6 @@ namespace ShoppingApp
             services.AddControllersWithViews();
             services.AddControllers();
             services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IDashboardRepository, DashboardRepository>();
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -52,6 +51,7 @@ namespace ShoppingApp
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IFileUploadService, FileUploadService>();
             services.AddTransient<IDashboardRepository, DashboardRepository>();
             services.AddTransient<ICartProductRepository, CartProductRepository>();
         }
