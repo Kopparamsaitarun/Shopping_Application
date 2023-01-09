@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Services;
+using Services.Cart;
 using Services.ProductDetails;
 using System;
 using System.Collections.Generic;
@@ -51,6 +52,7 @@ namespace ShoppingApp
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ICategory,CategoryRepository>();
             services.AddTransient<IProduct, ProductRepository>();
+            services.AddTransient<ICartProductRepository, CartProductRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

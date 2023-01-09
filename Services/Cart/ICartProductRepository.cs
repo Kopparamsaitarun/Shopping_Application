@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 namespace Services.Cart
 {
-    interface ICartProductRepository
+    public interface ICartProductRepository
     {
-        List<CartProducts> GetCartProducts(int userId);//getAllProduct where incart = 1
+        IEnumerable<CartProducts> GetCartProducts(int userId);//getAllProduct where incart = 1
         void UpdateProduct(int productId, int userId, int count, string addRemove);//Change amt
         void DeleteProduct(int productId, int userId);
         void EmptyCart();//Not needed for now 

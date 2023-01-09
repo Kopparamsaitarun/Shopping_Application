@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domain.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230106082410_Intialstart")]
-    partial class Intialstart
+    [Migration("20230109055945_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,31 @@ namespace Domain.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.13")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Domain.Model.Cart.CartProducts", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("productId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("productId");
+
+                    b.ToTable("CartProducts");
+                });
 
             modelBuilder.Entity("Domain.Model.Product.Category", b =>
                 {
@@ -122,6 +147,21 @@ namespace Domain.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Register");
+                });
+
+            modelBuilder.Entity("Domain.Model.Cart.CartProducts", b =>
+                {
+                    b.HasOne("Domain.Model.User.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.HasOne("Domain.Model.Product.Product", "product")
+                        .WithMany()
+                        .HasForeignKey("productId");
+
+                    b.Navigation("product");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Model.Product.ProductCategory", b =>

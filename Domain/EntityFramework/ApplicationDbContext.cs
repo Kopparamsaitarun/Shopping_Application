@@ -1,4 +1,5 @@
-﻿using Domain.Model.Product;
+﻿using Domain.Model.Cart;
+using Domain.Model.Product;
 using Domain.Model.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -49,6 +50,7 @@ namespace Domain.EntityFramework
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<CartProducts> CartProducts { get; set; }
     }
 }
 
