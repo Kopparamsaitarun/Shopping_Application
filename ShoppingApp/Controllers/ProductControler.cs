@@ -2,8 +2,10 @@
 
 namespace ShoppingApp.Controllers
 {
-    public class ProductDetails : Controller
+    public class ProductControler : Controller
     {
+
+        [HttpGet]
         public IActionResult Index()
         {
             return View();

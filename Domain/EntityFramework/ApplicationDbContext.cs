@@ -1,5 +1,4 @@
-﻿using Domain.Model.Product;
-using Domain.Model.User;
+﻿using Domain.Model.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -47,8 +46,6 @@ namespace Domain.EntityFramework
         }
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Product> Products { get; set; }
     }
 }
 
