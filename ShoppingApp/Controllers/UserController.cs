@@ -1,22 +1,23 @@
 ﻿using Domain.Model.User;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace ShoppingApp.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    //[Route("[controller]")]
     public class UserController : Controller
     {
         IUserRepository iuserRepository;
+
         public UserController(IUserRepository _iuserRepository)
         {
             this.iuserRepository = _iuserRepository;
         }
 
-        [HttpGet("ListUsers")]
+        [HttpGet]
         public ActionResult ListUsers()
         {
             List<User> lstUser = new List<User>();
@@ -36,27 +37,55 @@ namespace ShoppingApp.Controllers
                 };
                 lstUser.Add(user);
             });
-            //return Ok(lstUser);
             ViewData["lstUser"] = lstUser;
             return View();
         }
-
-        [HttpPost("CreateUsers")]
-        public int CreateUsers(User model)
+        [HttpGet]
+        public ActionResult AddOrEdit(int id = 0)
         {
-            User UserEntity = new User
-            {
-                firstName = model.firstName,
-                lastName = model.lastName,
-                email = model.email,
-                phoneNumber = model.phoneNumber,
-                password = model.password,
-                policyFlag = model.policyFlag,
-                Role = model.Role,
-            };
-            iuserRepository.InsertUser(UserEntity);
-            return 1;
+            User user = new User();
+            return View(user);
         }
+
+        [HttpGet]
+        public IActionResult RegistrationSuccess()
+        {
+            return View("UserRegistrationSuccess");
+        }
+         
+        [HttpPost]
+        public ActionResult Register(User user)
+        {
+            try
+            {
+                if (user.email != "" && user.firstName !="" && user.email != null && user.firstName != null && user.password!="" && user.password != null && user.password==user.ConfirmPassword)
+                {                
+                    User loginUser = new User
+                    {
+                        firstName = user.firstName,
+                        ConfirmPassword = user.ConfirmPassword,
+                        email = user.email,
+                        lastName = user.lastName,
+                        password = Models.EncDec.Encrypt(user.password),
+                        Role = user.Role,
+                        phoneNumber = user.phoneNumber,
+                        policyFlag = user.policyFlag                       
+                    };
+
+                    iuserRepository.InsertUser(loginUser);
+                    return Json(new { success = true, message = "Success"});
+                }
+                else
+                {                    
+                    return Json(new { success = false, message = "Fill all mandatory fields"});
+                }                
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(new { success = false, exception.Message });
+            }
+        }
+
 
         [HttpPut("UpdateUser")]
         public int UpdateUser(User model)

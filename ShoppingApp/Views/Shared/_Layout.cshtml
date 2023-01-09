@@ -1,4 +1,45 @@
-﻿<!DOCTYPE html>
+﻿<style>
+    .top_bar_user div {
+        display: inline-block;
+    }
+
+        .top_bar_user div:nth-child(2) {
+            margin-right: 21px;
+        }
+
+            .top_bar_user div:nth-child(2)::after {
+                display: block;
+                position: absolute;
+                top: 50%;
+                -webkit-transform: translateY(-50%);
+                -moz-transform: translateY(-50%);
+                -ms-transform: translateY(-50%);
+                -o-transform: translateY(-50%);
+                transform: translateY(-50%);
+                right: -13px;
+                width: 1px;
+                height: 17px;
+                background: rgba(0,0,0,0.1);
+                content: '';
+            }
+
+    .top_bar_user a {
+        font-size: 16px;
+        font-weight: 300;
+        line-height: 56px;
+        color: #000;
+        -webkit-transition: all 200ms ease;
+        -moz-transition: all 200ms ease;
+        -ms-transition: all 200ms ease;
+        -o-transition: all 200ms ease;
+        transition: all 200ms ease;
+    }
+
+        .top_bar_user a:hover {
+            color: #8a8a8a;
+        }
+</style>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -25,6 +66,12 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
+                </div>
+
+                <div class="top_bar_user">
+                    <div class="user_icon"></div>
+                    <div><a href='@Url.Action("AddOrEdit", "User")'>Register</a></div>
+                    <div><a href='@Url.Action("SignIn", "User")'>Sign in</a></div>
                 </div>
             </div>
         </nav>

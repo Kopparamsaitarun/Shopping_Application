@@ -1,6 +1,4 @@
-﻿using Domain.Model.Login;
-using Domain.Model.OrderDetails;
-using Domain.Model.User;
+﻿using Domain.Model.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -15,6 +13,7 @@ namespace Domain.EntityFramework
    public partial class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext() { }
+        //public DbSet<User> Users { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> opt) : base(opt)
         {
 
@@ -39,6 +38,19 @@ namespace Domain.EntityFramework
                 entity.Property(t => t.phoneNumber).IsRequired();
                 entity.Property(t => t.password).IsRequired();
                 entity.Property(t=>t.Role).IsRequired();    
+            });
+
+            oModelBuilder.Entity<Productlst>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.ToTable("Productlst");
+                entity.Property(t => t.ProductDescription).HasMaxLength(50);
+                entity.Property(t => t.ProductPrice).IsRequired(); ;
+                entity.Property(t => t.ProductName).IsRequired();
+                entity.Property(t => t.ProductName).IsRequired();
+                entity.Property(t => t.ProductImage);
+                entity.Property(e => e.InStock);
+                entity.Property(e => e.InCart);
             });
 
             oModelBuilder.Entity<UserLogin>(entity =>
@@ -68,8 +80,8 @@ namespace Domain.EntityFramework
             //new EmployeeQualificationMap(oModelBuilder.Entity<EmployeeQualification>());
 
         }
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);      
+        public DbSet<CartProducts> CartProducts { get; set; }
     }
 }
 
