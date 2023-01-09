@@ -52,7 +52,7 @@ namespace Services.Login
            //     new Clain("FundooNotes", "Notes");
                
                 new Claim("EmailId", userInfo.EmailId),
-             new Claim("Role", userInfo.Role)};
+                new Claim("Role", userInfo.Role)};
 
 
 

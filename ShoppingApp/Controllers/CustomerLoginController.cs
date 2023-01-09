@@ -10,8 +10,7 @@ using System.Net.Sockets;
 
 namespace ShoppingApp.Controllers
 {
-    //[Route("api/[controller]")]
-    //[ApiController]
+    [Route("[controller]")]
     public class CustomerLoginController : Controller
     {
         public ILoginRepository LoginRepository;
@@ -23,8 +22,7 @@ namespace ShoppingApp.Controllers
             userAuthenticationReposiroty = _userAuthenticationReposiroty;
         }
 
-        // [HttpGet("GetLoginCustomer")]
-        [HttpGet]
+        [HttpGet("GetLoginCustomer")]
         public IActionResult GetLoginCustomer()
         {
 
@@ -34,37 +32,32 @@ namespace ShoppingApp.Controllers
                 roles.Add(role);
             }
 
-            //ViewData["Roles"] = roles;
             return View("~/Views/CustomerLogin/LoginCustomer.cshtml", roles);
-          //  return View(roles);
         }
 
-        //[HttpPost("LoginCustomer")]
-        [HttpPost]
+        [HttpPost("LoginCustomer")]
         public IActionResult LoginCustomer(UserLogin model)
         {
             if (model == null)
             {
-                return BadRequest("user is null.");
+                return BadRequest("user is null");
             }
-            if(model.Role== "SelectRole")
-            {
-                return BadRequest("Please Select Your Role");
-            }
+            
             try
             {
                 UserLogin user = LoginRepository.Login(model);
-                if (user != null)
+               
+                if (user.Role!= null)
                 {
                     var tokenString = userAuthenticationReposiroty.GenerateSessionJWT(user);
                     return Ok(new
                     {
-                        success = true
-                        //Message = "User Login Successful",
-                        //user,
-                        //token = tokenString
+                        success = true,
+                        user,
+                        token = tokenString
                     });
                 }
+          
                 return BadRequest(new { success = false, Message = "User Login Unsuccessful" });
             }
             catch (Exception exception)

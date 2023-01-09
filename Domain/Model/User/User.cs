@@ -14,6 +14,8 @@ namespace Domain.Model.User
         public string firstName { get; set; }
         public string lastName { get; set; }
         [Required]
+        [EmailAddress(ErrorMessage = "Invalid email address.")]
+        [RegularExpression(@"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$", ErrorMessage = "Invalid pattern.")]
         public string email { get; set; }
         [Required]
         public string password { get; set; }

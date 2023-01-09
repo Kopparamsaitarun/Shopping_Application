@@ -10,6 +10,8 @@ namespace Domain.Model.Login
     public class UserLogin : BaseEntity
     {
         [Required]
+        [EmailAddress(ErrorMessage = "Invalid email address.")]
+        [RegularExpression(@"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$", ErrorMessage = "Invalid pattern.")]
         public string EmailId { get; set; }
 
         [DataType(DataType.Password)]

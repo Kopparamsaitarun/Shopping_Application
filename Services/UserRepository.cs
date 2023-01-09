@@ -20,7 +20,6 @@ namespace Services
         }
         public void DeleteUser(long Id)
         {
-
             User user = GetUser(Id);
             userRepository.Remove(user);
             userRepository.Savechanges();

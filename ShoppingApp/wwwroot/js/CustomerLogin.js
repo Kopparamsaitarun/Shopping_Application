@@ -9,7 +9,7 @@
     var customer = {
         EmailId: $("#email").val(),
         Password: $("#password").val(),
-        Role:$("#role").val()
+    //    Role:$("#role").val()
     };
 
     $.ajax
@@ -20,13 +20,23 @@
         url: "/CustomerLogin/LoginCustomer",
         success: function (result)
         {
-            if (result.success == true)
+            if (result!=null && result.success == true)
             {
-                alert("logged in successfully");
-            }
+                swal({
+                    title: "Congratulations",
+                    text: "LoggedIn Successfully",
+                    icon: "success",
+                    button:"OK"
+                });
+            }           
         },
          error: function (errormessage) {
-                alert("Please Enter Valid Credentials");
+             swal({
+                 title: "OOPS !",
+                 text: "Login Failed",
+                 icon: "error",
+                 button: "OK"
+             });
             }               
     });
 }

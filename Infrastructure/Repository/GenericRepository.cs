@@ -97,32 +97,45 @@ namespace Infrastructure.Repository
 
         public UserLogin Login(UserLogin userLogin)
         {
-
+            UserLogin user = new UserLogin();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
 
                 using (connection)
                 {
-
                     connection.Open();
-                    SqlCommand cmd = new SqlCommand("FetchCustomerLoginRecord", connection)
+                    SqlCommand cmd = new SqlCommand("Fetch_CustomerRole", connection)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
-                    cmd.Parameters.AddWithValue("email", userLogin.EmailId);
-                    cmd.Parameters.AddWithValue("password", userLogin.Password);
-                    var returnParameter = cmd.Parameters.Add("@Result", SqlDbType.Int);
-                    returnParameter.Direction = ParameterDirection.ReturnValue;
+                    cmd.Parameters.AddWithValue("@EmailId", userLogin.EmailId);
+                    cmd.Parameters.AddWithValue("@Password", userLogin.Password);
+                     cmd.Parameters.AddWithValue("@Statement","Role");
 
-                    UserLogin customer = new UserLogin();
+                    //explanation for this line
+                    //returnParameter.Direction = ParameterDirection.ReturnValue;
+
+                    //UserLogin customer = new UserLogin();
                     SqlDataReader rd = cmd.ExecuteReader();
-                    var result = returnParameter.Value;
-
-                    if (result != null && result.Equals(2))
+                    if (rd != null)
                     {
-                        throw new Exception("Email not registered");
+                        while (rd.Read())
+                        {
+                            user = new UserLogin()
+                            {
+                                EmailId = rd["email"].ToString(),
+                                Password = rd["Password"].ToString(),
+                                Role = rd["Role"].ToString()
+                            };
+                        }
                     }
-                    return userLogin;
+                    //var result = returnParameter.Value;
+
+                    //if (result != null && result.Equals(2))
+                    //{
+                    //    throw new Exception("Email not registered");
+                    //}
+                    return user;
                 }
             }
         }

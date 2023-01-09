@@ -1,4 +1,5 @@
 ﻿using Domain.Model.Login;
+using Domain.Model.OrderDetails;
 using Domain.Model.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -19,6 +20,7 @@ namespace Domain.EntityFramework
 
         }
         public virtual DbSet<User> Register { get; set; }
+        public virtual DbSet<UserOrderDetails> Order { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -46,6 +48,19 @@ namespace Domain.EntityFramework
                 entity.Property(t => t.Password).IsRequired();
                 entity.Property(t => t.Role).IsRequired();
 
+            });
+
+            oModelBuilder.Entity<UserOrderDetails>(entity =>
+            {
+                entity.HasKey(t => t.Id);
+                entity.Property(t => t.EmailId).IsRequired();
+                entity.Property(t => t.OrderId).IsRequired();
+                entity.Property(t => t.ProductPrice).IsRequired();
+                entity.Property(t => t.ProductId).IsRequired();
+                entity.Property(t => t.ProductName).IsRequired();
+                entity.Property(t => t.ProductImage).IsRequired();
+                entity.Property(t => t.Quantity).IsRequired();
+                entity.Property(t => t.Count).IsRequired();
             });
             OnModelCreatingPartial(oModelBuilder);
             //new EmployeeMap(oModelBuilder.Entity<Employee>());

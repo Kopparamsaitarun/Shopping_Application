@@ -4,6 +4,7 @@
 <head>
 	<link rel="stylesheet" href="~/css/LoginCustomer.css">
 	<script src="~/js/CustomerLogin.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
@@ -30,13 +31,13 @@
 					</div>*@
 				
 		
-					 <label for="role" id="lblname">Select Role : </label>
+					@* <label for="role" id="lblname">Select Role : </label>
       <select name="roles" id="role">
 		  @foreach(var role in Model){
 			          <option value="@role">@role</option>
 		  }
         
-      </select>
+      </select>*@
 
 
 
@@ -56,13 +57,14 @@
 					</button>
 				</form>
 				<div class="social-login">
-					<h3>log in via</h3>
+					<h3><b style="color:black">log in via</b></h3>
 					<div class="social-icons">
-						<i class="fa fa-instagram" style="color:deepskyblue"></i>
-						<i class="fa fa-facebook" style="color:deepskyblue"></i>
+						<i class="fa fa-instagram" style="color:deepskyblue"></i>&nbsp;
+						<i class="fa fa-facebook" style="color:deepskyblue"></i>&nbsp;
 						<i class="fa fa-twitter" style="color:deepskyblue"></i>
 					</div>
-				</div>
+				</div><br /><br /><br />
+				<p style="padding:20px;"><b>New User ? <a style="color:ghostwhite" href="">Register here</a></b></p>
 			</div>
 			<div class="screen__background">
 				<span class="screen__background__shape screen__background__shape4"></span>
