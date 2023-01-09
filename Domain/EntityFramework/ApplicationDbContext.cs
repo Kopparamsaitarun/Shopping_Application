@@ -1,4 +1,5 @@
 ﻿using Domain.Model;
+using Domain.Model.Cart;
 using Domain.Model.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -39,6 +40,7 @@ namespace Domain.EntityFramework
                 entity.Property(t => t.password).IsRequired();
                 entity.Property(t=>t.Role).IsRequired();    
             });
+
             oModelBuilder.Entity<Productlst>(entity =>
             {
                 entity.HasKey(e => e.Id);
@@ -57,10 +59,8 @@ namespace Domain.EntityFramework
             //new EmployeeQualificationMap(oModelBuilder.Entity<EmployeeQualification>());
 
         }
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
-        
-
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);      
+        public DbSet<CartProducts> CartProducts { get; set; }
     }
 }
 
