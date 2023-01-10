@@ -12,7 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using Services;
 using Services.Login;
 using Services.Cart;
-using Services.DashBoard;
+using Services.Dashboard;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,7 +47,6 @@ namespace ShoppingApp
             services.AddControllersWithViews();
             services.AddControllers();
             services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IDashboardRepository, DashboardRepository>();
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 

@@ -44,17 +44,18 @@ namespace Domain.EntityFramework
                 entity.Property(t=>t.Role).IsRequired();    
             });
 
-            oModelBuilder.Entity<Productlst>(entity =>
+            oModelBuilder.Entity<Productlist>(entity =>
             {
                 entity.HasKey(e => e.Id);
-                entity.ToTable("Productlst");
-                entity.Property(t => t.ProductDescription).HasMaxLength(50);
+                entity.ToTable("Productlist");
+                entity.Property(t => t.ProductDiscription).HasMaxLength(50);
                 entity.Property(t => t.ProductPrice).IsRequired(); ;
-                entity.Property(t => t.ProductName).IsRequired();
                 entity.Property(t => t.ProductName).IsRequired();
                 entity.Property(t => t.ProductImage);
                 entity.Property(e => e.InStock);
                 entity.Property(e => e.InCart);
+                entity.Property(e => e.Quantity);
+
             });
 
             oModelBuilder.Entity<UserLogin>(entity =>
@@ -86,6 +87,7 @@ namespace Domain.EntityFramework
         }
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);      
         public DbSet<CartProducts> CartProducts { get; set; }
+        public DbSet<Productlist> Productlist { get; set; }
     }
 }
 
