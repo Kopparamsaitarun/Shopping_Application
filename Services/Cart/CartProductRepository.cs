@@ -23,7 +23,7 @@ namespace Services.Cart
         {
             var result = from cp in db.CartProducts
                       join u in db.Register on cp.User.Id equals u.Id
-                      join pl in db.Productlst on cp.product.Id equals pl.Id
+                      join pl in db.Productlist on cp.product.Id equals pl.Id
                       where cp.product.InCart == true
                       select new CartProducts
                       {
