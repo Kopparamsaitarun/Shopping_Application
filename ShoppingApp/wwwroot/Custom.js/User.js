@@ -9,11 +9,7 @@
         policyFlag: $('#policyFlag').val(),
         Role: 'Admin'
     };
-    function Delete() {
-        var ProductId = {
-            productName: $('#productName').val(),
-        }
-    }
+
 
     $.ajax({
         type: "POST",

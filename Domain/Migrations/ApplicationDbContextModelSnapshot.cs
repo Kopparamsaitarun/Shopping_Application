@@ -44,7 +44,7 @@ namespace Domain.Migrations
                     b.ToTable("CartProducts");
                 });
 
-            modelBuilder.Entity("Domain.Model.Productlst", b =>
+            modelBuilder.Entity("Domain.Model.Dashboard.Productlist", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -57,7 +57,7 @@ namespace Domain.Migrations
                     b.Property<bool>("InStock")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ProductDescription")
+                    b.Property<string>("ProductDiscription")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -76,7 +76,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Productlst");
+                    b.ToTable("Productlist");
                 });
 
             modelBuilder.Entity("Domain.Model.User.User", b =>
@@ -124,7 +124,7 @@ namespace Domain.Migrations
                         .WithMany()
                         .HasForeignKey("UserId");
 
-                    b.HasOne("Domain.Model.Productlst", "product")
+                    b.HasOne("Domain.Model.Dashboard.Productlist", "product")
                         .WithMany()
                         .HasForeignKey("productId");
 
