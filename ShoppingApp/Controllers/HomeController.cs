@@ -1,11 +1,15 @@
-﻿using Domain.Model.Cart;
+﻿using Domain.EntityFramework;
+using Domain.Model.Cart;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Services.Cart;
 using ShoppingApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+
 namespace ShoppingApp.Controllers
 {
     [Route("[controller]")]
@@ -13,7 +17,7 @@ namespace ShoppingApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ICartProductRepository _cartProductRepository;
+        private readonly ICartProductRepository _cartProductRepository; 
 
         public HomeController(ILogger<HomeController> logger, ICartProductRepository cartProductRepository)
         {
@@ -32,7 +36,7 @@ namespace ShoppingApp.Controllers
             {
                 List<CartProducts> cartProducts = new List<CartProducts>();
                 IEnumerable<CartProducts> cartItems = cartProducts;
-                cartItems = _cartProductRepository.GetCartProducts(1);//Need to get the UserId from Login Info
+                cartItems = _cartProductRepository.GetCartProducts(1);//Need to get the UserId from Login Info                                
                 return View(cartItems);
             }
             catch (Exception exception)

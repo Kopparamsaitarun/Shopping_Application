@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Domain.EntityFramework
 {
-   public partial class ApplicationDbContext : DbContext
+    public partial class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext() { }
         //public DbSet<User> Users { get; set; }
@@ -21,6 +21,8 @@ namespace Domain.EntityFramework
 
         }
         public virtual DbSet<User> Register { get; set; }
+        public virtual DbSet<CartProducts> CartProducts { get; set; }
+        public virtual DbSet<Productlst> Productlst { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -38,7 +40,7 @@ namespace Domain.EntityFramework
                 entity.Property(t => t.email).IsRequired();
                 entity.Property(t => t.phoneNumber).IsRequired();
                 entity.Property(t => t.password).IsRequired();
-                entity.Property(t=>t.Role).IsRequired();    
+                entity.Property(t => t.Role).IsRequired();
             });
 
             oModelBuilder.Entity<Productlst>(entity =>
@@ -59,8 +61,7 @@ namespace Domain.EntityFramework
             //new EmployeeQualificationMap(oModelBuilder.Entity<EmployeeQualification>());
 
         }
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);      
-        public DbSet<CartProducts> CartProducts { get; set; }
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);        
     }
 }
 
