@@ -10,7 +10,8 @@
     });
 }
 function UpdateCartData() {
-
+    //Need to get product Id and Count from HTML
+    //Need to call a controller function - updateProduct(productId,Count)
 }
 function IncreaseCount(itemId) {
     const cartDom = document.querySelector(".card");
@@ -27,6 +28,7 @@ function IncreaseCount(itemId) {
         };
     });
     CalculateSum();
+    UpdateCartData()
 }
 function DecreaseCount(itemId) {
     const cartDom = document.querySelector(".card");
