@@ -1,4 +1,8 @@
-﻿using Domain.Model.User;
+﻿using Domain.Model;
+using Domain.Model.Cart;
+using Domain.Model.Login;
+using Domain.Model.OrderDetails;
+using Domain.Model.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

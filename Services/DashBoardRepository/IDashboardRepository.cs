@@ -10,7 +10,10 @@ namespace Services.DashBoard
 {
     public interface IDashboardRepository
     {
-        Productlst GetProduct(long id);
+        IEnumerable<Productlst> GetAllProduct();
+        void InsertProduct(Productlst entity);
 
+        Productlst GetProduct(long id);
+        void DeleteProduct(long id);
     }
 }
