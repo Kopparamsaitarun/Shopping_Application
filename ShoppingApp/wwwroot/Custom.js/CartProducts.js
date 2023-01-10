@@ -2,16 +2,19 @@
     const cartDom = document.querySelector(".card");
     const cartItemsDom = cartDom.querySelectorAll(".cart-items");
     var total = 0;
+    var totalItems = 0;
     cartItemsDom.forEach(cartItemDom => {
-        var cartCount = parseInt(cartItemDom.querySelector(".cart_item_quantity").innerText);
-        var cartAmount = parseInt(1000);
-        total += (cartCount * cartAmount);
-        document.querySelector(".total").innerText = total;
+        var cartCount = cartItemDom.querySelector(".cart_item_quantity").innerText;
+        var cartAmount = cartItemDom.querySelector(".cart_item_amount").innerText;       
+        total += (StrToNum(cartCount) * StrToNum(cartAmount));
+        totalItems += (StrToNum(cartCount));
+        document.querySelector(".total").innerText = "₹ " + (Math.round(total * 100) / 100).toFixed(2);
+        document.querySelector(".total-items").innerText = "TOTAL ITEMS " + totalItems;
     });
 }
 function UpdateCartData() {
     //Need to get product Id and Count from HTML
-    //Need to call a controller function - updateProduct(productId,Count)
+    //Need to call a controller function - updateProduct()
 }
 function IncreaseCount(itemId) {
     const cartDom = document.querySelector(".card");
@@ -45,6 +48,10 @@ function DecreaseCount(itemId) {
         };
     });
     CalculateSum();
+    UpdateCartData()
 }
 function RemoveItem() {
+}
+function StrToNum(strVal) {
+    return parseInt(strVal.replace(/^\D+/g, '')); // replace all leading non-digits with nothing    
 }

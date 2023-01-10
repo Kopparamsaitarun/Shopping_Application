@@ -12,9 +12,11 @@
                 </div>
             </div>
             @{double total = 0;}
+            @{double totalItems = 0;}
             @foreach (var cart in Model)
             {
                 total += (cart.Count * cart.product.ProductPrice);
+                totalItems += cart.Count;
                 <div class="row border-top border-bottom cart-items">
                     <div class="row main align-items-center product">
                         <div class="col-2"><img class="img-fluid" src=@cart.product.ProductImage></div>
@@ -31,18 +33,18 @@
                     </div>
                 </div>
             }
-            <div class="back-to-shop"><a href="#">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
+            <div class="back-to-shop"><a href=@Url.Action("Index", "Home")>&leftarrow;</a><span class="text-muted">Back to shop</span></div>
         </div>
         <div class="col-md-4 summary">
             <div><h5><b>Summary</b></h5></div>
             <hr>
             <div class="row">
-                <div class="col" style="padding-left:0;">TOTAL ITEMS @Model.ToList().Count</div>                
+                <div class="col total-items" style="padding-left:0;">TOTAL ITEMS @totalItems</div>                
             </div>
 
             <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                 <div class="col">TOTAL PRICE</div>
-                <div class="col text-right total">&#8377; @total</div>
+                <div class="col text-right total">&#8377; @total.00</div>
             </div>
             <button class="btn">CHECKOUT</button>
         </div>
