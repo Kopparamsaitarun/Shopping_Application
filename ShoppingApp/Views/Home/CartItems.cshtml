@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<Domain.Model.Cart.CartProducts>
 <link href="~/css/CartItems.css" rel="stylesheet" />
+<script src="~/Custom.js/CartProducts.js"></script>
 
 <div class="card">
     <div class="row">
@@ -20,7 +21,7 @@
                             <div class="row">@cart.product.ProductDescription</div>
                         </div>
                         <div class="col">
-                            <a href="#">-</a><a href="#" class="border">@cart.Count</a><a href="#">+</a>
+                            <a href="#" onclick="DecreaseCount()">-</a><a href="#" class="border">@cart.Count</a><a href="#" onclick="IncreaseCount()">+</a>
                         </div>
                         <div class="col">&#8377; @cart.product.ProductPrice <span class="close">&#10005;</span></div>
                     </div>

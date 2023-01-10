@@ -1,4 +1,5 @@
-﻿using Domain.Model.Dashboard;
+﻿using Domain.Model;
+using Domain.Model.Dashboard;
 using Domain.Model.User;
 using System;
 using System.Collections.Generic;

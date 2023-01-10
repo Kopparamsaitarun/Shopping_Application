@@ -1,5 +1,6 @@
 ﻿using Domain.Model;
 using Domain.Model.Cart;
+using Domain.Model.Dashboard;
 using Domain.Model.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -22,7 +23,7 @@ namespace Domain.EntityFramework
         }
         public virtual DbSet<User> Register { get; set; }
         public virtual DbSet<CartProducts> CartProducts { get; set; }
-        public virtual DbSet<Productlst> Productlst { get; set; }
+        public virtual DbSet<Productlist> Productlst { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -43,7 +44,7 @@ namespace Domain.EntityFramework
                 entity.Property(t => t.Role).IsRequired();
             });
 
-            oModelBuilder.Entity<Productlst>(entity =>
+            oModelBuilder.Entity<Productlist>(entity =>
             {
                 entity.HasKey(e => e.Id);
                 entity.ToTable("Productlst");

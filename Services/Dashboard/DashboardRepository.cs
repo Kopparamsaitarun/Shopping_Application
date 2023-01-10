@@ -1,4 +1,5 @@
-﻿using Domain.Model.Dashboard;
+﻿using Domain.Model;
+using Domain.Model.Dashboard;
 using Domain.Model.User;
 using Infrastructure.Repository;
 using System;
@@ -33,7 +34,7 @@ namespace Services.Dashboard
                 product = new Productlist()
                 {
                     Id = u.Id,
-                    ProductDiscription = u.ProductDiscription,
+                    ProductDescription = u.ProductDescription,
                     ProductPrice = u.ProductPrice,
                     ProductName = u.ProductName,
                     ProductImage = u.ProductImage,
@@ -60,7 +61,7 @@ namespace Services.Dashboard
             Productlist entity = null;
             entity = new Productlist
             {
-                ProductDiscription = model.ProductDiscription,
+                ProductDescription = model.ProductDiscription,
                 ProductPrice = model.ProductPrice,
                 ProductName = model.ProductName,
                 ProductImage = model.ProductImage,
@@ -96,8 +97,14 @@ namespace Services.Dashboard
 
         }
 
-     
+        IEnumerable<Productlist> IDashboardRepository.GetAllProduct()
+        {
+            throw new NotImplementedException();
+        }
 
-
+        Productlist IDashboardRepository.GetProduct(long id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

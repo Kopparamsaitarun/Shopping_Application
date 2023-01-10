@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-namespace Domain.Model
+namespace Domain.Model.Dashboard
 {
-    public class Productlst : BaseEntity
+    public class Productlist : BaseEntity
     {
         public string ProductDescription { get; set; } = "";
         [Required]
