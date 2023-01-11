@@ -22,16 +22,16 @@ namespace Services.Cart
         public IEnumerable<CartProducts> GetCartProducts(int userId)
         {
             var result = from cp in db.CartProducts
-                      join u in db.Register on cp.User.Id equals u.Id
-                      join pl in db.Productlist on cp.product.Id equals pl.Id
-                      where cp.product.InCart == true
-                      select new CartProducts
-                      {
-                          Id = cp.Id,
-                          Count=cp.Count,
-                          User=u,
-                          product=pl
-                      };
+                         join u in db.Register on cp.User.Id equals u.Id
+                         join pl in db.Productlist on cp.product.Id equals pl.Id
+                         where cp.product.InCart == true
+                         select new CartProducts
+                         {
+                             Id = cp.Id,
+                             Count = cp.Count,
+                             User = u,
+                             product = pl
+                         };
             IEnumerable<CartProducts> cartItems = result.ToList();
             return cartItems;
 
@@ -76,9 +76,15 @@ namespace Services.Cart
             throw new NotImplementedException();
         }
 
-        public void UpdateProduct(int productId, int userId, int count, string addRemove)
+        public void UpdateProduct(long productId, long userId, int count)
         {
-            throw new NotImplementedException();
+            //Get Single course which need to update  
+            CartProducts cartProducts = db.CartProducts.Where(item => (item.product.Id == productId) &&
+                (item.User.Id == userId)).FirstOrDefault();
+            //Field which will be update  
+            cartProducts.Count = count;
+            // executes the appropriate commands to implement the changes to the database  
+            db.CartProducts.Update(cartProducts);
         }
     }
 }

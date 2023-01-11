@@ -5,7 +5,7 @@
     var totalItems = 0;
     cartItemsDom.forEach(cartItemDom => {
         var cartCount = cartItemDom.querySelector(".cart_item_quantity").innerText;
-        var cartAmount = cartItemDom.querySelector(".cart_item_amount").innerText;       
+        var cartAmount = cartItemDom.querySelector(".cart_item_amount").innerText;
         total += (StrToNum(cartCount) * StrToNum(cartAmount));
         totalItems += (StrToNum(cartCount));
         document.querySelector(".total").innerText = "₹ " + (Math.round(total * 100) / 100).toFixed(2);
@@ -13,8 +13,39 @@
     });
 }
 function UpdateCartData() {
-    //Need to get product Id and Count from HTML
-    //Need to call a controller function - updateProduct()
+    const cartDom = document.querySelector(".card");
+    const cartItemsDom = cartDom.querySelectorAll(".cart-items");
+    var CartObj = [];
+    cartItemsDom.forEach(cartItemDom => {
+        var productId = cartItemDom.querySelector(".product-name").id;
+        var cartCount = cartItemDom.querySelector(".cart_item_quantity").innerText;
+
+        var item = {
+            product:{id: productId},
+            User: {Id:1},
+            Count: cartCount
+        };
+        CartObj.push(item);
+    });
+    console.log(CartObj);
+    console.log(JSON.stringify(CartObj));
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        data: JSON.stringify(CartObj),
+        url: "/Home/UpdateCart",
+        success: function (response) {
+            if (response.success) {
+                alert("Updated");
+            } else {
+                alert(response.message);
+            }
+        },
+        error: function (errormessgae) {
+            alert(errormessgae);
+        }
+    });
+
 }
 function IncreaseCount(itemId) {
     const cartDom = document.querySelector(".card");
