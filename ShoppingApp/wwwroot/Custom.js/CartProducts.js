@@ -1,4 +1,22 @@
-﻿function CalculateSum() {
+﻿function Checkout() {
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        data: {},
+        url: "/Home/Checkout",
+        success: function (response) {
+            if (response.success) {
+                ShowSuccess(UserObj.firstName);
+            } else {
+                alert(response.message);
+            }
+        },
+        error: function (errormessgae) {
+            alert(errormessgae);
+        }
+    });
+}
+function CalculateSum() {
     const cartDom = document.querySelector(".card");
     const cartItemsDom = cartDom.querySelectorAll(".cart-items");
     var total = 0;
@@ -21,7 +39,7 @@ function UpdateCartData() {
         var cartCount = StrToNum(cartItemDom.querySelector(".cart_item_quantity").innerText);
 
         var item = {
-            userId: 1,
+            userId: 1,//Sangeeth UserId hardcoded need to change this
             productId: productId,            
             count: cartCount
         };
@@ -36,8 +54,7 @@ function UpdateCartData() {
         data: JSON.stringify(CartObj),
         url: "/Home/UpdateCart",
         success: function (response) {
-            if (true) {
-                alert("Updated");
+            if (response.success) {                
             } else {
                 alert(response.message);
             }

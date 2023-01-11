@@ -1,10 +1,13 @@
 ﻿using Domain.EntityFramework;
 using Domain.Model.Cart;
+using Domain.Model.Dashboard;
+using Domain.Model.Order;
 using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,6 +17,7 @@ namespace Services.Cart
     {
         IGenericRepository<CartProducts> cartProductRepository;
         ApplicationDbContext db = new ApplicationDbContext();
+        ApplicationDbContext dbTemp = new ApplicationDbContext();
         public CartProductRepository(IGenericRepository<CartProducts> _cartProductRepository)
         {
             this.cartProductRepository = _cartProductRepository;
@@ -51,19 +55,28 @@ namespace Services.Cart
             //});
         }
 
-        public void CheckOut()
-        {
-            throw new NotImplementedException();
-        }
-
         public void DeleteProduct(int productId, int userId)
         {
-            throw new NotImplementedException();
+            var recordsToDel = from pc in db.CartProducts
+                               where pc.product.Id == productId && pc.User.Id == userId
+                               select new { pc };
+            foreach (var item in recordsToDel)
+            {
+                db.CartProducts.Remove(item.pc);
+            };
+            db.SaveChanges();
         }
 
-        public void EmptyCart()
+        public void EmptyCart(int userId)
         {
-            throw new NotImplementedException();
+            var recordsToDel = from pc in db.CartProducts
+                               where pc.User.Id == userId
+                               select new { pc };
+            foreach (var item in recordsToDel)
+            {
+                db.CartProducts.Remove(item.pc);
+            };
+            db.SaveChanges();
         }
 
         public int GetCartCount()
@@ -76,7 +89,7 @@ namespace Services.Cart
             throw new NotImplementedException();
         }
 
-        public void UpdateProduct(long _productId, long _userId, int count)
+        public void UpdateProduct(long productId, long userId, int count)
         {
             try
             {
@@ -84,13 +97,41 @@ namespace Services.Cart
                     from cp in db.CartProducts
                     join pl in db.Productlist on cp.product.Id equals pl.Id
                     join us in db.Register on cp.User.Id equals us.Id
-                    where cp.product.Id == _productId && cp.User.Id == _userId
+                    where cp.product.Id == productId && cp.User.Id == userId
                     select new { cp, cp.product, cp.User };
 
                 CartProducts cartProducts = new CartProducts();
                 cartProducts = query.ToList().ElementAt(0).cp;
                 cartProducts.Count = count;
                 db.CartProducts.Update(cartProducts);
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+        public void Checkout(long userId)
+        {
+            try
+            {
+                var cartData =
+                     from cp in db.CartProducts
+                     join pl in db.Productlist on cp.product.Id equals pl.Id
+                     join us in db.Register on cp.User.Id equals us.Id
+                     where cp.User.Id == userId
+                     select new { cp, pl, us };
+
+                foreach (var item in cartData)
+                {
+                    OrderDetail orderDetail = new OrderDetail();
+                    orderDetail.count = item.cp.Count; 
+                    orderDetail.Product = item.pl;
+                    orderDetail.User = item.us;
+                    orderDetail.orderDate = DateTime.Now;
+                    db.OrderDetail.Add(orderDetail);
+                }
                 db.SaveChanges();
             }
             catch (Exception)

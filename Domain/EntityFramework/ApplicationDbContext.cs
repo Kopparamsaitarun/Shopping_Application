@@ -1,6 +1,7 @@
 ﻿using Domain.Model;
 using Domain.Model.Cart;
 using Domain.Model.Dashboard;
+using Domain.Model.Order;
 using Domain.Model.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -24,6 +25,7 @@ namespace Domain.EntityFramework
         public virtual DbSet<User> Register { get; set; }
         public virtual DbSet<CartProducts> CartProducts { get; set; }
         public virtual DbSet<Productlist> Productlist { get; set; }
+        public virtual DbSet<OrderDetail> OrderDetail { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -56,7 +58,8 @@ namespace Domain.EntityFramework
                 entity.Property(e => e.InStock);
                 entity.Property(e => e.InCart);
             });
-            OnModelCreatingPartial(oModelBuilder);
+
+                OnModelCreatingPartial(oModelBuilder);
             //new EmployeeMap(oModelBuilder.Entity<Employee>());
             //new EmployeeProfessionalMap(oModelBuilder.Entity<EmployeeProfessional>());
             //new EmployeeQualificationMap(oModelBuilder.Entity<EmployeeQualification>());

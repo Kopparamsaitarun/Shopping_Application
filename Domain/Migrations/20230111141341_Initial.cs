@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Domain.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +13,7 @@ namespace Domain.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductDiscription = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    ProductDescription = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     ProductPrice = table.Column<int>(type: "int", nullable: false),
                     ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProductImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -71,6 +72,34 @@ namespace Domain.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "OrderDetail",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductId = table.Column<long>(type: "bigint", nullable: true),
+                    UserId = table.Column<long>(type: "bigint", nullable: true),
+                    count = table.Column<int>(type: "int", nullable: false),
+                    orderDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderDetail", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderDetail_Productlist_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Productlist",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_OrderDetail_Register_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Register",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_CartProducts_productId",
                 table: "CartProducts",
@@ -80,12 +109,25 @@ namespace Domain.Migrations
                 name: "IX_CartProducts_UserId",
                 table: "CartProducts",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderDetail_ProductId",
+                table: "OrderDetail",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderDetail_UserId",
+                table: "OrderDetail",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "CartProducts");
+
+            migrationBuilder.DropTable(
+                name: "OrderDetail");
 
             migrationBuilder.DropTable(
                 name: "Productlist");

@@ -25,7 +25,7 @@ namespace ShoppingApp.Controllers
             _logger = logger;
             _cartProductRepository = cartProductRepository;
         }
-       
+
         [HttpGet("Index")]
         public IActionResult Index()
         {
@@ -38,7 +38,7 @@ namespace ShoppingApp.Controllers
             {
                 List<CartProducts> cartProducts = new List<CartProducts>();
                 IEnumerable<CartProducts> cartItems = cartProducts;
-                cartItems = _cartProductRepository.GetCartProducts(1);//Need to get the UserId from Login Info                                
+                cartItems = _cartProductRepository.GetCartProducts(1);//Sangeeth UserId hardcoded need to change this                            
                 return View(cartItems);
             }
             catch (Exception exception)
@@ -62,18 +62,21 @@ namespace ShoppingApp.Controllers
             {
                 return BadRequest(new { success = false, exception.Message });
             }
-            //List<CartProducts> cartPUpdate = new List<CartProducts>();
-            //foreach (var cartItem in cartProducts)
-            //{
-            //    cartPUpdate.Add(
-            //    new CartProducts
-            //    {
-            //        Count = cartItem.Count,
-            //        Id = cartItem.Id,
-            //        product = cartItem.product,
-            //        User = cartItem.User
-            //    });
-            //}
+        }
+
+        [HttpPost("Checkout")]
+        public IActionResult Checkout()
+        {
+            try
+            {
+                _cartProductRepository.Checkout(1);//Sangeeth UserId hardcoded need to change this
+                _cartProductRepository.EmptyCart(1);//Sangeeth UserId hardcoded need to change this
+                return Json(new { success = true, message = "Success" });
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(new { success = false, exception.Message });
+            }
         }
 
         [HttpGet("Privacy")]

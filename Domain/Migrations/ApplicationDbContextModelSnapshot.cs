@@ -57,7 +57,7 @@ namespace Domain.Migrations
                     b.Property<bool>("InStock")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ProductDiscription")
+                    b.Property<string>("ProductDescription")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -77,6 +77,34 @@ namespace Domain.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Productlist");
+                });
+
+            modelBuilder.Entity("Domain.Model.Order.OrderDetail", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long?>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("count")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("orderDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("OrderDetail");
                 });
 
             modelBuilder.Entity("Domain.Model.User.User", b =>
@@ -129,6 +157,21 @@ namespace Domain.Migrations
                         .HasForeignKey("productId");
 
                     b.Navigation("product");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Model.Order.OrderDetail", b =>
+                {
+                    b.HasOne("Domain.Model.Dashboard.Productlist", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("Domain.Model.User.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Product");
 
                     b.Navigation("User");
                 });
