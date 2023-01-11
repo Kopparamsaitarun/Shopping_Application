@@ -90,5 +90,13 @@ namespace ShoppingApp.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [HttpGet("CheckoutSuccess")]
+        public IActionResult CheckoutSuccess()
+        {
+            ViewBag.userName= "Sangeeth";//Sangeeth UserName hardcoded need to change this
+            return View("CheckoutSuccess");
+
+        }
     }
 }

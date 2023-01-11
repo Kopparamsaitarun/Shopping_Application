@@ -6,7 +6,7 @@
         url: "/Home/Checkout",
         success: function (response) {
             if (response.success) {
-                ShowSuccess(UserObj.firstName);
+                ShowSuccess();
             } else {
                 alert(response.message);
             }
@@ -103,4 +103,8 @@ function RemoveItem() {
 }
 function StrToNum(strVal) {
     return parseInt(strVal.replace(/^\D+/g, '')); // replace all leading non-digits with nothing    
+}
+function ShowSuccess() {
+    window.location.href = '/Home/CartItems';
+    window.location.href = '/Home/CheckoutSuccess';
 }

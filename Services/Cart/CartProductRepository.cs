@@ -116,6 +116,12 @@ namespace Services.Cart
         {
             try
             {
+                int orderNo = 1;
+                if (dbTemp.OrderDetail.Any())
+                {
+                    orderNo = (dbTemp.OrderDetail.OrderByDescending(u => u.orderNumber).FirstOrDefault().orderNumber) + 1;
+                }
+                
                 var cartData =
                      from cp in db.CartProducts
                      join pl in db.Productlist on cp.product.Id equals pl.Id
@@ -126,7 +132,8 @@ namespace Services.Cart
                 foreach (var item in cartData)
                 {
                     OrderDetail orderDetail = new OrderDetail();
-                    orderDetail.count = item.cp.Count; 
+                    orderDetail.count = item.cp.Count;
+                    orderDetail.orderNumber = orderNo;
                     orderDetail.Product = item.pl;
                     orderDetail.User = item.us;
                     orderDetail.orderDate = DateTime.Now;
