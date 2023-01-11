@@ -76,15 +76,28 @@ namespace Services.Cart
             throw new NotImplementedException();
         }
 
-        public void UpdateProduct(long productId, long userId, int count)
+        public void UpdateProduct(long _productId, long _userId, int count)
         {
-            //Get Single course which need to update  
-            CartProducts cartProducts = db.CartProducts.Where(item => (item.product.Id == productId) &&
-                (item.User.Id == userId)).FirstOrDefault();
-            //Field which will be update  
-            cartProducts.Count = count;
-            // executes the appropriate commands to implement the changes to the database  
-            db.CartProducts.Update(cartProducts);
+            try
+            {
+                var query =
+                    from cp in db.CartProducts
+                    join pl in db.Productlist on cp.product.Id equals pl.Id
+                    join us in db.Register on cp.User.Id equals us.Id
+                    where cp.product.Id == _productId && cp.User.Id == _userId
+                    select new { cp, cp.product, cp.User };
+
+                CartProducts cartProducts = new CartProducts();
+                cartProducts = query.ToList().ElementAt(0).cp;
+                cartProducts.Count = count;
+                db.CartProducts.Update(cartProducts);
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
     }
 }

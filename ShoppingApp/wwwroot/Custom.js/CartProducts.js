@@ -17,25 +17,26 @@ function UpdateCartData() {
     const cartItemsDom = cartDom.querySelectorAll(".cart-items");
     var CartObj = [];
     cartItemsDom.forEach(cartItemDom => {
-        var productId = cartItemDom.querySelector(".product-name").id;
-        var cartCount = cartItemDom.querySelector(".cart_item_quantity").innerText;
+        var productId = StrToNum(cartItemDom.querySelector(".product-name").id);
+        var cartCount = StrToNum(cartItemDom.querySelector(".cart_item_quantity").innerText);
 
         var item = {
-            product:{id: productId},
-            User: {Id:1},
-            Count: cartCount
+            userId: 1,
+            productId: productId,            
+            count: cartCount
         };
         CartObj.push(item);
     });
-    console.log(CartObj);
     console.log(JSON.stringify(CartObj));
+    console.log(CartObj);
     $.ajax({
         type: "POST",
+        contentType:"application/json",
         dataType: "JSON",
         data: JSON.stringify(CartObj),
         url: "/Home/UpdateCart",
         success: function (response) {
-            if (response.success) {
+            if (true) {
                 alert("Updated");
             } else {
                 alert(response.message);

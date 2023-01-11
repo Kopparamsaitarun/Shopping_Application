@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Services.Cart;
 using ShoppingApp.Models;
+using ShoppingApp.Models.Cart;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -47,13 +48,13 @@ namespace ShoppingApp.Controllers
         }
 
         [HttpPost("UpdateCart")]
-        public IActionResult UpdateCart(List<CartProducts> cartProducts)
+        public IActionResult UpdateCart(List<CartProductsDTO> cartProducts)
         {
             try
             {
                 foreach (var cartItem in cartProducts)
                 {
-                    _cartProductRepository.UpdateProduct(cartItem.product.Id, cartItem.User.Id, cartItem.Count);
+                    _cartProductRepository.UpdateProduct(cartItem.productId, cartItem.userId, cartItem.count);
                 }
                 return Json(new { success = true, message = "Success" });
             }
@@ -61,19 +62,18 @@ namespace ShoppingApp.Controllers
             {
                 return BadRequest(new { success = false, exception.Message });
             }
-
-            List<CartProducts> cartPUpdate = new List<CartProducts>();
-            foreach (var cartItem in cartProducts)
-            {
-                cartPUpdate.Add(
-                new CartProducts
-                {
-                    Count = cartItem.Count,
-                    Id = cartItem.Id,
-                    product = cartItem.product,
-                    User = cartItem.User
-                });
-            }
+            //List<CartProducts> cartPUpdate = new List<CartProducts>();
+            //foreach (var cartItem in cartProducts)
+            //{
+            //    cartPUpdate.Add(
+            //    new CartProducts
+            //    {
+            //        Count = cartItem.Count,
+            //        Id = cartItem.Id,
+            //        product = cartItem.product,
+            //        User = cartItem.User
+            //    });
+            //}
         }
 
         [HttpGet("Privacy")]
