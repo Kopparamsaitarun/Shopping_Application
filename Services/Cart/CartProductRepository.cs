@@ -139,18 +139,18 @@ namespace Services.Cart
 
         }
 
-        public List<Address> LoadUserAddress(long userId)
-        {
-            try
-            {
+        //public List<Address> LoadUserAddress(long userId)
+        //{
+        //    try
+        //    {
        
-            }
-            catch (Exception)
-            {
+        //    }
+        //    catch (Exception)
+        //    {
 
-                throw;
-            }
-        }
+        //        throw;
+        //    }
+        //}
         public void SaveUserAddress(Address addressData)
         {
             try

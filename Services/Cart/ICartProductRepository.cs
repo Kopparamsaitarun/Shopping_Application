@@ -10,7 +10,7 @@ namespace Services.Cart
         void DeleteProduct(int productId, int userId);
         void EmptyCart(int userId);//Not needed for now 
         void Checkout(long userId);//Insert into Order details table
-        List<Address> LoadUserAddress(long userId);
+        //List<Address> LoadUserAddress(long userId);
         void SaveUserAddress(Address address);
 
     }
