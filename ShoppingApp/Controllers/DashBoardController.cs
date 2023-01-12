@@ -23,10 +23,9 @@ public class DashboardController : Controller
         _dashboardRepository = dashboardRepository;
         _hostEnvironment = hostEnvironment;
     }
-     public string GetRole(string role)
-    {
-        return role;
-    }
+    
+    
+
     [HttpGet("GetProduct")]
     public async Task<IActionResult> GetProduct()
     {
@@ -35,10 +34,7 @@ public class DashboardController : Controller
             List<Productlist> productlist = new List<Productlist>();
             IEnumerable<Productlist> products = productlist;
             products = _dashboardRepository.GetAllProduct();
-
             return View("~/Views/Dashboard/Product.cshtml",products);
-
-
         }
         catch (Exception exception)
         {
@@ -140,8 +136,4 @@ public class DashboardController : Controller
         }
         return View("~/Views/Dashboard/Productlst.cshtml", productlist);
     }
-
-
-
-
 }

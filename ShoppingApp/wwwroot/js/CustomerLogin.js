@@ -28,7 +28,8 @@
                     icon: "success",
                     button:"OK"
                 });
-            }           
+                window.location.href = '/Dashboard/GetProduct';               
+            }               
         },
          error: function (errormessage) {
              swal({

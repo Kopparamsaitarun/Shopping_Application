@@ -2,6 +2,7 @@
 using Domain.Model.User;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using Services.Dashboard;
 using Services.Login;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,14 @@ namespace ShoppingApp.Controllers
     {
         public ILoginRepository LoginRepository;
         private readonly IUserAuthenticationReposiroty userAuthenticationReposiroty;
+        public IDashboardRepository dashboardRepository;
 
-        public CustomerLoginController(ILoginRepository _loginRepository, IUserAuthenticationReposiroty _userAuthenticationReposiroty)
+        public CustomerLoginController(ILoginRepository _loginRepository, IUserAuthenticationReposiroty _userAuthenticationReposiroty,
+            IDashboardRepository _dashboardRepository)
         {
             LoginRepository = _loginRepository;
             userAuthenticationReposiroty = _userAuthenticationReposiroty;
+            dashboardRepository = _dashboardRepository;
         }
 
         [HttpGet("GetLoginCustomer")]
@@ -46,9 +50,9 @@ namespace ShoppingApp.Controllers
             try
             {
                 UserLogin user = LoginRepository.Login(model);
-               
                 if (user.Role!= null)
                 {
+                   dashboardRepository.GetRole(user.Role);
                     var tokenString = userAuthenticationReposiroty.GenerateSessionJWT(user);
                     return Ok(new
                     {
@@ -56,17 +60,14 @@ namespace ShoppingApp.Controllers
                         user,
                         token = tokenString
                     });
-                }
-          
+                }          
                 return BadRequest(new { success = false, Message = "User Login Unsuccessful" });
             }
             catch (Exception exception)
             {
                 return BadRequest(new { success = false, exception.Message });
             }
-        }
-            
-           
+        }                      
 
         }
     }

@@ -21,5 +21,8 @@ namespace ShoppingApp.Models.Dashboard
         [Required]
         [Range(0, 1000000000, ErrorMessage = "Quantity must be between 0 to 10000000")]
         public int Quantity { get; set; }
+
+        public string Role { get; set; }
+
     }
 }

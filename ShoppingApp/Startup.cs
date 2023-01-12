@@ -56,7 +56,9 @@ namespace ShoppingApp
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ILoginRepository, LoginRepository>();
+            services.AddTransient<IDashboardRepository, DashboardRepository>();
             services.AddTransient<IUserAuthenticationReposiroty, UserAuthenticationReposiroty>();
+            services.AddTransient<IFileUploadService, FileUploadService>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {

@@ -1,5 +1,6 @@
 ﻿using Domain.Model;
 using Domain.Model.Cart;
+using Domain.Model.Dashboard;
 using Domain.Model.Login;
 using Domain.Model.OrderDetails;
 using Domain.Model.User;

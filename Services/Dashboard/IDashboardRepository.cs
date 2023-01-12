@@ -16,6 +16,7 @@ namespace Services.Dashboard
         Productlist GetProduct(long id);
         void DeleteProduct(long id);
         void AddtoCart(long id);
+        string GetRole(string role);
     }
         
 }

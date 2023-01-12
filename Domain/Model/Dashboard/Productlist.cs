@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Domain.Model.Login;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Internal;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,11 +18,13 @@ namespace Domain.Model.Dashboard
         public int ProductPrice { get; set; }
         [Required]
         public string ProductName { get; set; }
-        public IFormFile ProductImage { get; set; }
+        public string ProductImage { get; set; }
         public bool InStock { get; set; }
         public bool InCart { get; set; }
         [Required]
         [Range(0, 1000000000, ErrorMessage = "Quantity must be between 0 to 10000000")]
         public int Quantity { get; set; }
+
+        public string Role { get; set; }
     }
 }

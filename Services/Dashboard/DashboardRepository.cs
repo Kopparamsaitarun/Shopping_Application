@@ -15,17 +15,17 @@ namespace Services.Dashboard
         private readonly IFileUploadService _fileUploadService;
 
 
-
-
-
         public DashboardRepository(IGenericRepository<Productlist> shoppingRepository, IFileUploadService fileUploadService)
         {
             this._genericRepository = shoppingRepository;
             _fileUploadService = fileUploadService;
         }
+        
+        string loggedInRole;
+
+        
         public IEnumerable<Productlist> GetAllProduct()
         {
-
             List<Productlist> productlist = new List<Productlist>();
             _genericRepository.GetAll().ToList().ForEach(u =>
             {
@@ -40,19 +40,17 @@ namespace Services.Dashboard
                     InStock = u.InStock,
                     InCart = u.InCart,
                     Quantity = u.Quantity,
+                    Role=loggedInRole
                 };
                 productlist.Add(product);
             });
             IEnumerable<Productlist> products = productlist;
 
             return products;
-
-
-
-
-
-
         }
+
+
+
         public void InsertProduct(ProductlistModel model)
         {
             //string unique = _fileUploadService.Upload(model.ProductImage);
@@ -67,10 +65,10 @@ namespace Services.Dashboard
                 InStock = model.InStock,
                 InCart = model.InCart,
                 Quantity = model.Quantity,
-
             };
             _genericRepository.Insert(entity);
         }
+
 
 
         public Productlist GetProduct(long id)
@@ -79,25 +77,28 @@ namespace Services.Dashboard
         }
        
 
+
         public void DeleteProduct(long id)
         {
-
-
             Productlist product = GetProduct(id);
             _genericRepository.Remove(product);
             _genericRepository.Savechanges();
         }
+
+
 
         public void AddtoCart(long id)
         {
             Productlist product = GetProduct(id);
             product.InCart = true;
             _genericRepository.Update(product);
-
         }
 
-     
 
 
+        public string GetRole(string role)
+        {          
+            return loggedInRole=role;
+        }
     }
 }
