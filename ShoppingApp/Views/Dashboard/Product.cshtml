@@ -1073,16 +1073,25 @@
                             </div>
                         </div>
                     </div>
-                    <!--Wishlist -->
-                    <div class="col-lg-4 col-9 order-lg-3 order-2 text-lg-left text-right">
-                        <div class="wishlist_cart d-flex flex-row align-items-center justify-content-end">
-                            <meta name="viewport" content="width=device-width, initial-scale=1">
+                <!--Filter-->
+                <div class="col-lg-1 col-8 order-lg-2 order-2 text-lg-left text-right">
+                    <div class="dropdown">
+                        <a onclick="myFunction()" class="dropbtn" style="font-size: larger;">Filter</a>
+                        <div id="myDropdown" class="dropdown-content">
+                            <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                        </div>
+                    </div>
+                </div>
+                <!--Wishlist -->
+                <div class="col-lg-3 col-8 order-lg-3 order-2 text-lg-left text-right">
+                    <div class="wishlist_cart d-flex flex-row align-items-center justify-content-end">
+                        <meta name="viewport" content="width=device-width, initial-scale=1">
                             <!-- Cart -->
                             <div class="cart">
                                 <div class="cart_container d-flex flex-row align-items-center justify-content-end">
                                     <div class="cart_icon">
-                                        <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918704/cart.png" alt="">
-                                        <div class="cart_count"><span>3</span></div>
+
+                                        <a href="@Url.Action("CartItems", "Cart")"><img src="~/Images/CartIcon.png" href="@Url.Action("CartItems", "Home")" /></a>
                                     </div>
                                     <div class="cart_content">
                                         <div class="cart_text"><a href="#">Cart</a></div>
