@@ -99,7 +99,30 @@ namespace Services.Dashboard
 
         IEnumerable<Productlist> IDashboardRepository.GetAllProduct()
         {
-            throw new NotImplementedException();
+            List<Productlist> productlist = new List<Productlist>();
+            _genericRepository.GetAll().ToList().ForEach(u =>
+            {
+                Productlist product = null;
+                product = new Productlist()
+                {
+                    Id = u.Id,
+                    ProductDescription = u.ProductDescription,
+                    ProductPrice = u.ProductPrice,
+                    ProductName = u.ProductName,
+                    ProductImage = u.ProductImage,
+                    InStock = u.InStock,
+                    InCart = u.InCart,
+                    Quantity = u.Quantity,
+                };
+                productlist.Add(product);
+            });
+            IEnumerable<Productlist> products = productlist;
+
+
+
+            return products;
+
+
         }
 
         Productlist IDashboardRepository.GetProduct(long id)
