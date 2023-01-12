@@ -31,53 +31,7 @@ namespace ShoppingApp.Controllers
         {
             return View();
         }
-        [HttpGet("CartItems")]
-        public IActionResult CartItems()
-        {
-            try
-            {
-                List<CartProducts> cartProducts = new List<CartProducts>();
-                IEnumerable<CartProducts> cartItems = cartProducts;
-                cartItems = _cartProductRepository.GetCartProducts(1);//Sangeeth UserId hardcoded need to change this                            
-                return View(cartItems);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(new { success = false, exception.Message });
-            }
-        }
-
-        [HttpPost("UpdateCart")]
-        public IActionResult UpdateCart(List<CartProductsDTO> cartProducts)
-        {
-            try
-            {
-                foreach (var cartItem in cartProducts)
-                {
-                    _cartProductRepository.UpdateProduct(cartItem.productId, cartItem.userId, cartItem.count);
-                }
-                return Json(new { success = true, message = "Success" });
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(new { success = false, exception.Message });
-            }
-        }
-
-        [HttpPost("Checkout")]
-        public IActionResult Checkout()
-        {
-            try
-            {
-                _cartProductRepository.Checkout(1);//Sangeeth UserId hardcoded need to change this
-                _cartProductRepository.EmptyCart(1);//Sangeeth UserId hardcoded need to change this
-                return Json(new { success = true, message = "Success" });
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(new { success = false, exception.Message });
-            }
-        }
+       
 
         [HttpGet("Privacy")]
         public IActionResult Privacy()
@@ -89,14 +43,6 @@ namespace ShoppingApp.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        [HttpGet("CheckoutSuccess")]
-        public IActionResult CheckoutSuccess()
-        {
-            ViewBag.userName= "Sangeeth";//Sangeeth UserName hardcoded need to change this
-            return View("CheckoutSuccess");
-
-        }
+        }       
     }
 }

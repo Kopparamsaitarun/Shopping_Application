@@ -29,7 +29,7 @@
                             <a href="#" class="border cart_item_quantity">@cart.Count</a>
                             <a href="#" onclick="IncreaseCount(@cart.product.Id)">+</a>
                         </div>
-                        <div class="col cart_item_amount">&#8377; @cart.product.ProductPrice <span class="close">&#10005;</span></div>
+                        <div class="col cart_item_amount">&#8377; @cart.product.ProductPrice <span class="close" onclick="RemoveProductFromCart(@cart.product.Id)">&#10005;</span></div>
                     </div>
                 </div>
             }

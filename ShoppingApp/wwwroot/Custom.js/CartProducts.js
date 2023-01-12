@@ -3,7 +3,7 @@
         type: "POST",
         dataType: "JSON",
         data: {},
-        url: "/Home/Checkout",
+        url: "/Cart/Checkout",
         success: function (response) {
             if (response.success) {
                 ShowSuccess();
@@ -40,21 +40,20 @@ function UpdateCartData() {
 
         var item = {
             userId: 1,//Sangeeth UserId hardcoded need to change this
-            productId: productId,            
+            productId: productId,
             count: cartCount
         };
         CartObj.push(item);
     });
-    console.log(JSON.stringify(CartObj));
-    console.log(CartObj);
+
     $.ajax({
         type: "POST",
-        contentType:"application/json",
+        contentType: "application/json",
         dataType: "JSON",
         data: JSON.stringify(CartObj),
-        url: "/Home/UpdateCart",
+        url: "/Cart/UpdateCart",
         success: function (response) {
-            if (response.success) {                
+            if (response.success) {
             } else {
                 alert(response.message);
             }
@@ -64,6 +63,34 @@ function UpdateCartData() {
         }
     });
 
+}
+function RemoveProductFromCart(itemId) {
+
+    var productToremove = {
+        "productId": itemId
+    };
+
+    console.log(JSON.stringify(productToremove));
+    console.log(productToremove);
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        dataType: "JSON",
+        data: JSON.stringify(productToremove),
+        url: "/Cart/RemoveProductFromCart",
+        success: function (response) {
+            if (response.success) {
+                CalculateSum();
+                ReloadCart();
+            } else {
+                alert(response.message);
+            }
+        },
+        error: function (errormessgae) {
+            alert(errormessgae);
+        }
+    });
 }
 function IncreaseCount(itemId) {
     const cartDom = document.querySelector(".card");
@@ -105,6 +132,9 @@ function StrToNum(strVal) {
     return parseInt(strVal.replace(/^\D+/g, '')); // replace all leading non-digits with nothing    
 }
 function ShowSuccess() {
-    window.location.href = '/Home/CartItems';
-    window.location.href = '/Home/CheckoutSuccess';
+    window.location.href = '/Cart/CartItems';
+    window.location.href = '/Cart/CheckoutSuccess';
+}
+function ReloadCart() {
+    window.location.href = '/Cart/CartItems';
 }
