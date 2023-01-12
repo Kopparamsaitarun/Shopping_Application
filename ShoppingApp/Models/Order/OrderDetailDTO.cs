@@ -11,5 +11,7 @@ namespace ShoppingApp.Models.Cart
         public int productId { get; set; }
         public int count { get; set; }
         public DateTime orderDate { get; set; }
+        public int orderNumber { get; set; }
+        public int addressId { get; set; }
     }
 }

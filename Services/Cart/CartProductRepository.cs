@@ -103,7 +103,7 @@ namespace Services.Cart
             }
 
         }
-        public void Checkout(long userId)
+        public void Checkout(long userId, long addressId)
         {
             try
             {
@@ -117,8 +117,9 @@ namespace Services.Cart
                      from cp in db.CartProducts
                      join pl in db.Productlist on cp.product.Id equals pl.Id
                      join us in db.Register on cp.User.Id equals us.Id
+                     join ua in db.Address on us.Id equals ua.Id
                      where cp.User.Id == userId
-                     select new { cp, pl, us };
+                     select new { cp, pl, us, ua };
 
                 foreach (var item in cartData)
                 {
@@ -128,6 +129,7 @@ namespace Services.Cart
                     orderDetail.Product = item.pl;
                     orderDetail.User = item.us;
                     orderDetail.orderDate = DateTime.Now;
+                    orderDetail.Address = item.ua;
                     db.OrderDetail.Add(orderDetail);
                 }
                 db.SaveChanges();
@@ -143,21 +145,31 @@ namespace Services.Cart
         {
             try
             {
-       
+                List<Address> addresses = new List<Address>();
+                var addressData =
+                     from us in db.Register
+                     join ad in db.Address on us.Id equals ad.user.Id
+                     where us.Id == userId
+                     select new { ad };
+                
+                foreach (var item in addressData)
+                {
+                    addresses.Add(item.ad);
+                }
+                return addresses;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
-        public void SaveUserAddress(Address addressData)
+        public void SaveUserAddress(Address addressData,long userId)
         {
             try
             {
                 var userData =
                      from us in db.Register
-                     where us.Id == 1
+                     where us.Id == userId
                      select new { us };
 
                 Address address = new Address()

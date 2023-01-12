@@ -1,4 +1,5 @@
 ﻿using Domain.Model.Dashboard;
+using Domain.Model.User;
 using System;
 using System.ComponentModel.DataAnnotations;
 namespace Domain.Model.Order
@@ -7,6 +8,7 @@ namespace Domain.Model.Order
     {
         public int orderNumber { get; set; }
         public Productlist Product { get; set; }
+        public Address Address { get; set; }
         public User.User User { get; set; }
         public int count { get; set; }
         [DataType(DataType.DateTime)]

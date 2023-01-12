@@ -1,20 +1,28 @@
 ﻿function Checkout() {
-    $.ajax({
-        type: "POST",
-        dataType: "JSON",
-        data: {},
-        url: "/Cart/Checkout",
-        success: function (response) {
-            if (response.success) {
-                ShowSuccess();
-            } else {
-                alert(response.message);
+    var haveAdd = parseInt(document.getElementById("listAddress").value);
+    var haveProduct = parseInt(document.getElementById("totalItems").innerHTML);
+    if (haveAdd > 0 && haveProduct > 0) {
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            dataType: "JSON",
+            data: JSON.stringify({ addressId: haveAdd }),
+            url: "/Cart/Checkout",
+            success: function (response) {
+                if (response.success) {
+                    ShowSuccess();
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function (errormessgae) {
+                alert(errormessgae);
             }
-        },
-        error: function (errormessgae) {
-            alert(errormessgae);
-        }
-    });
+        });
+    } else {
+        alert("Please check! Address and Cart items are required")
+    };
+
 }
 function CalculateSum() {
     const cartDom = document.querySelector(".card");
@@ -138,3 +146,50 @@ function ShowSuccess() {
 function ReloadCart() {
     window.location.href = '/Cart/CartItems';
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    ShowCompleteAddress();
+}, false);
+
+function SaveAddress() {
+    var address = {
+        address1: document.getElementById("address1").value,
+        address2: document.getElementById("address2").value,
+        city: document.getElementById("city").value,
+        state: document.getElementById("state").value,
+        postCode: document.getElementById("postCode").value,
+        country: document.getElementById("country").value
+    };
+    console.log(address);
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        dataType: "JSON",
+        data: JSON.stringify(address),
+        url: "/Cart/SaveUserAddress",
+        success: function (response) {
+            if (response.success) {
+                $(".modal-body input").val("")
+                $('#addressModal').modal('hide');
+                ReloadCart();
+                return false;
+            } else {
+                alert(response.message);
+            }
+        },
+        error: function (errormessgae) {
+            alert(errormessgae);
+        }
+    });
+}
+
+function ShowCompleteAddress() {
+    var e = document.getElementById("listAddress");
+    var option = e.options[e.selectedIndex];
+    var fullAddress = option.getAttribute("data-complete");
+
+    console.log(fullAddress);
+    console.log(option.dataset.complete);
+
+    document.getElementById("labelAddress").innerHTML = 'Delivery Address - ' + fullAddress;
+};

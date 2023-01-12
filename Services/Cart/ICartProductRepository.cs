@@ -9,9 +9,9 @@ namespace Services.Cart
         void UpdateProduct(long productId, long userId, int count);//Change count
         void DeleteProduct(int productId, int userId);
         void EmptyCart(int userId);//Not needed for now 
-        void Checkout(long userId);//Insert into Order details table
+        void Checkout(long userId,long addressId);//Insert into Order details table
         List<Address> LoadUserAddress(long userId);
-        void SaveUserAddress(Address address);
+        void SaveUserAddress(Address address, long userId);
 
     }
 }

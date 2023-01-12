@@ -39,15 +39,66 @@
             <div><h5><b>Summary</b></h5></div>
             <hr>
             <div class="row">
-                <div class="col total-items" style="padding-left:0;">TOTAL ITEMS @totalItems</div>                
+                <div class="col total-items" style="padding-left:0;">TOTAL ITEMS @totalItems</div>
             </div>
+            <hidden id="totalItems">@totalItems</hidden>
 
             <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                 <div class="col">TOTAL PRICE</div>
                 <div class="col text-right total">&#8377; @total.00</div>
             </div>
-            <button class="btn" disabled="@(totalItems<=0)" onclick="Checkout()">CHECKOUT</button>
+
+            @{string fullAdd = ""; }
+            <label>DELIVERY ADDRESS</label>
+            <select name="listAddress" id="listAddress" onchange="ShowCompleteAddress()">
+                @foreach (var item in ViewBag.addresses)
+                {
+                    fullAdd = item.address1 + ' ' + item.address2 + ' ' + item.city + '-' + item.postCode;
+                    <option data-complete=@fullAdd value="@item.Id">
+                        @item.address1 @item.address2
+                    </option>
+                }
+            </select>
+            <p id="labelAddress"></p>
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addressModal">
+                NEW ADDRESS
+            </button>
+            <button class="btn" onclick="Checkout()">CHECKOUT</button>
         </div>
     </div>
 
+</div>
+
+<!-- Modal Address-->
+<div class="modal fade" id="addressModal" tabindex="-1" role="dialog" aria-labelledby="addressModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row" sstyle="display:flex">
+                    <div class="col-md-10 col-md-offset-4">
+                        <form class="form-horizontal" role="form">
+                            <fieldset>
+                                <legend>Address Details</legend>
+                                <div class="col-sm-10">
+                                    <input type="text" id="address1" placeholder="Address Line 1" class="form-control">
+                                    <input type="text" id="address2" placeholder="Address Line 2" class="form-control">
+                                    <input type="text" id="city" placeholder="City" class="form-control">
+                                    <input type="text" id="state" placeholder="State" class="form-control">
+                                    <input type="text" id="postCode" placeholder="Post Code" class="form-control">
+                                    <input type="text" id="country" placeholder="Country" class="form-control">
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div><!-- /.col-lg-12 -->
+                </div><!-- /.row -->
+            </div>
+            <div style="display:flex">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" onclick="SaveAddress()" class="btn btn-primary">Save</button>
+            </div>
+            <div class="row"></div>
+        </div>
+    </div>
 </div>
