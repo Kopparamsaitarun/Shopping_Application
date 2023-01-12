@@ -10,6 +10,7 @@ using System.Linq;
 using System.Data;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Model.User;
 
 namespace Services.Cart
 {
@@ -79,16 +80,6 @@ namespace Services.Cart
             db.SaveChanges();
         }
 
-        public int GetCartCount()
-        {
-            throw new NotImplementedException();
-        }
-
-        public decimal GetCartTotal()
-        {
-            throw new NotImplementedException();
-        }
-
         public void UpdateProduct(long productId, long userId, int count)
         {
             try
@@ -121,7 +112,7 @@ namespace Services.Cart
                 {
                     orderNo = (dbTemp.OrderDetail.OrderByDescending(u => u.orderNumber).FirstOrDefault().orderNumber) + 1;
                 }
-                
+
                 var cartData =
                      from cp in db.CartProducts
                      join pl in db.Productlist on cp.product.Id equals pl.Id
@@ -146,6 +137,46 @@ namespace Services.Cart
                 throw;
             }
 
+        }
+
+        public List<Address> LoadUserAddress(long userId)
+        {
+            try
+            {
+       
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public void SaveUserAddress(Address addressData)
+        {
+            try
+            {
+                var userData =
+                     from us in db.Register
+                     where us.Id == 1
+                     select new { us };
+
+                Address address = new Address()
+                {
+                    postCode = addressData.postCode,
+                    address1 = addressData.address1,
+                    address2 = addressData.address2,
+                    city = addressData.city,
+                    country = addressData.country,
+                    state = addressData.state,
+                    user = userData.ToList().ElementAt(0).us
+                };
+                db.Address.Add(address);
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

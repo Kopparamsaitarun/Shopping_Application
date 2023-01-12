@@ -1,4 +1,5 @@
 ﻿using Domain.Model.Cart;
+using Domain.Model.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.Cart;
@@ -90,6 +91,34 @@ namespace ShoppingApp.Controllers
             try
             {
                 _cartProductRepository.DeleteProduct(cartProducts.productId, 1);//Sangeeth UserId hardcoded need to change this
+                return Json(new { success = true, message = "Success" });
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(new { success = false, exception.Message });
+            }
+        }
+
+        [HttpGet("LoadUserAddress")]
+        public IActionResult LoadUserAddress()
+        {
+            try
+            {
+                List<Address> address = _cartProductRepository.LoadUserAddress(1);//Sangeeth UserId hardcoded need to change this
+                return Json(new { address, message = "Success" });
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(new { success = false, exception.Message });
+            }
+        }
+
+        [HttpPost("SaveUserAddress")]
+        public IActionResult SaveAddress(Address address)
+        {
+            try
+            {   
+                _cartProductRepository.SaveUserAddress(address);
                 return Json(new { success = true, message = "Success" });
             }
             catch (Exception exception)

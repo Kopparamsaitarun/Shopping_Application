@@ -26,6 +26,7 @@ namespace Domain.EntityFramework
         public virtual DbSet<CartProducts> CartProducts { get; set; }
         public virtual DbSet<Productlist> Productlist { get; set; }
         public virtual DbSet<OrderDetail> OrderDetail { get; set; }
+        public virtual DbSet<Address> Address { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
