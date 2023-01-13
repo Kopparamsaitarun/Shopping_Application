@@ -45,7 +45,7 @@ namespace Domain.EntityFramework
                 entity.Property(t => t.password).IsRequired();
                 entity.Property(t => t.Role).IsRequired();
             });
-
+            //Validations purpose 
             oModelBuilder.Entity<Productlist>(entity =>
             {
                 entity.HasKey(e => e.Id);

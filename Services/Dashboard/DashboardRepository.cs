@@ -15,10 +15,6 @@ namespace Services.Dashboard
         IGenericRepository<Productlist> _genericRepository;
         private readonly IFileUploadService _fileUploadService;
 
-
-
-
-
         public DashboardRepository(IGenericRepository<Productlist> shoppingRepository, IFileUploadService fileUploadService)
         {
             this._genericRepository = shoppingRepository;
@@ -47,12 +43,6 @@ namespace Services.Dashboard
             IEnumerable<Productlist> products = productlist;
 
             return products;
-
-
-
-
-
-
         }
         public void InsertProduct(ProductlistModel model)
         {
@@ -74,7 +64,7 @@ namespace Services.Dashboard
         }
 
 
-        public Productlist GetProduct(long id)
+        public Productlist GetProduct(long id)//
         {
             return _genericRepository.GetT(id);
         }
@@ -96,8 +86,7 @@ namespace Services.Dashboard
             _genericRepository.Update(product);
 
         }
-
-        IEnumerable<Productlist> IDashboardRepository.GetAllProduct()
+       IEnumerable<Productlist> IDashboardRepository.GetAllProduct()
         {
             List<Productlist> productlist = new List<Productlist>();
             _genericRepository.GetAll().ToList().ForEach(u =>
@@ -117,14 +106,8 @@ namespace Services.Dashboard
                 productlist.Add(product);
             });
             IEnumerable<Productlist> products = productlist;
-
-
-
             return products;
-
-
         }
-
         Productlist IDashboardRepository.GetProduct(long id)
         {
             throw new NotImplementedException();

@@ -98,6 +98,9 @@ namespace Domain.Migrations
                     b.Property<DateTime>("orderDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("orderNumber")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");

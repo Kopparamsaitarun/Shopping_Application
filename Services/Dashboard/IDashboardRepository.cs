@@ -13,8 +13,7 @@ namespace Services.Dashboard
     {
         IEnumerable<Productlist> GetAllProduct();
         void InsertProduct(ProductlistModel entity);
-
-        Productlist GetProduct(long id);
+        Productlist GetProduct(long id);//
         void DeleteProduct(long id);
         void AddtoCart(long id);
     }
