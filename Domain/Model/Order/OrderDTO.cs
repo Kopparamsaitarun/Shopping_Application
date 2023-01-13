@@ -3,10 +3,12 @@ using Domain.Model.Dashboard;
 using Domain.Model.User;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ShoppingApp.Models.Cart
 {
-    public class OrderDetailDTO 
+    public class OrderDTO : BaseEntity
     {
         public long userId { get; set; }
         public long addressId { get; set; }
@@ -19,6 +21,7 @@ namespace ShoppingApp.Models.Cart
         public List<Productlist> ProductList { get; set; }
         public int count { get; set; }
         public long orderHeaderId { get; set; }
+        public double totalAmount { get; set; }
 
     }
 }

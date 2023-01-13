@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ShoppingApp.Models.Cart.OrderDTO>
+@{ var orderHeader = Model.ToList();
+    double amt = 0;
+    int i = 0; }
+@{ foreach (var ordDet in orderHeader)
+    {
+        foreach (var prod in ordDet.ProductList.ToList())
+        {
+            amt = amt + (double)(prod.ProductPrice);
+        }
+    } }
+<link href="~/css/Order.css" rel="stylesheet" />
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="osahan-account-page-right shadow-sm bg-white p-4 h-100">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane  fade  active show" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+                        <div class="row col-md-12">
+                            <h4 class="row row ml-4 mr-4">Past Orders</h4>
+                            <a class="btn btn-sm btn-outline-primary mr-4" href="@Url.Action("Index", "Home")" style="height: 30px;">Back to home</a>
+                        </div>
+                        @foreach (var oh in Model)
+                        {
+            <div class="bg-white card mb-4 order-list shadow-sm">
+                <div class="gold-members p-4">
+                    <div class="media">
+                        @{var imgURL = "";
+                            imgURL = orderHeader[i].ProductList.FirstOrDefault().ProductImage; }
+
+                        <img class="mr-4" src=@imgURL alt="Generic placeholder image">
+                        <div class="media-body">
+                            <span class="float-right text-info">Order placed on  @oh.orderDate.ToString("ddd dd-MMM-yyyy hh:mm tt")  <i class="icofont-check-circled text-success"></i></span>
+                            <h6 class="mb-2"><a href="#" class="text-black">Seller : Marlabs ShoppApp</a></h6>
+                            <p class="text-gray mb-1"><i class="icofont-location-arrow"></i>Delivery Address : @oh.Address.address1&nbsp;@oh.Address.address2&nbsp;<br>@oh.Address.state-@oh.Address.postCode&nbsp;@oh.Address.country</p>
+                            <p class="text-gray mb-3"><i class="icofont-list"></i>Order Number : ORDER #20222023000000.@oh.orderNumber <i class="icofont-clock-time ml-2"></i></p>
+
+                            @{var itemName = ""; }
+                            @{ foreach (var item in orderHeader[i].ProductList.ToList())
+                                {
+                                    itemName += item.ProductName + " : " + item.Quantity + "Nos x " + item.ProductPrice + ".00 = " + item.Quantity * item.ProductPrice + ".00  |  ";
+                                } }
+                            <p class="text-dark">Items : @itemName.Remove(itemName.Length - 3, 3)</p><hr>
+
+                            <p class="mb-0 text-black text-primary pt-2"><span class="text-black font-weight-bold"> Total Paid: @oh.totalAmount.00</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>i = i + 1;
+        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

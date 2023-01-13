@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Services;
 using Services.Cart;
 using Services.Dashboard;
+using Services.Order;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,6 +55,7 @@ namespace ShoppingApp
             services.AddTransient<IFileUploadService, FileUploadService>();
             services.AddTransient<IDashboardRepository, DashboardRepository>();
             services.AddTransient<ICartProductRepository, CartProductRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
