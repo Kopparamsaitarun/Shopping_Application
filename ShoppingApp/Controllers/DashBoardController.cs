@@ -27,8 +27,8 @@ public class DashboardController : Controller
     {
         return role;
     }
-    [HttpGet("GetProduct")]
-    public async Task<IActionResult> GetProduct()
+    [HttpGet("GetProductAll")]
+    public async Task<IActionResult> GetProductAll()
     {
         try
         {
@@ -77,7 +77,7 @@ public class DashboardController : Controller
                 ProductImage = uniqueFileName,
             };
             _dashboardRepository.InsertProduct(product);
-            GetProduct();
+            GetProductAll();
         }
         return View("~/Views/Dashboard/Product.cshtml");
     }
@@ -105,7 +105,7 @@ public class DashboardController : Controller
         if (ModelState.IsValid)
         {
             _dashboardRepository.AddtoCart(id);
-            GetProduct();
+            GetProductAll();
 
         }
         return View("~/Views/Dashboard/Product.cshtml");
@@ -118,7 +118,7 @@ public class DashboardController : Controller
         try
         {
             _dashboardRepository.DeleteProduct(id);
-            GetProduct();
+            GetProductAll();
             return View("~/Views/Dashboard/Product.cshtml");
         }
         catch (Exception exception)
@@ -128,8 +128,8 @@ public class DashboardController : Controller
     }
 
 
-    [HttpGet("GetProductList")]
-    public IActionResult GetProductList(long id)
+    [HttpGet("GetProduct")]
+    public IActionResult GetProduct(long id)
     {
         Productlist productlist = new Productlist();
 

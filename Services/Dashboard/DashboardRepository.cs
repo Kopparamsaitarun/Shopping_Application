@@ -86,6 +86,8 @@ namespace Services.Dashboard
             _genericRepository.Update(product);
 
         }
+
+        IEnumerable<Productlist> IDashboardRepository()
        IEnumerable<Productlist> IDashboardRepository.GetAllProduct()
         {
             List<Productlist> productlist = new List<Productlist>();
@@ -108,6 +110,8 @@ namespace Services.Dashboard
             IEnumerable<Productlist> products = productlist;
             return products;
         }
+
+       
         Productlist IDashboardRepository.GetProduct(long id)
         {
             throw new NotImplementedException();

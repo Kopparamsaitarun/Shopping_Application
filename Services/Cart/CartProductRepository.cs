@@ -10,6 +10,7 @@ using System.Linq;
 using System.Data;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Model.User;
 
 namespace Services.Cart
 {
@@ -79,16 +80,6 @@ namespace Services.Cart
             db.SaveChanges();
         }
 
-        public int GetCartCount()
-        {
-            throw new NotImplementedException();
-        }
-
-        public decimal GetCartTotal()
-        {
-            throw new NotImplementedException();
-        }
-
         public void UpdateProduct(long productId, long userId, int count)
         {
             try
@@ -112,31 +103,39 @@ namespace Services.Cart
             }
 
         }
-        public void Checkout(long userId)
+        public void Checkout(long userId, long addressId)
         {
             try
             {
                 int orderNo = 1;
-                if (dbTemp.OrderDetail.Any())
+                if (dbTemp.OrderHeader.Any())
                 {
-                    orderNo = (dbTemp.OrderDetail.OrderByDescending(u => u.orderNumber).FirstOrDefault().orderNumber) + 1;
+                    orderNo = (dbTemp.OrderHeader.OrderByDescending(u => u.orderNumber).FirstOrDefault().orderNumber) + 1;
                 }
-                
+
                 var cartData =
                      from cp in db.CartProducts
                      join pl in db.Productlist on cp.product.Id equals pl.Id
                      join us in db.Register on cp.User.Id equals us.Id
+                     join ua in db.Address on us.Id equals ua.Id
                      where cp.User.Id == userId
-                     select new { cp, pl, us };
+                     select new { cp, pl, us, ua };
+
+                OrderHeader orderHeader = new OrderHeader();
+                var itemH = cartData.FirstOrDefault();
+                    orderHeader.orderNumber = orderNo;
+                    orderHeader.User = itemH.us;
+                    orderHeader.orderDate = DateTime.Now;
+                    orderHeader.Address = itemH.ua;
+                    db.OrderHeader.Add(orderHeader);                
+                db.SaveChanges();
 
                 foreach (var item in cartData)
                 {
                     OrderDetail orderDetail = new OrderDetail();
+                    orderDetail.OrderHeader = orderHeader;
                     orderDetail.count = item.cp.Count;
-                    orderDetail.orderNumber = orderNo;
                     orderDetail.Product = item.pl;
-                    orderDetail.User = item.us;
-                    orderDetail.orderDate = DateTime.Now;
                     db.OrderDetail.Add(orderDetail);
                 }
                 db.SaveChanges();
@@ -146,6 +145,56 @@ namespace Services.Cart
                 throw;
             }
 
+        }
+
+        public List<Address> LoadUserAddress(long userId)
+        {
+            try
+            {
+                List<Address> addresses = new List<Address>();
+                var addressData =
+                     from us in db.Register
+                     join ad in db.Address on us.Id equals ad.user.Id
+                     where us.Id == userId
+                     select new { ad };
+
+                foreach (var item in addressData)
+                {
+                    addresses.Add(item.ad);
+                }
+                return addresses;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public void SaveUserAddress(Address addressData, long userId)
+        {
+            try
+            {
+                var userData =
+                     from us in db.Register
+                     where us.Id == userId
+                     select new { us };
+
+                Address address = new Address()
+                {
+                    postCode = addressData.postCode,
+                    address1 = addressData.address1,
+                    address2 = addressData.address2,
+                    city = addressData.city,
+                    country = addressData.country,
+                    state = addressData.state,
+                    user = userData.ToList().ElementAt(0).us
+                };
+                db.Address.Add(address);
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

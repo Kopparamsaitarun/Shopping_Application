@@ -86,14 +86,36 @@ namespace Domain.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long?>("ProductId")
+                    b.Property<long?>("OrderHeaderId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("UserId")
+                    b.Property<long?>("ProductId")
                         .HasColumnType("bigint");
 
                     b.Property<int>("count")
                         .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderHeaderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderDetail");
+                });
+
+            modelBuilder.Entity("Domain.Model.Order.OrderHeader", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long?>("AddressId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("orderDate")
                         .HasColumnType("datetime2");
@@ -103,11 +125,46 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("AddressId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("OrderDetail");
+                    b.ToTable("OrderHeader");
+                });
+
+            modelBuilder.Entity("Domain.Model.User.Address", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("address1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("address2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("city")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("postCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("state")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("userId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("userId");
+
+                    b.ToTable("Address");
                 });
 
             modelBuilder.Entity("Domain.Model.User.User", b =>
@@ -166,17 +223,41 @@ namespace Domain.Migrations
 
             modelBuilder.Entity("Domain.Model.Order.OrderDetail", b =>
                 {
+                    b.HasOne("Domain.Model.Order.OrderHeader", "OrderHeader")
+                        .WithMany()
+                        .HasForeignKey("OrderHeaderId");
+
                     b.HasOne("Domain.Model.Dashboard.Productlist", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId");
+
+                    b.Navigation("OrderHeader");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Domain.Model.Order.OrderHeader", b =>
+                {
+                    b.HasOne("Domain.Model.User.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
 
                     b.HasOne("Domain.Model.User.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
-                    b.Navigation("Product");
+                    b.Navigation("Address");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Model.User.Address", b =>
+                {
+                    b.HasOne("Domain.Model.User.User", "user")
+                        .WithMany()
+                        .HasForeignKey("userId");
+
+                    b.Navigation("user");
                 });
 #pragma warning restore 612, 618
         }
