@@ -116,8 +116,8 @@ namespace Services.Cart
                 var cartData =
                      from cp in db.CartProducts
                      join pl in db.Productlist on cp.product.Id equals pl.Id
-                     join us in db.Register on cp.User.Id equals us.Id
-                     join ua in db.Address on us.Id equals ua.Id
+                     join us in db.Register on cp.User.Id equals us.Id                     
+                     join ua in db.Address on new { us.Id, addressId =addressId } equals new { ua.user.Id, addressId = ua.Id }
                      where cp.User.Id == userId
                      select new { cp, pl, us, ua };
 

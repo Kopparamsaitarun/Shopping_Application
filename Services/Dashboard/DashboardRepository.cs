@@ -87,7 +87,7 @@ namespace Services.Dashboard
 
         }
 
-        IEnumerable<Productlist> IDashboardRepository()
+        //IEnumerable<Productlist> IDashboardRepository()
        IEnumerable<Productlist> IDashboardRepository.GetAllProduct()
         {
             List<Productlist> productlist = new List<Productlist>();
