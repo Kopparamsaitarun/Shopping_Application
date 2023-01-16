@@ -33,17 +33,20 @@ namespace ShoppingApp.Controllers
                     phoneNumber = u.phoneNumber,
                     password = u.password,
                     policyFlag = u.policyFlag,
-                    Role=u.Role,
+                    Role = u.Role,
                 };
                 lstUser.Add(user);
             });
-            ViewData["lstUser"] = lstUser;
+
+            ViewData["lstUser"] = lstUser;            
             return View();
         }
         [HttpGet]
         public ActionResult AddOrEdit(int id = 0)
         {
             User user = new User();
+            string[] roles = { Role.Admin, Role.Customer };
+            ViewData["roles"] = roles;
             return View(user);
         }
 
@@ -52,14 +55,14 @@ namespace ShoppingApp.Controllers
         {
             return View("UserRegistrationSuccess");
         }
-         
+
         [HttpPost]
         public ActionResult Register(User user)
         {
             try
             {
-                if (user.email != "" && user.firstName !="" && user.email != null && user.firstName != null && user.password!="" && user.password != null && user.password==user.ConfirmPassword)
-                {                
+                if (user.email != "" && user.firstName != "" && user.email != null && user.firstName != null && user.password != "" && user.password != null && user.password == user.ConfirmPassword)
+                {
                     User loginUser = new User
                     {
                         firstName = user.firstName,
@@ -69,16 +72,16 @@ namespace ShoppingApp.Controllers
                         password = Models.EncDec.Encrypt(user.password),
                         Role = user.Role,
                         phoneNumber = user.phoneNumber,
-                        policyFlag = user.policyFlag                       
+                        policyFlag = user.policyFlag
                     };
 
                     iuserRepository.InsertUser(loginUser);
-                    return Json(new { success = true, message = "Success"});
+                    return Json(new { success = true, message = "Success" });
                 }
                 else
-                {                    
-                    return Json(new { success = false, message = "Fill all mandatory fields"});
-                }                
+                {
+                    return Json(new { success = false, message = "Fill all mandatory fields" });
+                }
             }
             catch (Exception exception)
             {

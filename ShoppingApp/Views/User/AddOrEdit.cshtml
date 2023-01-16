@@ -2,6 +2,7 @@
 @*@Html.PasswordFor(m => m.Password)*@
 @{
     ViewData["Title"] = "AddOrEdit";
+    var roles = (string[])ViewData["roles"];
 }
 
 <table>
@@ -47,6 +48,17 @@
                 <input asp-for="phoneNumber" class="form-control" id="phoneNumber" />
                 <span asp-validation-for="phoneNumber" class="text-danger"></span>
                 @Html.ValidationMessageFor(m => m.phoneNumber, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Role" class="control-label">Role</label>
+                <select  asp-for="Role" class="form-control" id="role">
+                    @foreach (var item in roles)
+                    {
+                    <option value=@item>@item</option>
+                    }
+                </select>
+                <span asp-validation-for="Role" class="text-danger"></span>
+                @Html.ValidationMessageFor(m => m.Role, "", new { @class = "text-danger" })
             </div>
             <div class="form-group form-check">
                 <input class="form-check-input" asp-for="policyFlag" /> @Html.DisplayNameFor(model => model.policyFlag)
