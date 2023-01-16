@@ -10,7 +10,8 @@ namespace Domain.Model.User
         public string firstName { get; set; }
         [Required(ErrorMessage = "Enter your Last name")]
         public string lastName { get; set; }  
-        [Required(ErrorMessage = "Enter your Email"), RegularExpression(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",ErrorMessage ="Email validation failed - required small letters, Enter a valid Email")]
+        //[Required(ErrorMessage = "Enter your Email"), RegularExpression(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",ErrorMessage ="Email validation failed - required small letters, Enter a valid Email")]
+        [EmailAddress(ErrorMessage = "The email address is not valid")]
         public string email { get; set; }
         [Required(ErrorMessage = "Enter your Password"),DataType(DataType.Password), RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$", ErrorMessage = "Password Required Special character, Capital letter, Number. Enter a valid Password!")]
         public string password { get; set; }
