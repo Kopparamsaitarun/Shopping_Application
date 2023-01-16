@@ -1,6 +1,6 @@
 ﻿function Checkout() {
     var haveAdd = parseInt(document.getElementById("listAddress").value);
-    var haveProduct = parseInt(document.getElementById("totalItems").innerHTML);
+    var haveProduct = parseInt(document.getElementById("totalItems").value);
     if (haveAdd > 0 && haveProduct > 0) {
         $.ajax({
             type: "POST",
@@ -36,6 +36,7 @@ function CalculateSum() {
         totalItems += (StrToNum(cartCount));
         document.querySelector(".total").innerText = "₹ " + (Math.round(total * 100) / 100).toFixed(2);
         document.querySelector(".total-items").innerText = "TOTAL ITEMS " + totalItems;
+        document.getElementById("totalItems").value = totalItems;
     });
 }
 function UpdateCartData() {
@@ -47,7 +48,6 @@ function UpdateCartData() {
         var cartCount = StrToNum(cartItemDom.querySelector(".cart_item_quantity").innerText);
 
         var item = {
-            userId: 1,//Sangeeth UserId hardcoded need to change this
             productId: productId,
             count: cartCount
         };
@@ -77,9 +77,6 @@ function RemoveProductFromCart(itemId) {
     var productToremove = {
         "productId": itemId
     };
-
-    console.log(JSON.stringify(productToremove));
-    console.log(productToremove);
 
     $.ajax({
         type: "POST",
@@ -160,7 +157,7 @@ function SaveAddress() {
         postCode: document.getElementById("postCode").value,
         country: document.getElementById("country").value
     };
-    console.log(address);
+
     $.ajax({
         type: "POST",
         contentType: "application/json",
@@ -187,9 +184,5 @@ function ShowCompleteAddress() {
     var e = document.getElementById("listAddress");
     var option = e.options[e.selectedIndex];
     var fullAddress = option.getAttribute("data-complete");
-
-    console.log(fullAddress);
-    console.log(option.dataset.complete);
-
     document.getElementById("labelAddress").innerHTML = 'Delivery Address - ' + fullAddress;
 };
