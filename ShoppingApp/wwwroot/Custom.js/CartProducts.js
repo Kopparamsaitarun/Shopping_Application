@@ -1,12 +1,16 @@
-﻿function Checkout() {
-    var haveAdd = parseInt(document.getElementById("listAddress").value);
+﻿/*Usage : To Checkout order
+  Validating if there is address and items in cart
+  After validation calling the CartController function - Checkout
+*/
+function Checkout() {
+    var haveAddress = parseInt(document.getElementById("listAddress").value);
     var haveProduct = parseInt(document.getElementById("totalItems").value);
-    if (haveAdd > 0 && haveProduct > 0) {
+    if (haveAddress > 0 && haveProduct > 0) {
         $.ajax({
             type: "POST",
             contentType: "application/json",
             dataType: "JSON",
-            data: JSON.stringify({ addressId: haveAdd }),
+            data: JSON.stringify({ addressId: haveAddress }),
             url: "/Cart/Checkout",
             success: function (response) {
                 if (response.success) {
@@ -22,8 +26,11 @@
     } else {
         alert("Please check! Address and Cart items are required")
     };
-
 }
+
+/*Usage : To calculate the sum after any update in the product
+  Updating the calculated Product count and amount and pass into UI
+*/
 function CalculateSum() {
     const cartDom = document.querySelector(".card");
     const cartItemsDom = cartDom.querySelectorAll(".cart-items");
@@ -39,6 +46,10 @@ function CalculateSum() {
         document.getElementById("totalItems").value = totalItems;
     });
 }
+
+/*Usage : To update the product count
+  Passing productId and product count into CartController function UpdateCart()
+*/
 function UpdateCartData() {
     const cartDom = document.querySelector(".card");
     const cartItemsDom = cartDom.querySelectorAll(".cart-items");
@@ -70,8 +81,11 @@ function UpdateCartData() {
             alert(errormessgae);
         }
     });
-
 }
+
+/*Usage : To remove the product from cart
+  Passing productId into CartController function RemoveProductFromCart()
+*/
 function RemoveProductFromCart(itemId) {
 
     var productToremove = {
@@ -97,6 +111,10 @@ function RemoveProductFromCart(itemId) {
         }
     });
 }
+
+/*Usage : To increase count of the product in cart
+  Just updating in the UI and calling UpdateCartData(),CalculateSum() function
+*/
 function IncreaseCount(itemId) {
     const cartDom = document.querySelector(".card");
     const cartItemsDom = cartDom.querySelectorAll(".cart-items");
@@ -114,6 +132,10 @@ function IncreaseCount(itemId) {
     CalculateSum();
     UpdateCartData()
 }
+
+/*Usage : To decrease count of the product in cart
+  Just updating in the UI and calling UpdateCartData(),CalculateSum() function
+*/
 function DecreaseCount(itemId) {
     const cartDom = document.querySelector(".card");
     const cartItemsDom = cartDom.querySelectorAll(".cart-items");
@@ -131,19 +153,23 @@ function DecreaseCount(itemId) {
     CalculateSum();
     UpdateCartData()
 }
+
+/*Usage : Replace all leading non-digits with nothing
+  used in the functions to remove characters and take out number from string
+*/
 function StrToNum(strVal) {
-    return parseInt(strVal.replace(/^\D+/g, '')); // replace all leading non-digits with nothing    
+    return parseInt(strVal.replace(/^\D+/g, ''));   
 }
-function ShowSuccess() {
-    window.location.href = '/Cart/CartItems';
-    window.location.href = '/Cart/CheckoutSuccess';
-}
-function ReloadCart() {
-    window.location.href = '/Cart/CartItems';
-}
+
+//Usage : On page load calling the function ShowCompleteAddress()
 document.addEventListener('DOMContentLoaded', function () {
     ShowCompleteAddress();
 }, false);
+
+/*Usage : To Save address from the modal address
+  Taking field values from the html and
+  passing to the CartController function - SaveUserAddress()
+*/
 function SaveAddress() {
     var address = {
         address1: document.getElementById("address1").value,
@@ -175,9 +201,23 @@ function SaveAddress() {
         }
     });
 }
+
+/*Usage : To show the complete address based on the selected dropdown address
+  Taking the complete address from dropdown data and updating to label
+*/
 function ShowCompleteAddress() {
     var e = document.getElementById("listAddress");
     var option = e.options[e.selectedIndex];
     var fullAddress = option.getAttribute("data-complete");
     document.getElementById("labelAddress").innerHTML = 'Delivery Address - ' + fullAddress;
 };
+
+//Usage : function to reload the CartItems page and redirect CheckoutSuccess message view
+function ShowSuccess() {
+    window.location.href = '/Cart/CartItems';
+    window.location.href = '/Cart/CheckoutSuccess';
+}
+//Usage : Function to reload the CartItems page
+function ReloadCart() {
+    window.location.href = '/Cart/CartItems';
+}
