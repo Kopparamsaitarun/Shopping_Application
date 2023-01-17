@@ -5,11 +5,11 @@ namespace Services.Cart
 {
     public interface ICartProductRepository 
     {
-        IEnumerable<CartProducts> GetCartProducts(int userId);//getAllProduct where incart = 1
-        void UpdateProduct(long productId, long userId, int count);//Change count
+        IEnumerable<CartProducts> GetCartProducts(int userId);
+        void UpdateProduct(long productId, long userId, int count);
         void DeleteProduct(int productId, int userId);
-        void EmptyCart(int userId);//Not needed for now 
-        void Checkout(long userId,long addressId);//Insert into Order details table
+        void EmptyCart(int userId);
+        void Checkout(long userId,long addressId);
         List<Address> LoadUserAddress(long userId);
         void SaveUserAddress(Address address, long userId);
 
