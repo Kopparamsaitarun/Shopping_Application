@@ -19,7 +19,7 @@
                 totalItems += cart.Count;
                 <div class="row border-top border-bottom cart-items">
                     <div class="row main align-items-center product">
-                        <div class="col-2"><img class="img-fluid" src=@cart.product.ProductImage></div>
+                        <div class="col-2"><img class="img-fluid" src="~/images/@cart.product.ProductImage"></div>
                         <div class="col">
                             <div class="row text-muted product-name" id=@cart.product.Id>@cart.product.ProductName</div>
                             <div class="row">@cart.product.ProductDescription</div>

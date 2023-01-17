@@ -28,7 +28,7 @@
                         @{var imgURL = "";
                             imgURL = orderHeader[i].ProductList.FirstOrDefault().ProductImage; }
 
-                        <img class="mr-4" src=@imgURL alt="Generic placeholder image">
+                        <img class="mr-4" src="~/images/@imgURL" alt="Generic placeholder image">
                         <div class="media-body">
                             <span class="float-right text-info">Order placed on  @oh.orderDate.ToString("ddd dd-MMM-yyyy hh:mm tt")</span>
                             <h6 class="mb-2"><a href="#" class="text-black">Seller : Marlabs ShoppApp</a></h6>
