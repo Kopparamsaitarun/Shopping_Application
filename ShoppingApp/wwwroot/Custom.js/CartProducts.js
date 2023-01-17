@@ -131,8 +131,6 @@ function DecreaseCount(itemId) {
     CalculateSum();
     UpdateCartData()
 }
-function RemoveItem() {
-}
 function StrToNum(strVal) {
     return parseInt(strVal.replace(/^\D+/g, '')); // replace all leading non-digits with nothing    
 }
@@ -143,11 +141,9 @@ function ShowSuccess() {
 function ReloadCart() {
     window.location.href = '/Cart/CartItems';
 }
-
 document.addEventListener('DOMContentLoaded', function () {
     ShowCompleteAddress();
 }, false);
-
 function SaveAddress() {
     var address = {
         address1: document.getElementById("address1").value,
@@ -179,7 +175,6 @@ function SaveAddress() {
         }
     });
 }
-
 function ShowCompleteAddress() {
     var e = document.getElementById("listAddress");
     var option = e.options[e.selectedIndex];

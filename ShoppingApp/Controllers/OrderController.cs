@@ -23,7 +23,7 @@ namespace ShoppingApp.Controllers
         }
 
         [HttpGet("GetOrders")]
-        public ActionResult GetOrders()
+        public ActionResult GetOrders()//Loading all orders placed by user
         {
             List<OrderDetailDTO> orders = new List<OrderDetailDTO>();
             var ordersList = _orderRepository.GetOrders(1);//Sangeeth UserId hardcoded need to change this

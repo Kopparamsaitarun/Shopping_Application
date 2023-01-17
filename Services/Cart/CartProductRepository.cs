@@ -1,16 +1,12 @@
 ﻿using Domain.EntityFramework;
 using Domain.Model.Cart;
-using Domain.Model.Dashboard;
 using Domain.Model.Order;
+using Domain.Model.User;
 using Infrastructure.Repository;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Data;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Model.User;
+using System.Linq;
 
 namespace Services.Cart
 {
@@ -37,46 +33,47 @@ namespace Services.Cart
                              User = u,
                              product = pl
                          };
-            IEnumerable<CartProducts> cartItems = result.ToList();
+            IEnumerable<CartProducts> cartItems = result?.ToList();
             return cartItems;
-
-            //Need to check this later - Sangeeth
-            //List<CartProducts> cartProducts = new List<CartProducts>();
-            //cartProductRepository.GetAll().ToList().ForEach(u =>
-            //{
-            //    CartProducts product = null;
-            //    product = new CartProducts()
-            //    {
-            //        Id = u.Id,
-            //        Count = u.Count,
-            //        product = u.product,
-            //        User = u.User
-            //    };
-            //    cartProducts.Add(product);
-            //});
         }
 
         public void DeleteProduct(int productId, int userId)
         {
+            //Query to fetch item from cart table
             var recordsToDel = from pc in db.CartProducts
                                where pc.product.Id == productId && pc.User.Id == userId
-                               select new { pc };
-            foreach (var item in recordsToDel)
-            {
-                db.CartProducts.Remove(item.pc);
-            };
+                               select new { pc }.pc;
+
+            //Query to fetch item from product table
+            var productToUpdate = from pl in db.Productlist
+                                  where pl.Id == productId
+                                  select new { pl }.pl;
+
+            //Update table product list to enable button Add to Cart in Dashboard
+            productToUpdate.FirstOrDefault().InCart = false;
+            db.Productlist.Update(productToUpdate.FirstOrDefault());
+
+            //Remove product from table CartProducts
+            db.CartProducts.Remove(recordsToDel.FirstOrDefault());
             db.SaveChanges();
         }
 
         public void EmptyCart(int userId)
         {
-            var recordsToDel = from pc in db.CartProducts
-                               where pc.User.Id == userId
-                               select new { pc };
-            foreach (var item in recordsToDel)
+            //Query to fetch item from cart table
+            List<CartProducts> recordsToDel = db.CartProducts.Where(cp => cp.User.Id == userId).ToList();
+
+            //Query to fetch item from product table
+            var productToUpdate = from pl in db.Productlist
+                                  select new { pl };
+            //Update productlist
+            foreach (var item in productToUpdate)
             {
-                db.CartProducts.Remove(item.pc);
+                item.pl.InCart = false;
+                db.Productlist.Update(item.pl);
             };
+            //remove items from cart
+            db.CartProducts.RemoveRange(recordsToDel);
             db.SaveChanges();
         }
 
@@ -103,7 +100,7 @@ namespace Services.Cart
             }
 
         }
-        public void Checkout(long userId, long addressId)
+        public void Checkout(long userId, long addressId)//Moving all products from cart->order tables
         {
             try
             {
@@ -116,18 +113,18 @@ namespace Services.Cart
                 var cartData =
                      from cp in db.CartProducts
                      join pl in db.Productlist on cp.product.Id equals pl.Id
-                     join us in db.Register on cp.User.Id equals us.Id                     
-                     join ua in db.Address on new { us.Id, addressId =addressId } equals new { ua.user.Id, addressId = ua.Id }
+                     join us in db.Register on cp.User.Id equals us.Id
+                     join ua in db.Address on new { us.Id, addressId = addressId } equals new { ua.user.Id, addressId = ua.Id }
                      where cp.User.Id == userId
                      select new { cp, pl, us, ua };
 
                 OrderHeader orderHeader = new OrderHeader();
                 var itemH = cartData.FirstOrDefault();
-                    orderHeader.orderNumber = orderNo;
-                    orderHeader.User = itemH.us;
-                    orderHeader.orderDate = DateTime.Now;
-                    orderHeader.Address = itemH.ua;
-                    db.OrderHeader.Add(orderHeader);                
+                orderHeader.orderNumber = orderNo;
+                orderHeader.User = itemH.us;
+                orderHeader.orderDate = DateTime.Now;
+                orderHeader.Address = itemH.ua;
+                db.OrderHeader.Add(orderHeader);
                 db.SaveChanges();
 
                 foreach (var item in cartData)

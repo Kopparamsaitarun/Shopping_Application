@@ -36,9 +36,12 @@ namespace ShoppingApp.Controllers
                 return BadRequest(new { success = false, exception.Message });
             }
         }
-
+        /// <summary>
+        /// Loading all the cart products
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("CartItems")]
-        public IActionResult CartItems()
+             public IActionResult CartItems()
         {
             try
             {
@@ -55,7 +58,7 @@ namespace ShoppingApp.Controllers
         }
 
         [HttpPost("UpdateCart")]
-        public IActionResult UpdateCart(List<CartProductsDTO> cartProducts)
+        public IActionResult UpdateCart(List<CartProductsDTO> cartProducts)//Updating the item count in cart
         {
             try
             {
@@ -72,7 +75,7 @@ namespace ShoppingApp.Controllers
         }
 
         [HttpPost("Checkout")]
-        public IActionResult Checkout(OrderDetailDTO orderDetail)
+        public IActionResult Checkout(OrderDetailDTO orderDetail)//Placing the order and moving the data to OrderHeader and OrderDetails
         {
             try
             {
@@ -87,7 +90,7 @@ namespace ShoppingApp.Controllers
         }
 
         [HttpPost("RemoveProductFromCart")]
-        public IActionResult RemoveProductFromCart(CartProductsDTO cartProducts)
+        public IActionResult RemoveProductFromCart(CartProductsDTO cartProducts)//Remove particular product from cart 
         {
             try
             {
@@ -100,15 +103,8 @@ namespace ShoppingApp.Controllers
             }
         }
 
-        [HttpGet("LoadAddressView")]
-        public ActionResult LoadAddressView()
-        {
-            Address address = new Address();
-            return View("~/Views/Cart/AddAddress.cshtml", address);
-        }
-
         [HttpGet("LoadUserAddress")]
-        public IActionResult LoadUserAddress()
+        public IActionResult LoadUserAddress() //User have multiple addresses loading that all to dropdown
         {
             try
             {
@@ -122,7 +118,7 @@ namespace ShoppingApp.Controllers
         }
 
         [HttpPost("SaveUserAddress")]
-        public IActionResult SaveAddress(Address address)
+        public IActionResult SaveAddress(Address address)//From the modal address saving into Address table
         {
             try
             {   
@@ -136,7 +132,7 @@ namespace ShoppingApp.Controllers
         }
 
         [HttpGet("CheckoutSuccess")]
-        public IActionResult CheckoutSuccess()
+        public IActionResult CheckoutSuccess()//After placing order showing success message and redirect to past orders
         {
             ViewBag.userName = "Sangeeth";//Sangeeth UserName hardcoded need to change this
             return View("CheckoutSuccess");

@@ -6,8 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace ShoppingApp.Controllers
-{
-    //[Route("[controller]")]
+{   
     public class UserController : Controller
     {
         IUserRepository iuserRepository;
@@ -18,7 +17,7 @@ namespace ShoppingApp.Controllers
         }
 
         [HttpGet]
-        public ActionResult ListUsers()
+        public ActionResult ListUsers()//Listing all users registerd for admin role
         {
             List<User> lstUser = new List<User>();
             iuserRepository.GetUsers().ToList().ForEach(u =>
@@ -42,7 +41,7 @@ namespace ShoppingApp.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult AddOrEdit(int id = 0)
+        public ActionResult AddOrEdit(int id = 0)//Loading the register view
         {
             User user = new User();
             string[] roles = { Role.Admin, Role.Customer };
@@ -51,13 +50,13 @@ namespace ShoppingApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult RegistrationSuccess()
+        public IActionResult RegistrationSuccess()//After registration showing success message
         {
             return View("UserRegistrationSuccess");
         }
 
         [HttpPost]
-        public ActionResult Register(User user)
+        public ActionResult Register(User user)//Save the user into table
         {
             try
             {

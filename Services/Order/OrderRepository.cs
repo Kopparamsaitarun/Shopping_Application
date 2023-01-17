@@ -1,5 +1,4 @@
 ﻿using Domain.EntityFramework;
-using Domain.Model.Cart;
 using Domain.Model.Dashboard;
 using Domain.Model.Order;
 using Infrastructure.Repository;
@@ -20,7 +19,7 @@ namespace Services.Order
         {
             this.orderRepository = _orderRepository;
         }
-        public IEnumerable<OrderDTO> GetOrders(int _userId)
+        public IEnumerable<OrderDTO> GetOrders(int _userId)//Loadind order header and details
         {
             var result = from oh in db.OrderHeader
                          join us in db.Register on oh.User.Id equals us.Id
@@ -29,13 +28,13 @@ namespace Services.Order
                          select new { oh, us, ad};
             List<OrderDTO> orderList = new List<OrderDTO>();
 
-            var proLst = 
+            var proLst = //Loading product details to map into the order
                 from plst in db.Productlist
                 join odt in db.OrderDetail on plst.Id equals odt.Product.Id
                 join oh in db.OrderHeader on odt.OrderHeader.Id equals oh.Id
                 select new { plst,odt,oh };
 
-            foreach(var temp in proLst)
+            foreach(var temp in proLst)//Adding item count against item
             {
                 temp.plst.Quantity = temp.odt.count;
             };
@@ -57,7 +56,7 @@ namespace Services.Order
                 }); ;
             };
 
-            foreach (var t in proLst)
+            foreach (var t in proLst)//Adding items to order 
             {
                 foreach (var s in orderList)
                 {
@@ -68,7 +67,7 @@ namespace Services.Order
                 }
             }
 
-            foreach (var t in orderList)
+            foreach (var t in orderList)//Calculating total for passing to html
             {
                 double tot = 0;
                 foreach (var item in t.ProductList)
@@ -78,7 +77,7 @@ namespace Services.Order
                 t.totalAmount = tot;
             }
 
-            return orderList.OrderByDescending(ord=> ord.orderHeaderId);
+            return orderList.OrderByDescending(ord=> ord.orderHeaderId);//Sorting the orders by inserted Id desc
 
         }
 
