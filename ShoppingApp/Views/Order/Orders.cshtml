@@ -1,18 +1,9 @@
 ﻿@model IEnumerable<ShoppingApp.Models.Cart.OrderDTO>
-@{
-    ViewData["Title"] = "Order";
 
-}
 @{ var orderHeader = Model.ToList();
-    double amt = 0;
-    int i = 0; }
-@{ foreach (var ordDet in orderHeader)
-    {
-        foreach (var prod in ordDet.ProductList.ToList())
-        {
-            amt = amt + (double)(prod.ProductPrice);
-        }
-    } }
+    int i = 0;
+}
+
 <link href="~/css/Order.css" rel="stylesheet" />
 <div class="container">
     <div class="row">
@@ -26,46 +17,50 @@
                         </div>
                         @foreach (var oh in Model)
                         {
-            <div class="bg-white card mb-4 order-list shadow-sm">
-                <div class="gold-members p-4">
-                    <div class="media">
-                        @{var imgURL = "";
-                            imgURL = orderHeader[i].ProductList.FirstOrDefault().ProductImage; }
+                            <div class="bg-white card mb-4 order-list shadow-sm">
+                                <div class="gold-members p-4">
+                                    <div class="media">
+                                        @* Loading the first product image to show in grid *@
+                                        @{var imgURL = "";
+                                            imgURL = orderHeader[i].ProductList.FirstOrDefault().ProductImage; }
 
-                        <img class="mr-4" src="~/images/@imgURL" alt="Generic placeholder image">
-                        <div class="media-body">
-                            <span class="float-right text-info">Order placed on  @oh.orderDate.ToString("ddd dd-MMM-yyyy hh:mm tt")</span>
-                            <h6 class="mb-2"><a href="#" class="text-black">Seller : Marlabs ShoppApp</a></h6>
-                            <p class="text-gray mb-1"><i class="icofont-list"></i>Order Number : ORDER #20222023000000.@oh.orderNumber</p>
-                            <p class="text-gray mb-1"><i class="icofont-location-arrow"></i>Delivery Address : @oh.Address.address1&nbsp;@oh.Address.address2&nbsp;<br>@oh.Address.state-@oh.Address.postCode&nbsp;@oh.Address.country</p>
-                            @{var itemName = ""; }                            
-                            <h6 class="mb-2"><a href="#" class="text-black">Items in order</a></h6>
-                            <table style="width: 65%" class="table table-sm">
-                                <thead>
-                                    <tr>
-                                        <th>Product</th>
-                                        <th style="text-align:end">Quantity</th>                                        
-                                        <th style="text-align:end">Rate</th>
-                                        <th style="text-align:end">Amount</th>
-                                    </tr>
-                                </thead>
-                                @{ foreach (var item in orderHeader[i].ProductList.ToList())
-                                    {
-                                        var tot = @item.Quantity * @item.ProductPrice;
+                                        <img class="mr-4" src="~/images/@imgURL" alt="Generic placeholder image">
+                                        <div class="media-body">
+                                            <span class="float-right text-info">Order placed on  @oh.orderDate.ToString("ddd dd-MMM-yyyy hh:mm tt")</span>
+                                            <h6 class="mb-2"><a href="#" class="text-black">Seller : Marlabs ShoppApp</a></h6>
+                                            <p class="text-gray mb-1"><i class="icofont-list"></i>Order Number : ORDER #20222023000000.@oh.orderNumber</p>
+                                            <p class="text-gray mb-1"><i class="icofont-location-arrow"></i>Delivery Address : @oh.Address.address1&nbsp;@oh.Address.address2&nbsp;<br>@oh.Address.state-@oh.Address.postCode&nbsp;@oh.Address.country</p>
+                                            @{var itemName = ""; }
+                                            <h6 class="mb-2"><a href="#" class="text-black">Items in order</a></h6>
+                                            <table style="width: 65%" class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Product</th>
+                                                        <th style="text-align:end">Quantity</th>
+                                                        <th style="text-align:end">Rate</th>
+                                                        <th style="text-align:end">Amount</th>
+                                                    </tr>
+                                                </thead>
+                                                @* Building the ordered products info table *@
+                                                @{ foreach (var item in orderHeader[i].ProductList.ToList())
+                                                    {
+                                                        var tot = @item.Quantity * @item.ProductPrice;
 
-                            <tr>
-                                <td align="left">@item.ProductName</td>
-                                <td align="right">@item.Quantity Nos</td>                                
-                                <td align="right">@item.ProductPrice.00</td>
-                                <td align="right">@tot.00</td>
-                            </tr> itemName = item.ProductName + " : " + item.Quantity + "Nos x " + item.ProductPrice + ".00 = " + item.Quantity * item.ProductPrice + ".00"; @*@: <p class="text-gray mb-1">@itemName</p>*@ } }
-                            </table>
-                            <p class="mb-0 text-black text-primary pt-2"><span class="text-black font-weight-bold"> Total Paid: @oh.totalAmount.00</span></p>
-                        </div>
-                    </div>
-                </div>
-            </div>i = i + 1;
-        }
+                                                        <tr>
+                                                            <td align="left">@item.ProductName</td>
+                                                            <td align="right">@item.Quantity Nos</td>
+                                                            <td align="right">@item.ProductPrice.00</td>
+                                                            <td align="right">@tot.00</td>
+                                                        </tr>
+                                                        itemName = item.ProductName + " : " + item.Quantity + "Nos x " + item.ProductPrice + ".00 = " + item.Quantity * item.ProductPrice + ".00"; @*@: <p class="text-gray mb-1">@itemName</p>*@ } }
+                                            </table>
+                                            @* Total amount is calculated in the repository and just loading here *@
+                                            <p class="mb-0 text-black text-primary pt-2"><span class="text-black font-weight-bold"> Total Paid: @oh.totalAmount.00</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>i = i + 1;
+                        }
                     </div>
                 </div>
             </div>

@@ -19,7 +19,12 @@ namespace Services.Order
         {
             this.orderRepository = _orderRepository;
         }
-        public IEnumerable<OrderDTO> GetOrders(int _userId)//Loadind order header and details
+        /// <summary>
+        /// Get all the user order details from table header and details
+        /// </summary>
+        /// <param name="_userId"></param>
+        /// <returns>List of orders along with product details and address</returns>
+        public IEnumerable<OrderDTO> GetOrders(int _userId)
         {
             var result = from oh in db.OrderHeader
                          join us in db.Register on oh.User.Id equals us.Id
@@ -27,14 +32,14 @@ namespace Services.Order
                          where oh.User.Id == _userId 
                          select new { oh, us, ad};
             List<OrderDTO> orderList = new List<OrderDTO>();
-
-            var proLst = //Loading product details to map into the order
+            //Loading product details to map into the order
+            var proLst = 
                 from plst in db.Productlist
                 join odt in db.OrderDetail on plst.Id equals odt.Product.Id
                 join oh in db.OrderHeader on odt.OrderHeader.Id equals oh.Id
                 select new { plst,odt,oh };
-
-            foreach(var temp in proLst)//Adding item count against item
+            //Adding item count against item
+            foreach (var temp in proLst)
             {
                 temp.plst.Quantity = temp.odt.count;
             };
@@ -55,8 +60,8 @@ namespace Services.Order
                     userId = item.us.Id
                 }); ;
             };
-
-            foreach (var t in proLst)//Adding items to order 
+            //Adding items to order 
+            foreach (var t in proLst)
             {
                 foreach (var s in orderList)
                 {
@@ -66,8 +71,8 @@ namespace Services.Order
                     }
                 }
             }
-
-            foreach (var t in orderList)//Calculating total for passing to html
+            //Calculating total for using html
+            foreach (var t in orderList)
             {
                 double tot = 0;
                 foreach (var item in t.ProductList)
@@ -76,14 +81,8 @@ namespace Services.Order
                 }
                 t.totalAmount = tot;
             }
-
-            return orderList.OrderByDescending(ord=> ord.orderHeaderId);//Sorting the orders by inserted Id desc
-
-        }
-
-        public IEnumerable<OrderHeader> GetOrderHeader(int userId)
-        {
-            throw new NotImplementedException();
+            //Sorting the orders by inserted Id desc
+            return orderList.OrderByDescending(ord=> ord.orderHeaderId);
         }
     }
 }

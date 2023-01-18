@@ -21,9 +21,12 @@ namespace ShoppingApp.Controllers
         {
             return View();
         }
-
+        /// <summary>
+        /// Loading all orders placed by user
+        /// </summary>
+        /// <returns> List of orders </returns>
         [HttpGet("GetOrders")]
-        public ActionResult GetOrders()//Loading all orders placed by user
+        public ActionResult GetOrders()
         {
             List<OrderDetailDTO> orders = new List<OrderDetailDTO>();
             var ordersList = _orderRepository.GetOrders(1);//Sangeeth UserId hardcoded need to change this
