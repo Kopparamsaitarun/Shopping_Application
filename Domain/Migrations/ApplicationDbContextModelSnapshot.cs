@@ -58,8 +58,7 @@ namespace Domain.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("ProductDescription")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductImage")
                         .HasColumnType("nvarchar(max)");

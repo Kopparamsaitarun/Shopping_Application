@@ -7,7 +7,7 @@
         ConfirmPassword: $('#ConfirmPassword').val(),
         phoneNumber: $('#phoneNumber').val(),
         policyFlag: $('#policyFlag').val(),
-        Role: 'Admin'
+        Role: $('#role').val()
     };
 
 

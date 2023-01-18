@@ -79,7 +79,7 @@ function AddtoCart(itemId) {
         contentType: "application/json",
         dataType: "JSON",
         data: JSON.stringify(item),
-        url: "/Cart/AddToCart",
+        url: "/Dashboard/AddToCart",
         success: function (response) {
             if (response.success) {
             } else {

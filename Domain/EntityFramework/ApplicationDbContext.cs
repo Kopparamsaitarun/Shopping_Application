@@ -48,18 +48,18 @@ namespace Domain.EntityFramework
                 entity.Property(t => t.Role).IsRequired();
             });
             //Validations purpose 
-            oModelBuilder.Entity<Productlist>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-                entity.ToTable("Productlist");
-                entity.Property(t => t.ProductDescription).HasMaxLength(50);
-                entity.Property(t => t.ProductPrice).IsRequired(); ;
-                entity.Property(t => t.ProductName).IsRequired();
-                entity.Property(t => t.ProductName).IsRequired();
-                entity.Property(t => t.ProductImage);
-                entity.Property(e => e.InStock);
-                entity.Property(e => e.InCart);
-            });
+            //oModelBuilder.Entity<Productlist>(entity =>
+            //{
+            //    entity.HasKey(e => e.Id);
+            //    entity.ToTable("Productlist");
+            //    entity.Property(t => t.ProductDescription).HasMaxLength(50);
+            //    entity.Property(t => t.ProductPrice).IsRequired(); ;
+            //    entity.Property(t => t.ProductName).IsRequired();
+            //    entity.Property(t => t.ProductName).IsRequired();
+            //    entity.Property(t => t.ProductImage);
+            //    entity.Property(e => e.InStock);
+            //    entity.Property(e => e.InCart);
+            //});
 
 		
 
