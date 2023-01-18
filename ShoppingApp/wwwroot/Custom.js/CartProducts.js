@@ -112,6 +112,7 @@ function RemoveProductFromCart(itemId) {
     });
 }
 
+
 /*Usage : To increase count of the product in cart
   Just updating in the UI and calling UpdateCartData(),CalculateSum() function
 */
