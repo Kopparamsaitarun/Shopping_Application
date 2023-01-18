@@ -3,8 +3,6 @@ using Infrastructure.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Registration
 {
@@ -17,26 +15,79 @@ namespace Services.Registration
         {
             userRepository = _userRepository;
         }
+        /// <summary>
+        /// Delete user
+        /// </summary>
+        /// <param name="Id"></param>
         public void DeleteUser(long Id)
         {
-
-            User user = GetUser(Id);
-            userRepository.Remove(user);
-            userRepository.Savechanges();
+            try
+            {
+                User user = GetUser(Id);
+                userRepository.Remove(user);
+                userRepository.Savechanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
+        /// <summary>
+        /// To check the new user email exists
+        /// </summary>
+        /// <param name="emailInput"></param>
+        /// <returns></returns>
         public bool EmailExists(string emailInput)
         {
-            return userRepository.GetAll().Where(e => e.email?.ToLower() == emailInput?.ToLower()).Any();
+            try
+            {
+                return userRepository.GetAll().Where(e => e.email?.ToLower() == emailInput?.ToLower()).Any();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
+
+        /// <summary>
+        /// Get user by id
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         public User GetUser(long Id)
         {
-            return userRepository.GetT(Id);
+            try
+            {
+                return userRepository.GetT(Id);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
+
+        /// <summary>
+        /// Get list of users
+        /// </summary>
+        /// <returns> list of users </returns>
         public IEnumerable<User> GetUsers()
         {
-            return userRepository.GetAll();
+            try
+            {
+                return userRepository.GetAll();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
+
+        /// <summary>
+        /// Added InsertUser1 with email existing() check
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public int InsertUser1(User user)
         {
             if (!EmailExists(user.email))
@@ -50,14 +101,36 @@ namespace Services.Registration
             }
         }
 
+        /// <summary>
+        /// Update the user info
+        /// </summary>
+        /// <param name="user"></param>
         public void UpdatetUser(User user)
         {
-            userRepository.Update(user);
+            try
+            {
+                userRepository.Update(user);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
+        /// <summary>
+        /// Insert user data into table register
+        /// </summary>
+        /// <param name="user"></param>
         void IUserRepository.InsertUser(User user)
         {
-            userRepository.Insert(user);
+            try
+            {
+                userRepository.Insert(user);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

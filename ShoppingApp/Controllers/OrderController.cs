@@ -15,7 +15,7 @@ namespace ShoppingApp.Controllers
         public OrderController(ILogger<OrderController> logger, IOrderRepository orderRepository)
         {
             _logger = logger;
-            _orderRepository =orderRepository;
+            _orderRepository = orderRepository;
         }
         public IActionResult Index()
         {
@@ -28,9 +28,17 @@ namespace ShoppingApp.Controllers
         [HttpGet("GetOrders")]
         public ActionResult GetOrders()
         {
-            List<OrderDetailDTO> orders = new List<OrderDetailDTO>();
-            var ordersList = _orderRepository.GetOrders(1);//Sangeeth UserId hardcoded need to change this
-            return View("~/Views/Order/Orders.cshtml", ordersList);
+            try
+            {
+                List<OrderDetailDTO> orders = new List<OrderDetailDTO>();
+                var ordersList = _orderRepository.GetOrders(1);//Sangeeth UserId hardcoded need to change this
+                return View("~/Views/Order/Orders.cshtml", ordersList);
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+
         }
     }
 }

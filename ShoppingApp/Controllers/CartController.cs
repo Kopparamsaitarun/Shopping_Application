@@ -29,7 +29,7 @@ namespace ShoppingApp.Controllers
                 List<CartProducts> cartProducts = new List<CartProducts>();
                 IEnumerable<CartProducts> cartItems = cartProducts;
                 cartItems = _cartProductRepository.GetCartProducts(1);//Sangeeth UserId hardcoded need to change this                            
-                return View("CartItems",cartItems);
+                return View("CartItems", cartItems);
             }
             catch (Exception exception)
             {
@@ -41,7 +41,7 @@ namespace ShoppingApp.Controllers
         /// </summary>
         /// <returns>List of products in cart</returns>
         [HttpGet("CartItems")]
-             public IActionResult CartItems()
+        public IActionResult CartItems()
         {
             try
             {
@@ -68,7 +68,7 @@ namespace ShoppingApp.Controllers
             {
                 foreach (var cartItem in cartProducts)
                 {
-                    _cartProductRepository.UpdateProduct(cartItem.productId, 1 , cartItem.count);//Sangeeth UserId hardcoded need to change this
+                    _cartProductRepository.UpdateProduct(cartItem.productId, 1, cartItem.count);//Sangeeth UserId hardcoded need to change this
                 }
                 return Json(new { success = true, message = "Success" });
             }
@@ -87,7 +87,7 @@ namespace ShoppingApp.Controllers
         {
             try
             {
-                _cartProductRepository.Checkout(1,orderDetail.addressId);//Sangeeth UserId hardcoded need to change this
+                _cartProductRepository.Checkout(1, orderDetail.addressId);//Sangeeth UserId hardcoded need to change this
                 _cartProductRepository.EmptyCart(1);//Sangeeth UserId hardcoded need to change this
                 return Json(new { success = true, message = "Success" });
             }
@@ -103,7 +103,7 @@ namespace ShoppingApp.Controllers
         /// <param name="cartProducts"></param>
         /// <returns>Suceess true and false</returns>
         [HttpPost("RemoveProductFromCart")]
-        public IActionResult RemoveProductFromCart(CartProductsDTO cartProducts) 
+        public IActionResult RemoveProductFromCart(CartProductsDTO cartProducts)
         {
             try
             {
@@ -121,7 +121,7 @@ namespace ShoppingApp.Controllers
         /// </summary>
         /// <returns> List of address </returns>
         [HttpGet("LoadUserAddress")]
-        public IActionResult LoadUserAddress() 
+        public IActionResult LoadUserAddress()
         {
             try
             {
@@ -143,8 +143,8 @@ namespace ShoppingApp.Controllers
         public IActionResult SaveAddress(Address address)
         {
             try
-            {   
-                _cartProductRepository.SaveUserAddress(address,1);//Sangeeth UserId hardcoded need to change this
+            {
+                _cartProductRepository.SaveUserAddress(address, 1);//Sangeeth UserId hardcoded need to change this
                 return Json(new { success = true, message = "Success" });
             }
             catch (Exception exception)

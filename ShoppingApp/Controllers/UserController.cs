@@ -23,26 +23,33 @@ namespace ShoppingApp.Controllers
         [HttpGet]
         public ActionResult ListUsers()
         {
-            List<User> lstUser = new List<User>();
-            iuserRepository.GetUsers().ToList().ForEach(u =>
+            try
             {
-                User user = null;
-                user = new User()
+                List<User> lstUser = new List<User>();
+                iuserRepository.GetUsers().ToList().ForEach(u =>
                 {
-                    Id = u.Id,
-                    firstName = u.firstName,
-                    lastName = u.lastName,
-                    email = u.email,
-                    phoneNumber = u.phoneNumber,
-                    password = u.password,
-                    policyFlag = u.policyFlag,
-                    Role = u.Role,
-                };
-                lstUser.Add(user);
-            });
+                    User user = null;
+                    user = new User()
+                    {
+                        Id = u.Id,
+                        firstName = u.firstName,
+                        lastName = u.lastName,
+                        email = u.email,
+                        phoneNumber = u.phoneNumber,
+                        password = u.password,
+                        policyFlag = u.policyFlag,
+                        Role = u.Role,
+                    };
+                    lstUser.Add(user);
+                });
 
-            ViewData["lstUser"] = lstUser;
-            return View();
+                ViewData["lstUser"] = lstUser;
+                return View();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         /// <summary>
@@ -53,10 +60,17 @@ namespace ShoppingApp.Controllers
         [HttpGet]
         public ActionResult Registration(int id = 0)
         {
-            User user = new User();
-            string[] roles = { Role.Admin, Role.Customer };
-            ViewData["roles"] = roles;
-            return View(user);
+            try
+            {
+                User user = new User();
+                string[] roles = { Role.Admin, Role.Customer };
+                ViewData["roles"] = roles;
+                return View(user);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         /// <summary>
@@ -96,10 +110,12 @@ namespace ShoppingApp.Controllers
                     var inserted = iuserRepository.InsertUser1(loginUser);
                     if (inserted == 1)
                     {
-                        return Json(new { success = true, message = "Success" });}
+                        return Json(new { success = true, message = "Success" });
+                    }
                     else
                     {
-                        return Json(new { success = true, message = "Email already exists" });}
+                        return Json(new { success = true, message = "Email already exists" });
+                    }
                 }
                 else
                 {
@@ -120,20 +136,27 @@ namespace ShoppingApp.Controllers
         [HttpPut("UpdateUser")]
         public int UpdateUser(User model)
         {
-            User UserEntity = new User
+            try
             {
-                Id = model.Id,
-                firstName = model.firstName,
-                lastName = model.lastName,
-                email = model.email,
-                phoneNumber = model.phoneNumber,
-                password = model.password,
-                policyFlag = model.policyFlag,
-                Role = model.Role,
+                User UserEntity = new User
+                {
+                    Id = model.Id,
+                    firstName = model.firstName,
+                    lastName = model.lastName,
+                    email = model.email,
+                    phoneNumber = model.phoneNumber,
+                    password = model.password,
+                    policyFlag = model.policyFlag,
+                    Role = model.Role,
 
-            };
-            iuserRepository.UpdatetUser(UserEntity);
-            return 1;
+                };
+                iuserRepository.UpdatetUser(UserEntity);
+                return 1;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         /// <summary>
@@ -144,8 +167,15 @@ namespace ShoppingApp.Controllers
         [HttpDelete("DeleteUser")]
         public int DeleteUser(long id)
         {
-            iuserRepository.DeleteUser(id);
-            return 1;
+            try
+            {
+                iuserRepository.DeleteUser(id);
+                return 1;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         /// <summary>
@@ -160,17 +190,17 @@ namespace ShoppingApp.Controllers
             {
                 if (iuserRepository.EmailExists(model.email))
                 {
-                    return Json(new { success = true, message = "Email already exists" });}
+                    return Json(new { success = true, message = "Email already exists" });
+                }
                 else
                 {
-                    return Json(new { success = false, message = "Email Availabe!" });}                     
+                    return Json(new { success = false, message = "Email Availabe!" });
+                }
             }
             catch (Exception)
             {
                 throw;
             }
-
         }
-
     }
 }
