@@ -20,7 +20,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="firstName" class="control-label">First Name</label>
-                <input asp-for="firstName" class="form-control" id="firstName"/>
+                <input asp-for="firstName" class="form-control" id="firstName" />
                 <span asp-validation-for="firstName" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -29,9 +29,18 @@
                 <span asp-validation-for="lastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="email" class="control-label">Email</label>
-                <input asp-for="email" class="form-control" id="email" />
-                <span asp-validation-for="email" class="text-danger"></span>
+                <table>
+                    <tr>
+                        <td>
+                            <label asp-for="email" class="control-label">Email</label>
+                            <input asp-for="email" class="form-control" id="email" oninput="EmailExists()" />
+                            <span asp-validation-for="email" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <label class="control-label"><span id="IdEmailExists"></span></label>                            
+                        </td>
+                    </tr>
+                </table>
             </div>
             <div class="form-group">
                 <label asp-for="password" class="control-label">Password</label>
@@ -51,10 +60,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="Role" class="control-label">Role</label>
-                <select  asp-for="Role" class="form-control" id="role">
+                <select asp-for="Role" class="form-control" id="role">
                     @foreach (var item in roles)
                     {
-                    <option value=@item>@item</option>
+                        <option value=@item>@item</option>
                     }
                 </select>
                 <span asp-validation-for="Role" class="text-danger"></span>
@@ -64,8 +73,8 @@
                 <input class="form-check-input" asp-for="policyFlag" /> @Html.DisplayNameFor(model => model.policyFlag)
             </div>
             <div class="form-group">
-                @*<input type="button" onclick="Signup()" value="Signup" class="btn btn-primary" />*@  
-                <input type="submit" name="signup" value="Signup" class="btn btn-primary" />                
+                @*<input type="button" onclick="Signup()" value="Signup" class="btn btn-primary" />*@
+                <input type="submit" name="signup" value="Signup" class="btn btn-primary" />
             </div>
         </div>
     </div>

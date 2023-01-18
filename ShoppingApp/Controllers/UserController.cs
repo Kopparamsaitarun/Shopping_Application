@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace ShoppingApp.Controllers
-{   
+{
     public class UserController : Controller
     {
         IUserRepository iuserRepository;
@@ -37,7 +37,7 @@ namespace ShoppingApp.Controllers
                 lstUser.Add(user);
             });
 
-            ViewData["lstUser"] = lstUser;            
+            ViewData["lstUser"] = lstUser;
             return View();
         }
         [HttpGet]
@@ -113,6 +113,25 @@ namespace ShoppingApp.Controllers
         {
             iuserRepository.DeleteUser(id);
             return 1;
+        }
+
+        [HttpGet]
+        public ActionResult EmailExists(User model)
+        {
+            try
+            {
+                if (iuserRepository.EmailExists(model.email))
+                {
+                    return Json(new { success = true, message = "Email already exists" });}
+                else
+                {
+                    return Json(new { success = false, message = "Email Availabe!" });}                     
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
 
     }

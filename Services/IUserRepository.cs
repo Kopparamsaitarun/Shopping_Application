@@ -14,5 +14,6 @@ namespace Services
         void InsertUser(User user);
         void UpdatetUser(User user);
         void DeleteUser(long Id);
+        bool EmailExists(string emailInput);
     }
 }

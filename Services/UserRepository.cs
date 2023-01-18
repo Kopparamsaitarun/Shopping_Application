@@ -24,6 +24,11 @@ namespace Services
             userRepository.Remove(user);
             userRepository.Savechanges();
         }
+
+        public bool EmailExists(string emailInput)
+        {
+            return userRepository.GetAll().Where(e => e.email?.ToLower() == emailInput?.ToLower()).Any();            
+        }
         public User GetUser(long Id)
         {
             return userRepository.GetT(Id);
