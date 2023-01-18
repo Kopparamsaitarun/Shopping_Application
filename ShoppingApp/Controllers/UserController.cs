@@ -1,12 +1,12 @@
 ﻿using Domain.Model.User;
 using Microsoft.AspNetCore.Mvc;
-using Services;
+using Services.Registration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace ShoppingApp.Controllers
-{   
+{
     public class UserController : Controller
     {
         IUserRepository iuserRepository;
@@ -37,11 +37,11 @@ namespace ShoppingApp.Controllers
                 lstUser.Add(user);
             });
 
-            ViewData["lstUser"] = lstUser;            
+            ViewData["lstUser"] = lstUser;
             return View();
         }
         [HttpGet]
-        public ActionResult AddOrEdit(int id = 0)//Loading the register view
+        public ActionResult Registration(int id = 0)//Loading the register view
         {
             User user = new User();
             string[] roles = { Role.Admin, Role.Customer };
@@ -113,6 +113,25 @@ namespace ShoppingApp.Controllers
         {
             iuserRepository.DeleteUser(id);
             return 1;
+        }
+
+        [HttpGet]
+        public ActionResult EmailExists(User model)
+        {
+            try
+            {
+                if (iuserRepository.EmailExists(model.email))
+                {
+                    return Json(new { success = true, message = "Email already exists" });}
+                else
+                {
+                    return Json(new { success = false, message = "Email Availabe!" });}                     
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
 
     }
