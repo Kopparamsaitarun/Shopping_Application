@@ -1,4 +1,8 @@
 ﻿@model IEnumerable<ShoppingApp.Models.Cart.OrderDTO>
+@{
+    ViewData["Title"] = "Order";
+
+}
 @{ var orderHeader = Model.ToList();
     double amt = 0;
     int i = 0; }

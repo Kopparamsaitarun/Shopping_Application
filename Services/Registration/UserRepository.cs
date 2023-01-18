@@ -6,16 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services
+namespace Services.Registration
 {
-    
+
     public class UserRepository : IUserRepository
     {
         IGenericRepository<User> userRepository;
 
         public UserRepository(IGenericRepository<User> _userRepository)
         {
-            this.userRepository = _userRepository;
+            userRepository = _userRepository;
         }
         public void DeleteUser(long Id)
         {

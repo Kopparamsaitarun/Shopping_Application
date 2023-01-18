@@ -1,5 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Routing
 @model IEnumerable<Domain.Model.Dashboard.Productlist>
+<script src="~/Custom.js/CartProducts.js"></script>
+@{
+        ViewData["Title"] = "Dashboard";
+
+}
+
 <style>
     body {
         font-family: 'Rubik', sans-serif;
@@ -1037,7 +1043,7 @@
         <!-- Header Main -->
         <div class="header_main">
             <div class="container">
-                <div class="row">
+                <div class="row" style="height:125px">
 
                    <!-- Logo -->
                     <div class="col-lg-2 col-sm-3 col-3 order-1">
@@ -1046,39 +1052,37 @@
                         </div>
                     </div>
 
-                    <!-- Search -->
-                    <div class="col-lg-6 col-12 order-lg-2 order-3 text-lg-left text-right">
-                        <div class="header_search">
-                            <div class="header_search_content">
-                                <div class="header_search_form_container">
-                                    <form action="#" class="header_search_form clearfix">
-                                        <input type="search" required="required" class="header_search_input" placeholder="Search for products...">
-                                        <div class="custom_dropdown" style="display: none;">
-                                            <div class="custom_dropdown_list">
-                                                <span class="custom_dropdown_placeholder clc">All Categories</span>
-                                                <i class="fas fa-chevron-down"></i>
-                                                <ul class="custom_list clc">
-                                                    <li><a class="clc" href="#">All Categories</a></li>
-                                                    <li><a class="clc" href="#">Computers</a></li>
-                                                    <li><a class="clc" href="#">Laptops</a></li>
-                                                    <li><a class="clc" href="#">Cameras</a></li>
-                                                    <li><a class="clc" href="#">Hardware</a></li>
-                                                    <li><a class="clc" href="#">Smartphones</a></li>
-                                                </ul>
-                                            </div>
+                <div class="col-lg-6 col-12 order-lg-2 order-3 text-lg-left text-right">
+                    <div class="header_search">
+                        <div class="header_search_content">
+                            <div class="header_search_form_container">
+                                <form asp-controller="DashBoard" asp-action="SearchProduct" method="get" class="header_search_form clearfix">
+                                    <input type="text" required="required" class="header_search_input" placeholder="Search for products..." name="searchString">
+                                    <div class="custom_dropdown" style="display: none;">
+
+                                        <div class="custom_dropdown_list">
+                                            <span class="custom_dropdown_placeholder clc">All Categories</span>
+
+                                            <i class="fas fa-chevron-down"></i>
+
                                         </div>
-                                        <button type="submit" class="header_search_button trans_300" value="Submit"><img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918770/search.png" alt=""></button>
-                                    </form>
-                                </div>
+                                    </div>
+                                    <button type="submit" class="header_search_button trans_300" value="Submit"><img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918770/search.png" alt=""></button>
+                                </form>
                             </div>
                         </div>
                     </div>
+                </div>
                 <!--Filter-->
                 <div class="col-lg-1 col-8 order-lg-2 order-2 text-lg-left text-right">
                     <div class="dropdown">
-                        <a onclick="myFunction()" class="dropbtn" style="font-size: larger;">Filter</a>
-                        <div id="myDropdown" class="dropdown-content">
-                            <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            Filter
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" asp-controller="DashBoard" asp-action="GetProductLowHigh">Low to High</a>
+                            <a class="dropdown-item" asp-controller="DashBoard" asp-action="GetProductHighLow">High to Low</a>
                         </div>
                     </div>
                 </div>
@@ -1091,7 +1095,7 @@
                                 <div class="cart_container d-flex flex-row align-items-center justify-content-end">
                                     <div class="cart_icon">
 
-                                        <a href="@Url.Action("CartItems", "Cart")"><img src="~/Images/CartIcon.png" href="@Url.Action("CartItems", "Cart")" /></a>
+                                    <a href="@Url.Action("CartItems", "Cart")"><img src="~/Images/CartIcon.png"  /></a>
                                     </div>
                                     <div class="cart_content">
                                         <div class="cart_text"><a href="#">Cart</a></div>
@@ -1114,7 +1118,7 @@
 
                     <input type="hidden" class="productID" value="{item.Id}">
 
-                <a href="@Url.Action("GetProduct","Dashboard", new {id=item.Id })"><img src="~/images/@item.ProductImage" class="img-fluid card-img-top" style="margin-bottom:7px;" /></a>
+                <a href="@Url.Action("GetProductAll","Dashboard", new {id=item.Id })"><img src="~/images/@item.ProductImage" class="img-fluid card-img-top" style="margin-bottom:7px;" /></a>
 
                         <div class="card-body">
                     <h4 class="card-title" id="productName" name="productName">@item.ProductName</h4>
@@ -1125,7 +1129,8 @@
                             </p>
                             @if(item.InCart == false)
                             {
-                    <a href="@Url.Action("AddToCart","Dashboard", new {id=item.Id })"class="btn btn-primary btn-lg">Add To Cart</a>
+                           <a href="#" onclick="AddtoCart(@item.Id)" class="btn btn-primary btn-lg">Add To Carts</a>
+
                             }
                             else
                             {
