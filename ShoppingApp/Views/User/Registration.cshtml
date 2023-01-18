@@ -1,10 +1,9 @@
 ﻿@model Domain.Model.User.User
-@*@Html.PasswordFor(m => m.Password)*@
 @{
-    ViewData["Title"] = "AddOrEdit";
+    ViewData["Title"] = "Registration";
     var roles = (string[])ViewData["roles"];
 }
-
+<link href="~/css/User.css" rel="stylesheet" />
 <table>
     <tr>
         <td><img src="~/UserIcon.png" /></td>
@@ -16,7 +15,7 @@
 <hr />
 <form name="userRegistration" onsubmit="return Signup()">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-10">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="firstName" class="control-label">First Name</label>
@@ -29,15 +28,16 @@
                 <span asp-validation-for="lastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <table>
+                <table class="tblemail">
                     <tr>
-                        <td>
+                        <td width="70%">
                             <label asp-for="email" class="control-label">Email</label>
-                            <input asp-for="email" class="form-control" id="email" oninput="EmailExists()" />
-                            <span asp-validation-for="email" class="text-danger"></span>
+                            <input asp-for="email" class="form-control" id="email" onchange="EmailExists()"  />
+                            <span asp-validation-for="email" class="text-danger" id="lblEmailError"></span>
                         </td>
-                        <td>
-                            <label class="control-label"><span id="IdEmailExists"></span></label>                            
+                        <td width="30%">      
+                            <br /><br />
+                            <label class="control-label" id="IdEmailExists"></label>
                         </td>
                     </tr>
                 </table>
@@ -60,7 +60,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Role" class="control-label">Role</label>
-                <select asp-for="Role" class="form-control" id="role">
+                <select asp-for="Role" class="form-control" id="role" style="width: 42%">
                     @foreach (var item in roles)
                     {
                         <option value=@item>@item</option>
@@ -73,8 +73,7 @@
                 <input class="form-check-input" asp-for="policyFlag" /> @Html.DisplayNameFor(model => model.policyFlag)
             </div>
             <div class="form-group">
-                @*<input type="button" onclick="Signup()" value="Signup" class="btn btn-primary" />*@
-                <input type="submit" name="signup" value="Signup" class="btn btn-primary" />
+                <input type="submit" name="signup" id="signup" value="Signup" class="btn btn-primary" />
             </div>
         </div>
     </div>

@@ -16,8 +16,12 @@ namespace ShoppingApp.Controllers
             this.iuserRepository = _iuserRepository;
         }
 
+        /// <summary>
+        /// Listing all users registerd for admin role - not in use
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public ActionResult ListUsers()//Listing all users registerd for admin role
+        public ActionResult ListUsers()
         {
             List<User> lstUser = new List<User>();
             iuserRepository.GetUsers().ToList().ForEach(u =>
@@ -40,8 +44,14 @@ namespace ShoppingApp.Controllers
             ViewData["lstUser"] = lstUser;
             return View();
         }
+
+        /// <summary>
+        /// Loading the empty Register view
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
-        public ActionResult Registration(int id = 0)//Loading the register view
+        public ActionResult Registration(int id = 0)
         {
             User user = new User();
             string[] roles = { Role.Admin, Role.Customer };
@@ -49,14 +59,23 @@ namespace ShoppingApp.Controllers
             return View(user);
         }
 
+        /// <summary>
+        /// After registration showing success message
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public IActionResult RegistrationSuccess()//After registration showing success message
+        public IActionResult RegistrationSuccess()
         {
             return View("UserRegistrationSuccess");
         }
 
+        /// <summary>
+        /// Save the user info into table
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPost]
-        public ActionResult Register(User user)//Save the user into table
+        public ActionResult Register(User user)
         {
             try
             {
@@ -74,8 +93,13 @@ namespace ShoppingApp.Controllers
                         policyFlag = user.policyFlag
                     };
 
-                    iuserRepository.InsertUser(loginUser);
-                    return Json(new { success = true, message = "Success" });
+                    var inserted = iuserRepository.InsertUser1(loginUser);
+                    if (inserted == 1)
+                    {
+                        return Json(new { success = true, message = "Success" });}
+                    else
+                    {
+                        return Json(new { success = true, message = "Email already exists" });}
                 }
                 else
                 {
@@ -88,7 +112,11 @@ namespace ShoppingApp.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Updating the user information
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPut("UpdateUser")]
         public int UpdateUser(User model)
         {
@@ -108,6 +136,11 @@ namespace ShoppingApp.Controllers
             return 1;
         }
 
+        /// <summary>
+        /// Delete a particular user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("DeleteUser")]
         public int DeleteUser(long id)
         {
@@ -115,6 +148,11 @@ namespace ShoppingApp.Controllers
             return 1;
         }
 
+        /// <summary>
+        /// Check email already exists from the new registration window
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult EmailExists(User model)
         {

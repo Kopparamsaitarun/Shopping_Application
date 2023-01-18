@@ -37,9 +37,9 @@ namespace ShoppingApp.Controllers
             }
         }
         /// <summary>
-        /// Loading all the cart products
+        /// Loading all the user products in cart
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of products in cart</returns>
         [HttpGet("CartItems")]
              public IActionResult CartItems()
         {
@@ -56,9 +56,13 @@ namespace ShoppingApp.Controllers
                 return BadRequest(new { success = false, exception.Message });
             }
         }
-
+        /// <summary>
+        /// Updating the item count in user cart
+        /// </summary>
+        /// <param name="cartProducts"></param>
+        /// <returns>Suceess true and false</returns>
         [HttpPost("UpdateCart")]
-        public IActionResult UpdateCart(List<CartProductsDTO> cartProducts)//Updating the item count in cart
+        public IActionResult UpdateCart(List<CartProductsDTO> cartProducts)
         {
             try
             {
@@ -73,9 +77,13 @@ namespace ShoppingApp.Controllers
                 return BadRequest(new { success = false, exception.Message });
             }
         }
-
+        /// <summary>
+        /// Placing the order and moving the cart data to OrderHeader and OrderDetails
+        /// </summary>
+        /// <param name="orderDetail"></param>
+        /// <returns>Suceess true and false</returns>
         [HttpPost("Checkout")]
-        public IActionResult Checkout(OrderDetailDTO orderDetail)//Placing the order and moving the data to OrderHeader and OrderDetails
+        public IActionResult Checkout(OrderDetailDTO orderDetail)
         {
             try
             {
@@ -89,8 +97,13 @@ namespace ShoppingApp.Controllers
             }
         }
 
+        /// <summary>
+        /// Remove a single product from cart
+        /// </summary>
+        /// <param name="cartProducts"></param>
+        /// <returns>Suceess true and false</returns>
         [HttpPost("RemoveProductFromCart")]
-        public IActionResult RemoveProductFromCart(CartProductsDTO cartProducts)//Remove particular product from cart 
+        public IActionResult RemoveProductFromCart(CartProductsDTO cartProducts) 
         {
             try
             {
@@ -103,8 +116,12 @@ namespace ShoppingApp.Controllers
             }
         }
 
+        /// <summary>
+        /// User have multiple addresses loading that all in to dropdown
+        /// </summary>
+        /// <returns> List of address </returns>
         [HttpGet("LoadUserAddress")]
-        public IActionResult LoadUserAddress() //User have multiple addresses loading that all to dropdown
+        public IActionResult LoadUserAddress() 
         {
             try
             {
@@ -117,8 +134,13 @@ namespace ShoppingApp.Controllers
             }
         }
 
+        /// <summary>
+        /// From the modal-address saving data into Address table
+        /// </summary>
+        /// <param name="address"></param>
+        /// <returns> Suceess true and false </returns>
         [HttpPost("SaveUserAddress")]
-        public IActionResult SaveAddress(Address address)//From the modal address saving into Address table
+        public IActionResult SaveAddress(Address address)
         {
             try
             {   
@@ -131,8 +153,12 @@ namespace ShoppingApp.Controllers
             }
         }
 
+        /// <summary>
+        /// After placing order showing success message and redirect to past orders
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("CheckoutSuccess")]
-        public IActionResult CheckoutSuccess()//After placing order showing success message and redirect to past orders
+        public IActionResult CheckoutSuccess()
         {
             ViewBag.userName = "Sangeeth";//Sangeeth UserName hardcoded need to change this
             return View("CheckoutSuccess");

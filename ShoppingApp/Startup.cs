@@ -58,7 +58,7 @@ namespace ShoppingApp
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IDashboardRepository, DashboardRepository>();
             services.AddTransient<ICartProductRepository, CartProductRepository>();
-            services.AddTransient<ILoginRepository, LoginRepository>();
+            //services.AddTransient<ILoginRepository, LoginRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
 
             services.AddHttpContextAccessor();

@@ -15,10 +15,12 @@
                     <div class="col align-self-center text-right text-muted">@Model.ToList().Count items</div>
                 </div>
             </div>
+            @* Initializing calculation variables *@
             @{double total = 0;}
             @{double totalItems = 0;}
             @foreach (var cart in Model)
             {
+                //Doing calculation for total and total items
                 total += (cart.Count * cart.product.ProductPrice);
                 totalItems += cart.Count;
                 <div class="row border-top border-bottom cart-items">
@@ -33,6 +35,7 @@
                             <a href="#" class="border cart_item_quantity">@cart.Count</a>
                             <a href="#" onclick="IncreaseCount(@cart.product.Id)">+</a>
                         </div>
+                        @* Rupees symbol added along with price and calling the remove product function *@
                         <div class="col cart_item_amount">&#8377; @cart.product.ProductPrice <span class="close" onclick="RemoveProductFromCart(@cart.product.Id)">&#10005;</span></div>
                     </div>
                 </div>
@@ -45,6 +48,7 @@
             <div class="row">
                 <div class="col total-items" style="padding-left:0;">TOTAL ITEMS @totalItems</div>
             </div>
+            @* Hidden field to store the totalItems count and there by easy access in JS file *@
             <input type="hidden" id="totalItems" name="totalItems" value=@totalItems>
 
             <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
@@ -52,12 +56,14 @@
                 <div class="col text-right total">&#8377; @total.00</div>
             </div>
 
+            @* Building the data of full address of the user - to display in the label *@
             @{string fullAdd = ""; }
             <label>DELIVERY ADDRESS</label>
             <select name="listAddress" id="listAddress" onchange="ShowCompleteAddress()">
                 @foreach (var item in ViewBag.addresses)
                 {
                     fullAdd = item.address1 + ' ' + item.address2 + ' ' + item.city + '-' + item.postCode;
+                    //Using custom attribute to store the data full address - data-complete
                     <option data-complete=@fullAdd value="@item.Id">
                         @item.address1 @item.address2
                     </option>
@@ -65,7 +71,7 @@
             </select>
             <p id="labelAddress"></p>
 
-            <!-- Button trigger modal -->
+            <!-- Button trigger modal address-->
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addressModal">
                 NEW ADDRESS
             </button>
@@ -95,8 +101,8 @@
                                 </div>
                             </fieldset>
                         </form>
-                    </div><!-- /.col-lg-12 -->
-                </div><!-- /.row -->
+                    </div>
+                </div>
             </div>
             <div style="display:flex">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -12,6 +12,7 @@ namespace Services.Registration
         IEnumerable<User> GetUsers();
         User GetUser(long Id);
         void InsertUser(User user);
+        int InsertUser1(User user);
         void UpdatetUser(User user);
         void DeleteUser(long Id);
         bool EmailExists(string emailInput);

@@ -27,7 +27,7 @@ namespace Services.Registration
 
         public bool EmailExists(string emailInput)
         {
-            return userRepository.GetAll().Where(e => e.email?.ToLower() == emailInput?.ToLower()).Any();            
+            return userRepository.GetAll().Where(e => e.email?.ToLower() == emailInput?.ToLower()).Any();
         }
         public User GetUser(long Id)
         {
@@ -37,10 +37,17 @@ namespace Services.Registration
         {
             return userRepository.GetAll();
         }
-        public int InsertUser(User user)
+        public int InsertUser1(User user)
         {
-            userRepository.Insert(user);
-            return 1;
+            if (!EmailExists(user.email))
+            {
+                userRepository.Insert(user);
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         public void UpdatetUser(User user)
