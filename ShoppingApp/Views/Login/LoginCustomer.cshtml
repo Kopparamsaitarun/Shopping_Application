@@ -1,0 +1,49 @@
+﻿@model List<string>
+@{
+	ViewData["Title"] = "Login";
+}
+<html>
+<head>
+	<link rel="stylesheet" href="~/css/LoginCustomer.css">
+	<script src="~/js/CustomerLogin.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+	<div class="container">
+		<div class="screen">
+			<div class="screen__content">
+
+				<form class="login" asp-action="LoginCustomer" method="post">
+					<div class="login__field">
+						<i class="fa fa-user"></i>
+						<input type="text" id="email" name="email" class="login__input" placeholder="Email">
+					</div>
+					<div class="login__field">
+						<i class="fa fa-lock"></i>
+						<input type="password" id="password" name="password" class="login__input" placeholder="Password">
+					</div>
+					<button type="submit" class="button login__submit" id="lgnBtn">
+						<span class="button__text">Log In Now</span>
+						<i class="fa fa-chevron-right"></i>
+					</button>
+				</form>
+				<div class="social-login">
+					<h3>log in via</h3>
+					<div class="social-icons">
+						<i class="fa fa-instagram" style="color:deepskyblue"></i>
+						<i class="fa fa-facebook" style="color:deepskyblue"></i>
+						<i class="fa fa-twitter" style="color:deepskyblue"></i>
+					</div>
+				</div>
+			</div>
+			<div class="screen__background">
+				<span class="screen__background__shape screen__background__shape4"></span>
+				<span class="screen__background__shape screen__background__shape3"></span>
+				<span class="screen__background__shape screen__background__shape2"></span>
+				<span class="screen__background__shape screen__background__shape1"></span>
+			</div>
+		</div>
+	</div>
+
+</body>

@@ -32,7 +32,7 @@ namespace Domain.EntityFramework
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;DataBase=ShoppingApp;Integrated Security=true;");
+                optionsBuilder.UseSqlServer("Server=MLBTAL-108966\\SQLEXPRESS;DataBase=ShoppingApp;Integrated Security=true;");
             }
         }
         protected override void OnModelCreating(ModelBuilder oModelBuilder)
@@ -48,24 +48,24 @@ namespace Domain.EntityFramework
                 entity.Property(t => t.Role).IsRequired();
             });
             //Validations purpose 
-            oModelBuilder.Entity<Productlist>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-                entity.ToTable("Productlist");
-                entity.Property(t => t.ProductDescription).HasMaxLength(50);
-                entity.Property(t => t.ProductPrice).IsRequired(); ;
-                entity.Property(t => t.ProductName).IsRequired();
-                entity.Property(t => t.ProductName).IsRequired();
-                entity.Property(t => t.ProductImage);
-                entity.Property(e => e.InStock);
-                entity.Property(e => e.InCart);
-            });
+            //oModelBuilder.Entity<Productlist>(entity =>
+            //{
+            //    entity.HasKey(e => e.Id);
+            //    entity.ToTable("Productlist");
+            //    entity.Property(t => t.ProductDescription).HasMaxLength(50);
+            //    entity.Property(t => t.ProductPrice).IsRequired(); ;
+            //    entity.Property(t => t.ProductName).IsRequired();
+            //    entity.Property(t => t.ProductName).IsRequired();
+            //    entity.Property(t => t.ProductImage);
+            //    entity.Property(e => e.InStock);
+            //    entity.Property(e => e.InCart);
+            //});
 
-                OnModelCreatingPartial(oModelBuilder);
-            //new EmployeeMap(oModelBuilder.Entity<Employee>());
-            //new EmployeeProfessionalMap(oModelBuilder.Entity<EmployeeProfessional>());
-            //new EmployeeQualificationMap(oModelBuilder.Entity<EmployeeQualification>());
+		
 
+
+			OnModelCreatingPartial(oModelBuilder);
+     
         }
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);        
     }

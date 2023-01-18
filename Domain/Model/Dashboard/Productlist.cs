@@ -2,8 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 namespace Domain.Model.Dashboard
 {
-    //Model of the Product list 
-    public class Productlist : BaseEntity 
+    public class Productlist : BaseEntity
     {
         public string ProductDescription { get; set; } = "";
         [Required]
