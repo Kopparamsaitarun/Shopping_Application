@@ -32,7 +32,7 @@ namespace Domain.EntityFramework
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;DataBase=ShoppingApp;Integrated Security=true;");
+                optionsBuilder.UseSqlServer("Server=MLBTAL-108966\\SQLEXPRESS;DataBase=ShoppingApp;Integrated Security=true;");
             }
         }
         protected override void OnModelCreating(ModelBuilder oModelBuilder)
@@ -61,11 +61,11 @@ namespace Domain.EntityFramework
                 entity.Property(e => e.InCart);
             });
 
-                OnModelCreatingPartial(oModelBuilder);
-            //new EmployeeMap(oModelBuilder.Entity<Employee>());
-            //new EmployeeProfessionalMap(oModelBuilder.Entity<EmployeeProfessional>());
-            //new EmployeeQualificationMap(oModelBuilder.Entity<EmployeeQualification>());
+		
 
+
+			OnModelCreatingPartial(oModelBuilder);
+     
         }
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);        
     }

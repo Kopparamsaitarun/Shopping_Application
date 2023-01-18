@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domain.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230112174733_Orderdetails col added")]
-    partial class Orderdetailscoladded
+    [Migration("20230118045407_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -88,17 +88,36 @@ namespace Domain.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long?>("AddressId")
+                    b.Property<long?>("OrderHeaderId")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("ProductId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("UserId")
-                        .HasColumnType("bigint");
-
                     b.Property<int>("count")
                         .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderHeaderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderDetail");
+                });
+
+            modelBuilder.Entity("Domain.Model.Order.OrderHeader", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long?>("AddressId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("orderDate")
                         .HasColumnType("datetime2");
@@ -110,11 +129,9 @@ namespace Domain.Migrations
 
                     b.HasIndex("AddressId");
 
-                    b.HasIndex("ProductId");
-
                     b.HasIndex("UserId");
 
-                    b.ToTable("OrderDetail");
+                    b.ToTable("OrderHeader");
                 });
 
             modelBuilder.Entity("Domain.Model.User.Address", b =>
@@ -208,21 +225,30 @@ namespace Domain.Migrations
 
             modelBuilder.Entity("Domain.Model.Order.OrderDetail", b =>
                 {
-                    b.HasOne("Domain.Model.User.Address", "Address")
+                    b.HasOne("Domain.Model.Order.OrderHeader", "OrderHeader")
                         .WithMany()
-                        .HasForeignKey("AddressId");
+                        .HasForeignKey("OrderHeaderId");
 
                     b.HasOne("Domain.Model.Dashboard.Productlist", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId");
+
+                    b.Navigation("OrderHeader");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Domain.Model.Order.OrderHeader", b =>
+                {
+                    b.HasOne("Domain.Model.User.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
 
                     b.HasOne("Domain.Model.User.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("Address");
-
-                    b.Navigation("Product");
 
                     b.Navigation("User");
                 });

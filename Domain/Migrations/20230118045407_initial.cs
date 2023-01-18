@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Domain.Migrations
 {
-    public partial class Intial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,6 +46,31 @@ namespace Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Address",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    userId = table.Column<long>(type: "bigint", nullable: true),
+                    address1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    address2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    city = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    state = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    postCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    country = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Address", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Address_Register_userId",
+                        column: x => x.userId,
+                        principalTable: "Register",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CartProducts",
                 columns: table => new
                 {
@@ -73,33 +98,64 @@ namespace Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderDetail",
+                name: "OrderHeader",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     orderNumber = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<long>(type: "bigint", nullable: true),
+                    AddressId = table.Column<long>(type: "bigint", nullable: true),
                     UserId = table.Column<long>(type: "bigint", nullable: true),
-                    count = table.Column<int>(type: "int", nullable: false),
                     orderDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
+                    table.PrimaryKey("PK_OrderHeader", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderHeader_Address_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "Address",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_OrderHeader_Register_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Register",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderDetail",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderHeaderId = table.Column<long>(type: "bigint", nullable: true),
+                    ProductId = table.Column<long>(type: "bigint", nullable: true),
+                    count = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_OrderDetail", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderDetail_OrderHeader_OrderHeaderId",
+                        column: x => x.OrderHeaderId,
+                        principalTable: "OrderHeader",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_OrderDetail_Productlist_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Productlist",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_OrderDetail_Register_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Register",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Address_userId",
+                table: "Address",
+                column: "userId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CartProducts_productId",
@@ -112,13 +168,23 @@ namespace Domain.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrderDetail_OrderHeaderId",
+                table: "OrderDetail",
+                column: "OrderHeaderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrderDetail_ProductId",
                 table: "OrderDetail",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderDetail_UserId",
-                table: "OrderDetail",
+                name: "IX_OrderHeader_AddressId",
+                table: "OrderHeader",
+                column: "AddressId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderHeader_UserId",
+                table: "OrderHeader",
                 column: "UserId");
         }
 
@@ -131,7 +197,13 @@ namespace Domain.Migrations
                 name: "OrderDetail");
 
             migrationBuilder.DropTable(
+                name: "OrderHeader");
+
+            migrationBuilder.DropTable(
                 name: "Productlist");
+
+            migrationBuilder.DropTable(
+                name: "Address");
 
             migrationBuilder.DropTable(
                 name: "Register");
